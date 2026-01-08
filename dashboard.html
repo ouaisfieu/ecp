@@ -1,0 +1,1519 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CCPLC — Kit Organisateur | Dashboard Arpentage</title>
+    
+    <style>
+        :root {
+            --black: #0a0a0a;
+            --white: #fafafa;
+            --red: #e63946;
+            --yellow: #ffd60a;
+            --green: #10b981;
+            --blue: #3b82f6;
+            --gray: #6b7280;
+            --gray-light: #f3f4f6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--gray-light);
+            min-height: 100vh;
+        }
+
+        /* ========== HEADER ========== */
+        header {
+            background: var(--black);
+            color: var(--white);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.25rem;
+        }
+
+        .logo span {
+            color: var(--red);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--red);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: #c1121f;
+        }
+
+        .btn-secondary {
+            background: var(--white);
+            color: var(--black);
+        }
+
+        .btn-secondary:hover {
+            background: var(--gray-light);
+        }
+
+        .btn-success {
+            background: var(--green);
+            color: var(--white);
+        }
+
+        /* ========== TABS ========== */
+        .tabs {
+            background: var(--white);
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            padding: 0 2rem;
+        }
+
+        .tab {
+            padding: 1rem 1.5rem;
+            border: none;
+            background: none;
+            font-size: 0.875rem;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            color: var(--gray);
+            transition: all 0.2s;
+        }
+
+        .tab:hover {
+            color: var(--black);
+        }
+
+        .tab.active {
+            color: var(--red);
+            border-bottom-color: var(--red);
+            font-weight: 600;
+        }
+
+        /* ========== MAIN CONTENT ========== */
+        main {
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* ========== STATS CARDS ========== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--gray);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        .stat-value.red { color: var(--red); }
+        .stat-value.green { color: var(--green); }
+        .stat-value.blue { color: var(--blue); }
+        .stat-value.yellow { color: #d97706; }
+
+        .stat-sub {
+            font-size: 0.875rem;
+            color: var(--gray);
+            margin-top: 0.5rem;
+        }
+
+        /* ========== CARDS ========== */
+        .card {
+            background: var(--white);
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            margin-bottom: 1.5rem;
+        }
+
+        .card-header {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-title {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        /* ========== FORM ========== */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: 4px;
+            font-size: 0.875rem;
+            transition: border-color 0.2s;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--red);
+        }
+
+        /* ========== TABLE ========== */
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+            font-size: 0.875rem;
+        }
+
+        th {
+            font-weight: 600;
+            background: var(--gray-light);
+        }
+
+        tr:hover {
+            background: #f9fafb;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .badge-pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .badge-confirmed {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .badge-group {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        /* ========== GROUPS GRID ========== */
+        .groups-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1rem;
+        }
+
+        .group-card {
+            background: var(--white);
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 1rem;
+            transition: all 0.2s;
+        }
+
+        .group-card:hover {
+            border-color: var(--red);
+        }
+
+        .group-card.complete {
+            border-color: var(--green);
+            background: #f0fdf4;
+        }
+
+        .group-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .group-name {
+            font-weight: 600;
+        }
+
+        .group-count {
+            font-size: 0.875rem;
+            color: var(--gray);
+        }
+
+        .group-members {
+            list-style: none;
+        }
+
+        .group-member {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #e5e7eb;
+            font-size: 0.875rem;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .group-member:last-child {
+            border-bottom: none;
+        }
+
+        .group-member-zone {
+            color: var(--gray);
+            font-size: 0.75rem;
+        }
+
+        /* ========== TOOLS GRID ========== */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .tool-card {
+            background: var(--white);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .tool-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .tool-name {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .tool-desc {
+            color: var(--gray);
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+        }
+
+        .tool-links {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .tool-link {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            background: var(--gray-light);
+            border-radius: 4px;
+            color: var(--black);
+            text-decoration: none;
+        }
+
+        .tool-link:hover {
+            background: #e5e7eb;
+        }
+
+        /* ========== CHECKLIST ========== */
+        .checklist {
+            list-style: none;
+        }
+
+        .checklist-item {
+            padding: 1rem;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .checklist-item:last-child {
+            border-bottom: none;
+        }
+
+        .checklist-checkbox {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .checklist-content {
+            flex: 1;
+        }
+
+        .checklist-title {
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+        }
+
+        .checklist-desc {
+            font-size: 0.875rem;
+            color: var(--gray);
+        }
+
+        .checklist-item.done {
+            opacity: 0.5;
+        }
+
+        .checklist-item.done .checklist-title {
+            text-decoration: line-through;
+        }
+
+        /* ========== TEMPLATE BOX ========== */
+        .template-box {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 1rem;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 0.8rem;
+            white-space: pre-wrap;
+            overflow-x: auto;
+            position: relative;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: var(--gray);
+            color: var(--white);
+            border: none;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            cursor: pointer;
+        }
+
+        .copy-btn:hover {
+            background: var(--red);
+        }
+
+        /* ========== WARNINGS ========== */
+        .warning-box {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .warning-title {
+            font-weight: 600;
+            color: #92400e;
+            margin-bottom: 0.5rem;
+        }
+
+        .warning-text {
+            font-size: 0.875rem;
+            color: #78350f;
+        }
+
+        .success-box {
+            background: #d1fae5;
+            border-left: 4px solid var(--green);
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0 4px 4px 0;
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .tabs {
+                overflow-x: auto;
+            }
+        }
+
+        /* ========== PRINT ========== */
+        @media print {
+            header, .tabs, .btn {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">CCPLC <span>Dashboard</span></div>
+        <div class="header-actions">
+            <button class="btn btn-secondary" onclick="exportData()">📥 Exporter CSV</button>
+            <button class="btn btn-secondary" onclick="importData()">📤 Importer</button>
+            <button class="btn btn-primary" onclick="showTab('inscription')">+ Nouvelle inscription</button>
+        </div>
+    </header>
+
+    <div class="tabs">
+        <button class="tab active" onclick="showTab('dashboard')">📊 Dashboard</button>
+        <button class="tab" onclick="showTab('inscription')">✏️ Inscription</button>
+        <button class="tab" onclick="showTab('participants')">👥 Participants</button>
+        <button class="tab" onclick="showTab('groupes')">🎯 Groupes</button>
+        <button class="tab" onclick="showTab('outils')">🔧 Outils</button>
+        <button class="tab" onclick="showTab('templates')">📝 Templates</button>
+        <button class="tab" onclick="showTab('checklist')">✅ Checklist</button>
+    </div>
+
+    <main>
+        <!-- DASHBOARD -->
+        <div id="dashboard" class="tab-content active">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-label">Inscriptions totales</div>
+                    <div class="stat-value red" id="stat-total">0</div>
+                    <div class="stat-sub">Objectif : 378</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Groupes complets</div>
+                    <div class="stat-value green" id="stat-groups">0</div>
+                    <div class="stat-sub">Sur 42 groupes</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Animateurs confirmés</div>
+                    <div class="stat-value blue" id="stat-animators">0</div>
+                    <div class="stat-sub">Besoin : 42</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Taux de remplissage</div>
+                    <div class="stat-value yellow" id="stat-fill">0%</div>
+                    <div class="stat-sub">378 places</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">📍 Répartition par zone</h3>
+                </div>
+                <div class="card-body">
+                    <div id="zone-chart" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem;">
+                        <!-- Généré par JS -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">📅 Timeline</h3>
+                </div>
+                <div class="card-body">
+                    <div id="timeline-status">
+                        <!-- Généré par JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- INSCRIPTION -->
+        <div id="inscription" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Nouvelle inscription</h3>
+                </div>
+                <div class="card-body">
+                    <form id="inscription-form" onsubmit="addParticipant(event)">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>Prénom *</label>
+                                <input type="text" name="prenom" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Nom *</label>
+                                <input type="text" name="nom" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Email *</label>
+                                <input type="email" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Téléphone</label>
+                                <input type="tel" name="telephone">
+                            </div>
+                            <div class="form-group">
+                                <label>Zone géographique *</label>
+                                <select name="zone" required>
+                                    <option value="">Sélectionner...</option>
+                                    <option value="bruxelles">Bruxelles (10 groupes)</option>
+                                    <option value="liege">Liège (8 groupes)</option>
+                                    <option value="charleroi">Charleroi (6 groupes)</option>
+                                    <option value="namur">Namur (5 groupes)</option>
+                                    <option value="mons">Mons (5 groupes)</option>
+                                    <option value="brabant">Brabant wallon (4 groupes)</option>
+                                    <option value="luxembourg">Luxembourg (2 groupes)</option>
+                                    <option value="verviers">Verviers (2 groupes)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Rôle souhaité</label>
+                                <select name="role">
+                                    <option value="participant">Participant·e</option>
+                                    <option value="animateur">Animateur·rice de groupe</option>
+                                    <option value="ambassadeur">Ambassadeur·rice</option>
+                                </select>
+                            </div>
+                            <div class="form-group full">
+                                <label>Comment avez-vous entendu parler de l'événement ?</label>
+                                <select name="source">
+                                    <option value="">Sélectionner...</option>
+                                    <option value="amazone">Amazone</option>
+                                    <option value="soralia">Soralia</option>
+                                    <option value="pac">PAC</option>
+                                    <option value="reseaux">Réseaux sociaux</option>
+                                    <option value="ami">Bouche à oreille</option>
+                                    <option value="autre">Autre</option>
+                                </select>
+                            </div>
+                            <div class="form-group full">
+                                <label>Remarques</label>
+                                <textarea name="remarques" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Ajouter l'inscription</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- PARTICIPANTS -->
+        <div id="participants" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Liste des participants</h3>
+                    <div>
+                        <input type="text" id="search-participants" placeholder="Rechercher..." style="padding: 0.5rem; border-radius: 4px; border: 1px solid #d1d5db;">
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Nom</th>
+                                    <th>Email</th>
+                                    <th>Zone</th>
+                                    <th>Rôle</th>
+                                    <th>Groupe</th>
+                                    <th>Source</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="participants-table">
+                                <!-- Généré par JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- GROUPES -->
+        <div id="groupes" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Gestion des groupes</h3>
+                    <div>
+                        <button class="btn btn-success" onclick="autoAssignGroups()">🎲 Auto-assigner</button>
+                        <button class="btn btn-secondary" onclick="exportGroupsTelegram()">📱 Export Telegram</button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="groups-grid" id="groups-grid">
+                        <!-- Généré par JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- OUTILS -->
+        <div id="outils" class="tab-content">
+            <div class="warning-box">
+                <div class="warning-title">⚠️ Stack technique recommandée</div>
+                <div class="warning-text">Tous ces outils sont gratuits et la plupart sont libres. Ils permettent de gérer 378 participants sans serveur ni base de données.</div>
+            </div>
+
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <div class="tool-icon">🌐</div>
+                    <div class="tool-name">GitHub Pages</div>
+                    <div class="tool-desc">Hébergement gratuit de sites statiques. Parfait pour le site vitrine et ce dashboard.</div>
+                    <div class="tool-links">
+                        <a href="https://pages.github.com/" target="_blank" class="tool-link">Site officiel</a>
+                        <span class="tool-link" style="background: #d1fae5; color: #065f46;">✓ Libre</span>
+                        <span class="tool-link" style="background: #d1fae5; color: #065f46;">✓ Gratuit</span>
+                    </div>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">📝</div>
+                    <div class="tool-name">Framaforms</div>
+                    <div class="tool-desc">Formulaires libres alternatifs à Google Forms. Export CSV, pas de limite de réponses.</div>
+                    <div class="tool-links">
+                        <a href="https://framaforms.org/" target="_blank" class="tool-link">Créer un formulaire</a>
+                        <span class="tool-link" style="background: #d1fae5; color: #065f46;">✓ Libre</span>
+                        <span class="tool-link" style="background: #d1fae5; color: #065f46;">✓ Gratuit</span>
+                    </div>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">📄</div>
+                    <div class="tool-name">Framapad / HedgeDoc</div>
+                    <div class="tool-desc">Pads collaboratifs pour les synthèses de groupe. Pas d'inscription requise.</div>
+                    <div class="tool-links">
+                        <a href="https://framapad.org/" target="_blank" class="tool-link">Framapad</a>
+                        <a href="https://demo.hedgedoc.org/" target="_blank" class="tool-link">HedgeDoc</a>
+                        <span class="tool-link" style="background: #d1fae5; color: #065f46;">✓ Libre</span>
+                    </div>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">💬</div>
+                    <div class="tool-name">Telegram</div>
+                    <div class="tool-desc">Messagerie avec groupes jusqu'à 200K membres. Bots automatisables. Fonctionne sur téléphones basiques.</div>
+                    <div class="tool-links">
+                        <a href="https://telegram.org/" target="_blank" class="tool-link">Télécharger</a>
+                        <span class="tool-link" style="background: #fef3c7; color: #92400e;">⚠ Non libre</span>
+                        <span class="tool-link" style="background: #d1fae5; color: #065f46;">✓ Gratuit</span>
+                    </div>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">🔐</div>
+                    <div class="tool-name">Element / Matrix</div>
+                    <div class="tool-desc">Alternative libre à Telegram. Fédéré, chiffré. Plus complexe à configurer.</div>
+                    <div class="tool-links">
+                        <a href="https://element.io/" target="_blank" class="tool-link">Element</a>
+                        <span class="tool-link" style="background: #d1fae5; color: #065f46;">✓ Libre</span>
+                        <span class="tool-link" style="background: #d1fae5; color: #065f46;">✓ Gratuit</span>
+                    </div>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">📹</div>
+                    <div class="tool-name">Jitsi Meet</div>
+                    <div class="tool-desc">Visioconférence libre. Pas d'inscription, lien direct. Jusqu'à 100 participants.</div>
+                    <div class="tool-links">
+                        <a href="https://meet.jit.si/" target="_blank" class="tool-link">Lancer une visio</a>
+                        <a href="https://framatalk.org/" target="_blank" class="tool-link">Framatalk</a>
+                        <span class="tool-link" style="background: #d1fae5; color: #065f46;">✓ Libre</span>
+                    </div>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">📅</div>
+                    <div class="tool-name">Framadate</div>
+                    <div class="tool-desc">Sondages de dates. Alternative libre à Doodle.</div>
+                    <div class="tool-links">
+                        <a href="https://framadate.org/" target="_blank" class="tool-link">Créer un sondage</a>
+                        <span class="tool-link" style="background: #d1fae5; color: #065f46;">✓ Libre</span>
+                    </div>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">📧</div>
+                    <div class="tool-name">Brevo (ex-Sendinblue)</div>
+                    <div class="tool-desc">Emailing gratuit jusqu'à 300 emails/jour. Alternative : Listmonk (self-hosted).</div>
+                    <div class="tool-links">
+                        <a href="https://www.brevo.com/fr/" target="_blank" class="tool-link">Brevo</a>
+                        <a href="https://listmonk.app/" target="_blank" class="tool-link">Listmonk (libre)</a>
+                        <span class="tool-link" style="background: #fef3c7; color: #92400e;">⚠ Freemium</span>
+                    </div>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">🎫</div>
+                    <div class="tool-name">Mobilizon</div>
+                    <div class="tool-desc">Alternative libre à Facebook Events et Meetup. Fédéré.</div>
+                    <div class="tool-links">
+                        <a href="https://mobilizon.org/" target="_blank" class="tool-link">Site officiel</a>
+                        <a href="https://mobilizon.fr/" target="_blank" class="tool-link">Instance Framasoft</a>
+                        <span class="tool-link" style="background: #d1fae5; color: #065f46;">✓ Libre</span>
+                    </div>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">📊</div>
+                    <div class="tool-name">NocoDB</div>
+                    <div class="tool-desc">Alternative libre à Airtable. Auto-hébergeable ou cloud gratuit.</div>
+                    <div class="tool-links">
+                        <a href="https://nocodb.com/" target="_blank" class="tool-link">NocoDB</a>
+                        <span class="tool-link" style="background: #d1fae5; color: #065f46;">✓ Libre</span>
+                    </div>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">📋</div>
+                    <div class="tool-name">Framemo</div>
+                    <div class="tool-desc">Tableau de post-it collaboratif. Parfait pour le "mur des découvertes".</div>
+                    <div class="tool-links">
+                        <a href="https://framemo.org/" target="_blank" class="tool-link">Créer un tableau</a>
+                        <span class="tool-link" style="background: #d1fae5; color: #065f46;">✓ Libre</span>
+                    </div>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">🖼️</div>
+                    <div class="tool-name">Canva</div>
+                    <div class="tool-desc">Design graphique pour visuels réseaux sociaux. Gratuit avec limitations.</div>
+                    <div class="tool-links">
+                        <a href="https://www.canva.com/" target="_blank" class="tool-link">Canva</a>
+                        <span class="tool-link" style="background: #fef3c7; color: #92400e;">⚠ Freemium</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TEMPLATES -->
+        <div id="templates" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">📧 Email de confirmation d'inscription</h3>
+                </div>
+                <div class="card-body">
+                    <div class="template-box">
+                        <button class="copy-btn" onclick="copyTemplate(this)">Copier</button>Objet : ✅ Inscription confirmée — Arpentage citoyen [NOM_EVENEMENT]
+
+Bonjour [PRENOM],
+
+Votre inscription à l'arpentage citoyen est confirmée ! 🎉
+
+📅 Date du bilan présentiel : [DATE]
+📍 Lieu : [LIEU]
+👥 Votre zone : [ZONE]
+
+PROCHAINES ÉTAPES :
+1. Vous recevrez un lien Telegram pour rejoindre votre groupe dans les 48h
+2. Le J1 ([DATE_J1]), nous lancerons l'exploration collective
+3. Chaque jour, vous aurez 15-20 min de lecture + échanges avec votre groupe
+
+Rappel : pas besoin d'avoir lu le livre à l'avance ! C'est le principe de l'arpentage.
+
+Des questions ? Répondez directement à cet email.
+
+À très vite,
+L'équipe CCPLC
+
+--
+CCPLC — Collectif Citoyen pour la Participation Libre & Consciente
+https://ouaisfieu.github.io/tech/ccplc/</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">📱 Message Telegram — Bienvenue groupe</h3>
+                </div>
+                <div class="card-body">
+                    <div class="template-box">
+                        <button class="copy-btn" onclick="copyTemplate(this)">Copier</button>🎉 Bienvenue dans le Groupe [NUMERO] — [ZONE] !
+
+Vous êtes 9 participants réunis pour explorer ensemble "[NOM_LIVRE]".
+
+👤 Votre animateur·rice : [NOM_ANIMATEUR]
+
+📅 PLANNING :
+• J1 ([DATE]) : Lancement (visio 1h)
+• J2-J5 : Lecture individuelle + échanges ici
+• J6 ([DATE]) : Synthèse collective (visio 2h)
+• J7 ([DATE]) : Bilan présentiel à [LIEU]
+
+📖 VOTRE SECTION DU LIVRE :
+Pages [X] à [Y] — Vous recevrez le PDF/scan demain.
+
+🔗 LIENS UTILES :
+• Pad de synthèse : [LIEN_FRAMAPAD]
+• Visio J1 : [LIEN_JITSI]
+
+Une question ? Pingez @[ANIMATEUR] !
+
+Bonne exploration 🚀</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">📣 Post Facebook — Appel à inscription</h3>
+                </div>
+                <div class="card-body">
+                    <div class="template-box">
+                        <button class="copy-btn" onclick="copyTemplate(this)">Copier</button>🎮 Et si tu apprenais [SUJET]... en jouant ?
+
+On lance un arpentage citoyen sur "[NOM_LIVRE]" — une méthode d'intelligence collective où on lit un livre ENSEMBLE, sans l'avoir lu avant.
+
+🗳️ [NOMBRE] participants
+⭐ [NOMBRE] groupes dans toute la Belgique
+🧠 7 jours d'exploration
+📴 Fonctionne en distanciel
+
+Pas besoin d'être expert·e. Juste curieux·se.
+
+✨ 5 minutes par semaine ? Déjà énorme.
+✨ Juste un partage ? Ça fait ultra plaisir.
+
+👉 Inscription : [LIEN]
+
+On construit ça ensemble, sans prise de tête. 🙌</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">📋 Guide animateur·rice (à envoyer)</h3>
+                </div>
+                <div class="card-body">
+                    <div class="template-box">
+                        <button class="copy-btn" onclick="copyTemplate(this)">Copier</button># Guide Animateur·rice — Arpentage CCPLC
+
+## Ton rôle
+Tu facilites les échanges, tu ne diriges pas. Ton groupe est autonome.
+
+## J1 — Lancement (1h visio)
+1. Tour de présentation (prénom + une attente)
+2. Explication de la méthode arpentage
+3. Distribution des sections (tirage au sort)
+4. Réponses aux questions
+
+## J2-J5 — Asynchrone
+- Envoie un message quotidien dans le groupe Telegram
+- Exemple : "Où en êtes-vous ? Une phrase qui vous a marqué·e ?"
+- Relance les silencieux en privé
+
+## J6 — Synthèse (2h visio)
+1. Tour de parole : chacun·e partage sa section (5 min max)
+2. Questions/réactions croisées (30 min)
+3. Rédaction collective sur le Framapad (30 min)
+4. Préparation de 3 phrases-clés pour J7
+
+## J7 — Présentiel
+- Arrive 15 min avant
+- Assure-toi que tout le monde a les infos pratiques
+- Au World Café : tu représentes ton groupe
+
+## En cas de problème
+- Conflit : contacte le pilotage via [CONTACT]
+- Absence : redistribue la section
+- Question technique : [LIEN_FAQ]
+
+Merci pour ton engagement ! 💪</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CHECKLIST -->
+        <div id="checklist" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">✅ Checklist J-14 → Jour J</h3>
+                </div>
+                <div class="card-body">
+                    <ul class="checklist" id="checklist-items">
+                        <!-- J-14 -->
+                        <li class="checklist-item" data-day="-14">
+                            <input type="checkbox" class="checklist-checkbox" onchange="toggleCheckItem(this)">
+                            <div class="checklist-content">
+                                <div class="checklist-title">J-14 : Valider le partenariat</div>
+                                <div class="checklist-desc">Réunion avec les co-organisateurs (Amazone, Soralia, PAC). Valider la répartition des 42 groupes.</div>
+                            </div>
+                        </li>
+                        <li class="checklist-item" data-day="-14">
+                            <input type="checkbox" class="checklist-checkbox" onchange="toggleCheckItem(this)">
+                            <div class="checklist-content">
+                                <div class="checklist-title">J-14 : Créer le formulaire Framaforms</div>
+                                <div class="checklist-desc">Champs : nom, email, zone, rôle, source. Tester l'export CSV.</div>
+                            </div>
+                        </li>
+                        <li class="checklist-item" data-day="-14">
+                            <input type="checkbox" class="checklist-checkbox" onchange="toggleCheckItem(this)">
+                            <div class="checklist-content">
+                                <div class="checklist-title">J-14 : Préparer le découpage du livre</div>
+                                <div class="checklist-desc">Diviser en 9 sections équivalentes. Scanner/photographier chaque section.</div>
+                            </div>
+                        </li>
+                        <!-- J-10 -->
+                        <li class="checklist-item" data-day="-10">
+                            <input type="checkbox" class="checklist-checkbox" onchange="toggleCheckItem(this)">
+                            <div class="checklist-content">
+                                <div class="checklist-title">J-10 : Recruter les 15 ambassadeurs</div>
+                                <div class="checklist-desc">Briefing de 2h. Kit de communication (pitch, visuels, FAQ).</div>
+                            </div>
+                        </li>
+                        <li class="checklist-item" data-day="-10">
+                            <input type="checkbox" class="checklist-checkbox" onchange="toggleCheckItem(this)">
+                            <div class="checklist-content">
+                                <div class="checklist-title">J-10 : Créer les groupes Telegram pilotes</div>
+                                <div class="checklist-desc">1 groupe par zone (8 groupes) + 1 groupe animateurs + 1 groupe pilotage.</div>
+                            </div>
+                        </li>
+                        <!-- J-7 -->
+                        <li class="checklist-item" data-day="-7">
+                            <input type="checkbox" class="checklist-checkbox" onchange="toggleCheckItem(this)">
+                            <div class="checklist-content">
+                                <div class="checklist-title">J-7 : Lancer la communication intensive</div>
+                                <div class="checklist-desc">2-3 posts/jour sur les réseaux. Compteur public d'inscriptions.</div>
+                            </div>
+                        </li>
+                        <li class="checklist-item" data-day="-7">
+                            <input type="checkbox" class="checklist-checkbox" onchange="toggleCheckItem(this)">
+                            <div class="checklist-content">
+                                <div class="checklist-title">J-7 : Former les animateurs</div>
+                                <div class="checklist-desc">Visio de 1h30. Envoyer le guide animateur. Répondre aux questions.</div>
+                            </div>
+                        </li>
+                        <!-- J-5 -->
+                        <li class="checklist-item" data-day="-5">
+                            <input type="checkbox" class="checklist-checkbox" onchange="toggleCheckItem(this)">
+                            <div class="checklist-content">
+                                <div class="checklist-title">J-5 : Première relance email</div>
+                                <div class="checklist-desc">"Plus que 5 jours pour rejoindre l'aventure !" + compteur.</div>
+                            </div>
+                        </li>
+                        <li class="checklist-item" data-day="-5">
+                            <input type="checkbox" class="checklist-checkbox" onchange="toggleCheckItem(this)">
+                            <div class="checklist-content">
+                                <div class="checklist-title">J-5 : Créer les Framapads</div>
+                                <div class="checklist-desc">1 pad par groupe (42 pads). Template pré-rempli avec structure de synthèse.</div>
+                            </div>
+                        </li>
+                        <!-- J-2 -->
+                        <li class="checklist-item" data-day="-2">
+                            <input type="checkbox" class="checklist-checkbox" onchange="toggleCheckItem(this)">
+                            <div class="checklist-content">
+                                <div class="checklist-title">J-2 : Dernière relance email</div>
+                                <div class="checklist-desc">Dernière chance ! + rappel infos pratiques.</div>
+                            </div>
+                        </li>
+                        <li class="checklist-item" data-day="-2">
+                            <input type="checkbox" class="checklist-checkbox" onchange="toggleCheckItem(this)">
+                            <div class="checklist-content">
+                                <div class="checklist-title">J-2 : Finaliser les groupes</div>
+                                <div class="checklist-desc">Auto-assignation. Envoyer les invitations Telegram aux participants.</div>
+                            </div>
+                        </li>
+                        <!-- J-1 -->
+                        <li class="checklist-item" data-day="-1">
+                            <input type="checkbox" class="checklist-checkbox" onchange="toggleCheckItem(this)">
+                            <div class="checklist-content">
+                                <div class="checklist-title">J-1 : Vérifier l'infrastructure</div>
+                                <div class="checklist-desc">Tester tous les liens Jitsi. Vérifier les Framapads. Backup des données.</div>
+                            </div>
+                        </li>
+                        <!-- Jour J -->
+                        <li class="checklist-item" data-day="0">
+                            <input type="checkbox" class="checklist-checkbox" onchange="toggleCheckItem(this)">
+                            <div class="checklist-content">
+                                <div class="checklist-title">Jour J : Accueil et World Café</div>
+                                <div class="checklist-desc">Arriver 1h avant. Vérifier la signalétique. Accueillir les animateurs.</div>
+                            </div>
+                        </li>
+                        <li class="checklist-item" data-day="0">
+                            <input type="checkbox" class="checklist-checkbox" onchange="toggleCheckItem(this)">
+                            <div class="checklist-content">
+                                <div class="checklist-title">Jour J : Documentation</div>
+                                <div class="checklist-desc">Photos, vidéos, récolte des synthèses. Formulaire de satisfaction.</div>
+                            </div>
+                        </li>
+                        <!-- J+7 -->
+                        <li class="checklist-item" data-day="+7">
+                            <input type="checkbox" class="checklist-checkbox" onchange="toggleCheckItem(this)">
+                            <div class="checklist-content">
+                                <div class="checklist-title">J+7 : Bilan et capitalisation</div>
+                                <div class="checklist-desc">Rapport d'évaluation. Remerciements. Proposition de suites aux participants.</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">⚠️ Points de blocage potentiels</h3>
+                </div>
+                <div class="card-body">
+                    <div class="warning-box">
+                        <div class="warning-title">🚨 Gestion de 42 groupes Telegram</div>
+                        <div class="warning-text">
+                            <strong>Problème :</strong> Créer et administrer 42 groupes manuellement est chronophage.<br>
+                            <strong>Solution :</strong> Utiliser un bot Telegram (ex: @GroupHelpBot) ou déléguer la création aux animateurs de zone.
+                        </div>
+                    </div>
+
+                    <div class="warning-box">
+                        <div class="warning-title">📧 Limites d'envoi d'emails</div>
+                        <div class="warning-text">
+                            <strong>Problème :</strong> Gmail limite à 500 emails/jour, Brevo gratuit à 300/jour.<br>
+                            <strong>Solution :</strong> Étaler les envois sur plusieurs jours ou passer à Brevo payant (19€/mois pour 20K emails).
+                        </div>
+                    </div>
+
+                    <div class="warning-box">
+                        <div class="warning-title">📱 Participants sans Telegram</div>
+                        <div class="warning-text">
+                            <strong>Problème :</strong> Certains publics (seniors) n'utilisent pas Telegram.<br>
+                            <strong>Solution :</strong> Prévoir une alternative email-only avec un rythme plus lent, ou accompagnement téléphonique pour l'installation.
+                        </div>
+                    </div>
+
+                    <div class="warning-box">
+                        <div class="warning-title">📖 Droits d'auteur sur le livre</div>
+                        <div class="warning-text">
+                            <strong>Problème :</strong> Scanner un livre complet pose des questions de droits.<br>
+                            <strong>Solution :</strong> Acheter 50 exemplaires et les découper physiquement, ou contacter l'éditeur pour un accord (argument : promotion du livre).
+                        </div>
+                    </div>
+
+                    <div class="warning-box">
+                        <div class="warning-title">👤 Animateurs défaillants</div>
+                        <div class="warning-text">
+                            <strong>Problème :</strong> Un animateur absent = un groupe sans facilitation.<br>
+                            <strong>Solution :</strong> Prévoir 5-10 animateurs de réserve. Briefer les coordinateurs de zone pour prendre le relais.
+                        </div>
+                    </div>
+
+                    <div class="warning-box">
+                        <div class="warning-title">💾 Perte de données</div>
+                        <div class="warning-text">
+                            <strong>Problème :</strong> Ce dashboard stocke tout en localStorage (local au navigateur).<br>
+                            <strong>Solution :</strong> Exporter en CSV quotidiennement. Stocker sur Google Drive/Nextcloud. Pour du vrai multi-utilisateurs, passer à NocoDB.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // ========== DATA STORAGE ==========
+        const STORAGE_KEY = 'ccplc_arpentage_data';
+        
+        const ZONES = {
+            bruxelles: { name: 'Bruxelles', maxGroups: 10 },
+            liege: { name: 'Liège', maxGroups: 8 },
+            charleroi: { name: 'Charleroi', maxGroups: 6 },
+            namur: { name: 'Namur', maxGroups: 5 },
+            mons: { name: 'Mons', maxGroups: 5 },
+            brabant: { name: 'Brabant wallon', maxGroups: 4 },
+            luxembourg: { name: 'Luxembourg', maxGroups: 2 },
+            verviers: { name: 'Verviers', maxGroups: 2 }
+        };
+
+        let data = {
+            participants: [],
+            groups: [],
+            checklist: {}
+        };
+
+        // Load data from localStorage
+        function loadData() {
+            const stored = localStorage.getItem(STORAGE_KEY);
+            if (stored) {
+                data = JSON.parse(stored);
+            }
+            initGroups();
+            updateUI();
+        }
+
+        // Save data to localStorage
+        function saveData() {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        }
+
+        // Initialize groups structure
+        function initGroups() {
+            if (data.groups.length === 0) {
+                let groupId = 1;
+                for (const [zoneKey, zone] of Object.entries(ZONES)) {
+                    for (let i = 1; i <= zone.maxGroups; i++) {
+                        data.groups.push({
+                            id: groupId++,
+                            zone: zoneKey,
+                            zoneName: zone.name,
+                            number: i,
+                            members: [],
+                            animator: null,
+                            telegramLink: '',
+                            padLink: ''
+                        });
+                    }
+                }
+                saveData();
+            }
+        }
+
+        // ========== TAB NAVIGATION ==========
+        function showTab(tabId) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            
+            document.querySelector(`.tab[onclick="showTab('${tabId}')"]`).classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+            
+            if (tabId === 'participants') renderParticipantsTable();
+            if (tabId === 'groupes') renderGroupsGrid();
+            if (tabId === 'dashboard') updateStats();
+        }
+
+        // ========== PARTICIPANTS ==========
+        function addParticipant(event) {
+            event.preventDefault();
+            const form = event.target;
+            const formData = new FormData(form);
+            
+            const participant = {
+                id: Date.now(),
+                prenom: formData.get('prenom'),
+                nom: formData.get('nom'),
+                email: formData.get('email'),
+                telephone: formData.get('telephone'),
+                zone: formData.get('zone'),
+                role: formData.get('role'),
+                source: formData.get('source'),
+                remarques: formData.get('remarques'),
+                groupId: null,
+                createdAt: new Date().toISOString()
+            };
+            
+            data.participants.push(participant);
+            saveData();
+            form.reset();
+            updateStats();
+            alert('✅ Inscription ajoutée !');
+        }
+
+        function renderParticipantsTable() {
+            const tbody = document.getElementById('participants-table');
+            tbody.innerHTML = data.participants.map(p => {
+                const group = data.groups.find(g => g.id === p.groupId);
+                return `
+                    <tr>
+                        <td>${p.prenom} ${p.nom}</td>
+                        <td>${p.email}</td>
+                        <td>${ZONES[p.zone]?.name || p.zone}</td>
+                        <td><span class="badge badge-${p.role === 'animateur' ? 'confirmed' : 'pending'}">${p.role}</span></td>
+                        <td>${group ? `<span class="badge badge-group">G${group.id}</span>` : '-'}</td>
+                        <td>${p.source || '-'}</td>
+                        <td>
+                            <button class="btn btn-secondary" onclick="deleteParticipant(${p.id})" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;">🗑️</button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function deleteParticipant(id) {
+            if (confirm('Supprimer ce participant ?')) {
+                data.participants = data.participants.filter(p => p.id !== id);
+                // Remove from group
+                data.groups.forEach(g => {
+                    g.members = g.members.filter(m => m !== id);
+                });
+                saveData();
+                renderParticipantsTable();
+                updateStats();
+            }
+        }
+
+        // ========== GROUPS ==========
+        function renderGroupsGrid() {
+            const grid = document.getElementById('groups-grid');
+            grid.innerHTML = data.groups.map(group => {
+                const members = data.participants.filter(p => p.groupId === group.id);
+                const isComplete = members.length >= 9;
+                return `
+                    <div class="group-card ${isComplete ? 'complete' : ''}">
+                        <div class="group-header">
+                            <span class="group-name">Groupe ${group.id} — ${group.zoneName}</span>
+                            <span class="group-count">${members.length}/9</span>
+                        </div>
+                        <ul class="group-members">
+                            ${members.map(m => `
+                                <li class="group-member">
+                                    <span>${m.prenom} ${m.nom}</span>
+                                    <span class="group-member-zone">${m.role === 'animateur' ? '👑' : ''}</span>
+                                </li>
+                            `).join('')}
+                            ${members.length === 0 ? '<li class="group-member" style="color: var(--gray);">Aucun membre</li>' : ''}
+                        </ul>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function autoAssignGroups() {
+            if (!confirm('Auto-assigner les participants aux groupes par zone ?')) return;
+            
+            // Reset all assignments
+            data.participants.forEach(p => p.groupId = null);
+            data.groups.forEach(g => g.members = []);
+            
+            // Group by zone
+            for (const [zoneKey, zone] of Object.entries(ZONES)) {
+                const zoneParticipants = data.participants.filter(p => p.zone === zoneKey && !p.groupId);
+                const zoneGroups = data.groups.filter(g => g.zone === zoneKey);
+                
+                // Shuffle participants
+                const shuffled = [...zoneParticipants].sort(() => Math.random() - 0.5);
+                
+                // Assign to groups
+                shuffled.forEach((participant, index) => {
+                    const groupIndex = index % zoneGroups.length;
+                    const group = zoneGroups[groupIndex];
+                    if (group.members.length < 9) {
+                        participant.groupId = group.id;
+                        group.members.push(participant.id);
+                    }
+                });
+            }
+            
+            saveData();
+            renderGroupsGrid();
+            updateStats();
+            alert('✅ Assignation terminée !');
+        }
+
+        function exportGroupsTelegram() {
+            let output = '# GROUPES TELEGRAM À CRÉER\n\n';
+            data.groups.forEach(group => {
+                const members = data.participants.filter(p => p.groupId === group.id);
+                if (members.length > 0) {
+                    output += `## Groupe ${group.id} — ${group.zoneName}\n`;
+                    output += `Membres (${members.length}):\n`;
+                    members.forEach(m => {
+                        output += `- ${m.prenom} ${m.nom} (${m.email})\n`;
+                    });
+                    output += '\n';
+                }
+            });
+            
+            const blob = new Blob([output], { type: 'text/markdown' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'groupes-telegram.md';
+            a.click();
+        }
+
+        // ========== STATS ==========
+        function updateStats() {
+            const total = data.participants.length;
+            const animators = data.participants.filter(p => p.role === 'animateur').length;
+            const completeGroups = data.groups.filter(g => {
+                const members = data.participants.filter(p => p.groupId === g.id);
+                return members.length >= 9;
+            }).length;
+            const fillRate = Math.round((total / 378) * 100);
+            
+            document.getElementById('stat-total').textContent = total;
+            document.getElementById('stat-groups').textContent = completeGroups;
+            document.getElementById('stat-animators').textContent = animators;
+            document.getElementById('stat-fill').textContent = fillRate + '%';
+            
+            // Zone chart
+            const zoneChart = document.getElementById('zone-chart');
+            zoneChart.innerHTML = Object.entries(ZONES).map(([key, zone]) => {
+                const count = data.participants.filter(p => p.zone === key).length;
+                const max = zone.maxGroups * 9;
+                const percent = Math.round((count / max) * 100);
+                return `
+                    <div style="text-align: center;">
+                        <div style="font-size: 1.5rem; font-weight: 700; color: ${percent >= 100 ? 'var(--green)' : 'var(--black)'};">${count}</div>
+                        <div style="font-size: 0.75rem; color: var(--gray);">${zone.name}</div>
+                        <div style="height: 4px; background: var(--gray-light); border-radius: 2px; margin-top: 0.5rem;">
+                            <div style="height: 100%; width: ${Math.min(percent, 100)}%; background: ${percent >= 100 ? 'var(--green)' : 'var(--red)'}; border-radius: 2px;"></div>
+                        </div>
+                        <div style="font-size: 0.7rem; color: var(--gray); margin-top: 0.25rem;">${count}/${max}</div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // ========== EXPORT/IMPORT ==========
+        function exportData() {
+            // CSV export
+            const headers = ['Prénom', 'Nom', 'Email', 'Téléphone', 'Zone', 'Rôle', 'Source', 'Groupe', 'Date inscription'];
+            const rows = data.participants.map(p => {
+                const group = data.groups.find(g => g.id === p.groupId);
+                return [
+                    p.prenom,
+                    p.nom,
+                    p.email,
+                    p.telephone || '',
+                    ZONES[p.zone]?.name || p.zone,
+                    p.role,
+                    p.source || '',
+                    group ? `Groupe ${group.id}` : '',
+                    new Date(p.createdAt).toLocaleDateString('fr-BE')
+                ];
+            });
+            
+            const csv = [headers, ...rows].map(row => row.map(cell => `"${cell}"`).join(',')).join('\n');
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `arpentage-participants-${new Date().toISOString().split('T')[0]}.csv`;
+            a.click();
+        }
+
+        function importData() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.json';
+            input.onchange = (e) => {
+                const file = e.target.files[0];
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    try {
+                        const imported = JSON.parse(event.target.result);
+                        if (imported.participants) {
+                            data = imported;
+                            saveData();
+                            updateUI();
+                            alert('✅ Données importées !');
+                        }
+                    } catch (err) {
+                        alert('❌ Erreur d\'import : ' + err.message);
+                    }
+                };
+                reader.readAsText(file);
+            };
+            input.click();
+        }
+
+        // ========== CHECKLIST ==========
+        function toggleCheckItem(checkbox) {
+            const item = checkbox.closest('.checklist-item');
+            item.classList.toggle('done', checkbox.checked);
+            
+            // Save state
+            const index = Array.from(item.parentNode.children).indexOf(item);
+            data.checklist[index] = checkbox.checked;
+            saveData();
+        }
+
+        function loadChecklist() {
+            document.querySelectorAll('.checklist-item').forEach((item, index) => {
+                const checkbox = item.querySelector('.checklist-checkbox');
+                if (data.checklist[index]) {
+                    checkbox.checked = true;
+                    item.classList.add('done');
+                }
+            });
+        }
+
+        // ========== TEMPLATES ==========
+        function copyTemplate(btn) {
+            const box = btn.parentNode;
+            const text = box.textContent.replace('Copier', '').trim();
+            navigator.clipboard.writeText(text).then(() => {
+                btn.textContent = 'Copié !';
+                setTimeout(() => btn.textContent = 'Copier', 2000);
+            });
+        }
+
+        // ========== SEARCH ==========
+        document.getElementById('search-participants')?.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            document.querySelectorAll('#participants-table tr').forEach(row => {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(query) ? '' : 'none';
+            });
+        });
+
+        // ========== UI UPDATE ==========
+        function updateUI() {
+            updateStats();
+            loadChecklist();
+        }
+
+        // ========== INIT ==========
+        loadData();
+    </script>
+</body>
+</html>
