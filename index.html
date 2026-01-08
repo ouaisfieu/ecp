@@ -1,0 +1,2087 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ECP — Économie Contributive Provisionnée | 975 000 Belges, 21 milliards €, une solution</title>
+    <meta name="description" content="Près d'un million de Belges sont piégés hors emploi. Données vérifiées, analyse juridique, solution concrète. Fact-checké.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,500&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* Palette sophistiquée */
+            --ink: #0f0f0f;
+            --ink-80: #2a2a2a;
+            --ink-60: #4a4a4a;
+            --ink-40: #7a7a7a;
+            --ink-20: #b0b0b0;
+            --ink-10: #d8d8d8;
+            --ink-05: #ececec;
+            
+            --paper: #FDFCFA;
+            --paper-warm: #F8F6F1;
+            --paper-dark: #EFECE5;
+            
+            --vermillon: #E63B2E;
+            --vermillon-soft: rgba(230, 59, 46, 0.1);
+            --vermillon-glow: rgba(230, 59, 46, 0.3);
+            
+            --emerald: #0D9668;
+            --emerald-soft: rgba(13, 150, 104, 0.1);
+            
+            --amber: #D97706;
+            --amber-soft: rgba(217, 119, 6, 0.1);
+            
+            --sapphire: #2563EB;
+            --sapphire-soft: rgba(37, 99, 235, 0.08);
+            
+            /* Typography */
+            --font-editorial: 'Newsreader', Georgia, serif;
+            --font-sans: 'Inter', -apple-system, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            
+            /* Spacing */
+            --space-1: 0.25rem;
+            --space-2: 0.5rem;
+            --space-3: 0.75rem;
+            --space-4: 1rem;
+            --space-6: 1.5rem;
+            --space-8: 2rem;
+            --space-12: 3rem;
+            --space-16: 4rem;
+            --space-24: 6rem;
+            --space-32: 8rem;
+            
+            /* Layout */
+            --max-width: 1200px;
+            --content-width: 720px;
+            
+            /* Effects */
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -1px rgba(0,0,0,0.04);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -2px rgba(0,0,0,0.04);
+            --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+            
+            --ease: cubic-bezier(0.4, 0, 0.2, 1);
+            --ease-out: cubic-bezier(0, 0, 0.2, 1);
+            --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        ::selection {
+            background: var(--vermillon);
+            color: white;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+        
+        body {
+            font-family: var(--font-sans);
+            background: var(--paper);
+            color: var(--ink);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        /* ========================================
+           NAVIGATION
+           ======================================== */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: rgba(253, 252, 250, 0.85);
+            backdrop-filter: blur(20px) saturate(180%);
+            border-bottom: 1px solid var(--ink-10);
+            transition: all 0.4s var(--ease);
+        }
+        
+        .nav.scrolled {
+            box-shadow: var(--shadow-md);
+        }
+        
+        .nav-inner {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: var(--space-4) var(--space-6);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            text-decoration: none;
+            color: var(--ink);
+        }
+        
+        .nav-logo-mark {
+            width: 36px;
+            height: 36px;
+            background: var(--vermillon);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-family: var(--font-mono);
+            font-weight: 700;
+            font-size: 0.75rem;
+            letter-spacing: -0.02em;
+        }
+        
+        .nav-logo-text {
+            font-family: var(--font-editorial);
+            font-weight: 600;
+            font-size: 1.125rem;
+            letter-spacing: -0.01em;
+        }
+        
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            list-style: none;
+        }
+        
+        .nav-links a {
+            color: var(--ink-60);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            padding: var(--space-2) var(--space-4);
+            border-radius: 6px;
+            transition: all 0.2s var(--ease);
+        }
+        
+        .nav-links a:hover {
+            color: var(--ink);
+            background: var(--ink-05);
+        }
+        
+        .nav-links a.active {
+            color: var(--vermillon);
+            background: var(--vermillon-soft);
+        }
+        
+        .nav-cta {
+            background: var(--ink) !important;
+            color: white !important;
+            font-weight: 600 !important;
+        }
+        
+        .nav-cta:hover {
+            background: var(--ink-80) !important;
+        }
+        
+        /* ========================================
+           HERO
+           ======================================== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: var(--space-32) var(--space-6) var(--space-16);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background: 
+                radial-gradient(ellipse 80% 50% at 50% 0%, var(--vermillon-soft) 0%, transparent 50%),
+                radial-gradient(ellipse 60% 40% at 100% 100%, var(--sapphire-soft) 0%, transparent 50%);
+            opacity: 0.7;
+        }
+        
+        .hero-pattern {
+            position: absolute;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='0.02'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.5;
+        }
+        
+        .hero-content {
+            position: relative;
+            max-width: var(--max-width);
+            margin: 0 auto;
+            width: 100%;
+        }
+        
+        .hero-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-3);
+            margin-bottom: var(--space-8);
+            animation: fadeUp 0.8s var(--ease-out) both;
+        }
+        
+        .hero-badge {
+            background: var(--emerald);
+            color: white;
+            font-family: var(--font-mono);
+            font-size: 0.6875rem;
+            font-weight: 600;
+            padding: var(--space-2) var(--space-3);
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+        
+        .hero-date {
+            font-size: 0.875rem;
+            color: var(--ink-40);
+        }
+        
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .hero-title {
+            font-family: var(--font-editorial);
+            font-size: clamp(2.75rem, 7vw, 5rem);
+            font-weight: 500;
+            line-height: 1.05;
+            letter-spacing: -0.025em;
+            max-width: 900px;
+            margin-bottom: var(--space-8);
+            animation: fadeUp 0.8s var(--ease-out) 0.1s both;
+        }
+        
+        .hero-title .number {
+            font-family: var(--font-mono);
+            font-weight: 700;
+            color: var(--vermillon);
+            position: relative;
+            white-space: nowrap;
+        }
+        
+        .hero-title .number::after {
+            content: '';
+            position: absolute;
+            bottom: 0.05em;
+            left: 0;
+            right: 0;
+            height: 0.12em;
+            background: var(--vermillon);
+            opacity: 0.2;
+        }
+        
+        .hero-title em {
+            font-style: italic;
+        }
+        
+        .hero-lead {
+            font-family: var(--font-editorial);
+            font-size: 1.375rem;
+            font-weight: 400;
+            line-height: 1.5;
+            color: var(--ink-60);
+            max-width: 600px;
+            margin-bottom: var(--space-12);
+            animation: fadeUp 0.8s var(--ease-out) 0.2s both;
+        }
+        
+        .hero-actions {
+            display: flex;
+            gap: var(--space-4);
+            flex-wrap: wrap;
+            animation: fadeUp 0.8s var(--ease-out) 0.3s both;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-2);
+            padding: var(--space-4) var(--space-6);
+            border-radius: 8px;
+            font-family: var(--font-sans);
+            font-size: 0.9375rem;
+            font-weight: 600;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s var(--ease);
+        }
+        
+        .btn-primary {
+            background: var(--ink);
+            color: white;
+            box-shadow: var(--shadow-md);
+        }
+        
+        .btn-primary:hover {
+            background: var(--ink-80);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .btn-secondary {
+            background: white;
+            color: var(--ink);
+            border: 1px solid var(--ink-10);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--ink-05);
+            border-color: var(--ink-20);
+        }
+        
+        /* Stats Strip */
+        .stats-strip {
+            margin-top: var(--space-16);
+            animation: fadeUp 0.8s var(--ease-out) 0.4s both;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            background: white;
+            border: 1px solid var(--ink-10);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .stat-item {
+            padding: var(--space-6);
+            text-align: center;
+            border-right: 1px solid var(--ink-05);
+            position: relative;
+            transition: all 0.3s var(--ease);
+        }
+        
+        .stat-item:last-child {
+            border-right: none;
+        }
+        
+        .stat-item:hover {
+            background: var(--paper-warm);
+        }
+        
+        .stat-value {
+            font-family: var(--font-mono);
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            font-weight: 700;
+            color: var(--vermillon);
+            line-height: 1;
+            margin-bottom: var(--space-2);
+        }
+        
+        .stat-label {
+            font-size: 0.8125rem;
+            color: var(--ink-60);
+            margin-bottom: var(--space-1);
+        }
+        
+        .stat-source {
+            font-family: var(--font-mono);
+            font-size: 0.625rem;
+            color: var(--ink-20);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .stat-source::before {
+            content: '✓ ';
+            color: var(--emerald);
+        }
+        
+        /* ========================================
+           SECTIONS
+           ======================================== */
+        section {
+            padding: var(--space-24) var(--space-6);
+        }
+        
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+        }
+        
+        .container-narrow {
+            max-width: var(--content-width);
+            margin: 0 auto;
+        }
+        
+        .section-header {
+            margin-bottom: var(--space-12);
+        }
+        
+        .section-number {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--vermillon);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: var(--space-4);
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+        }
+        
+        .section-number::after {
+            content: '';
+            flex: 1;
+            max-width: 60px;
+            height: 1px;
+            background: var(--vermillon);
+            opacity: 0.3;
+        }
+        
+        .section-title {
+            font-family: var(--font-editorial);
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 500;
+            line-height: 1.15;
+            letter-spacing: -0.02em;
+            margin-bottom: var(--space-4);
+        }
+        
+        .section-subtitle {
+            font-size: 1.125rem;
+            color: var(--ink-60);
+            max-width: 600px;
+        }
+        
+        /* ========================================
+           THE TRAP (Problem)
+           ======================================== */
+        .trap-section {
+            background: var(--paper-warm);
+            border-top: 1px solid var(--ink-10);
+            border-bottom: 1px solid var(--ink-10);
+        }
+        
+        .trap-visual {
+            margin-top: var(--space-12);
+        }
+        
+        .trap-diagram {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-6);
+            flex-wrap: wrap;
+            padding: var(--space-8);
+            background: white;
+            border: 1px solid var(--ink-10);
+            border-radius: 16px;
+            position: relative;
+        }
+        
+        .trap-label {
+            position: absolute;
+            top: -12px;
+            left: var(--space-6);
+            background: var(--vermillon);
+            color: white;
+            font-family: var(--font-mono);
+            font-size: 0.625rem;
+            font-weight: 700;
+            padding: var(--space-1) var(--space-3);
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+        
+        .trap-box {
+            background: var(--paper-warm);
+            border: 1px solid var(--ink-10);
+            border-radius: 12px;
+            padding: var(--space-6);
+            text-align: center;
+            min-width: 200px;
+            max-width: 240px;
+            transition: all 0.3s var(--ease);
+        }
+        
+        .trap-box:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .trap-box.center {
+            background: var(--ink);
+            border-color: var(--ink);
+            color: white;
+        }
+        
+        .trap-box.danger {
+            border-color: var(--vermillon);
+            background: var(--vermillon-soft);
+        }
+        
+        .trap-box-icon {
+            font-size: 2rem;
+            margin-bottom: var(--space-3);
+        }
+        
+        .trap-box-title {
+            font-family: var(--font-editorial);
+            font-weight: 600;
+            margin-bottom: var(--space-2);
+        }
+        
+        .trap-box-desc {
+            font-size: 0.875rem;
+            color: var(--ink-60);
+        }
+        
+        .trap-box.center .trap-box-desc {
+            color: var(--ink-20);
+        }
+        
+        .trap-arrow {
+            font-size: 1.5rem;
+            color: var(--ink-20);
+        }
+        
+        /* Problem Cards */
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--space-6);
+            margin-top: var(--space-12);
+        }
+        
+        .problem-card {
+            background: white;
+            border: 1px solid var(--ink-10);
+            border-radius: 12px;
+            padding: var(--space-6);
+            transition: all 0.3s var(--ease);
+        }
+        
+        .problem-card:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-4px);
+        }
+        
+        .problem-card-number {
+            font-family: var(--font-mono);
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--vermillon);
+            line-height: 1;
+            margin-bottom: var(--space-2);
+        }
+        
+        .problem-card-title {
+            font-family: var(--font-editorial);
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: var(--space-3);
+        }
+        
+        .problem-card-desc {
+            font-size: 0.9375rem;
+            color: var(--ink-60);
+            margin-bottom: var(--space-4);
+        }
+        
+        .problem-card-source {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+            font-family: var(--font-mono);
+            font-size: 0.6875rem;
+            color: var(--emerald);
+            background: var(--emerald-soft);
+            padding: var(--space-2) var(--space-3);
+            border-radius: 4px;
+        }
+        
+        /* ========================================
+           COST SECTION
+           ======================================== */
+        .cost-section {
+            background: var(--paper);
+        }
+        
+        .cost-layout {
+            display: grid;
+            grid-template-columns: 1fr 360px;
+            gap: var(--space-8);
+            margin-top: var(--space-12);
+            align-items: start;
+        }
+        
+        .cost-bars {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-4);
+        }
+        
+        .cost-item {
+            background: white;
+            border: 1px solid var(--ink-10);
+            border-radius: 12px;
+            padding: var(--space-6);
+            transition: all 0.3s var(--ease);
+        }
+        
+        .cost-item:hover {
+            border-color: var(--vermillon);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .cost-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: var(--space-3);
+        }
+        
+        .cost-item-label {
+            font-weight: 600;
+        }
+        
+        .cost-item-value {
+            font-family: var(--font-mono);
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--vermillon);
+        }
+        
+        .cost-item-bar {
+            height: 8px;
+            background: var(--ink-05);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .cost-item-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--vermillon), #F97316);
+            border-radius: 4px;
+            transition: width 1s var(--ease-out);
+        }
+        
+        .cost-item-source {
+            font-family: var(--font-mono);
+            font-size: 0.6875rem;
+            color: var(--ink-40);
+            margin-top: var(--space-3);
+        }
+        
+        .cost-total {
+            background: var(--ink);
+            border-radius: 16px;
+            padding: var(--space-8);
+            color: white;
+            text-align: center;
+            position: sticky;
+            top: 100px;
+        }
+        
+        .cost-total-label {
+            font-size: 0.9375rem;
+            opacity: 0.8;
+            margin-bottom: var(--space-4);
+        }
+        
+        .cost-total-value {
+            font-family: var(--font-mono);
+            font-size: 4rem;
+            font-weight: 800;
+            line-height: 1;
+            margin-bottom: var(--space-2);
+        }
+        
+        .cost-total-unit {
+            font-size: 1.125rem;
+            opacity: 0.9;
+        }
+        
+        .cost-total-source {
+            margin-top: var(--space-6);
+            padding-top: var(--space-4);
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-family: var(--font-mono);
+            font-size: 0.6875rem;
+            opacity: 0.6;
+        }
+        
+        .cost-correction {
+            margin-top: var(--space-8);
+            background: var(--vermillon-soft);
+            border: 1px solid var(--vermillon);
+            border-radius: 12px;
+            padding: var(--space-6);
+            display: flex;
+            gap: var(--space-4);
+        }
+        
+        .cost-correction-icon {
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+        
+        .cost-correction-title {
+            font-weight: 700;
+            color: var(--vermillon);
+            margin-bottom: var(--space-2);
+        }
+        
+        .cost-correction-text {
+            font-size: 0.9375rem;
+            color: var(--ink-80);
+        }
+        
+        /* ========================================
+           SOLUTION
+           ======================================== */
+        .solution-section {
+            background: var(--ink);
+            color: white;
+        }
+        
+        .solution-section .section-number {
+            color: var(--ink-20);
+        }
+        
+        .solution-section .section-number::after {
+            background: var(--ink-40);
+        }
+        
+        .solution-section .section-subtitle {
+            color: var(--ink-40);
+        }
+        
+        .solution-flow {
+            margin-top: var(--space-12);
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: var(--space-4);
+            position: relative;
+        }
+        
+        .solution-flow::before {
+            content: '';
+            position: absolute;
+            top: 40px;
+            left: 10%;
+            right: 10%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--vermillon), var(--emerald));
+            z-index: 0;
+        }
+        
+        .solution-step {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+        
+        .solution-step-circle {
+            width: 80px;
+            height: 80px;
+            background: var(--ink-80);
+            border: 2px solid var(--ink-60);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto var(--space-4);
+            font-family: var(--font-mono);
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--ink-40);
+            transition: all 0.3s var(--ease);
+        }
+        
+        .solution-step:hover .solution-step-circle {
+            background: var(--vermillon);
+            border-color: var(--vermillon);
+            color: white;
+            transform: scale(1.1);
+        }
+        
+        .solution-step-title {
+            font-family: var(--font-editorial);
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: var(--space-2);
+        }
+        
+        .solution-step-desc {
+            font-size: 0.8125rem;
+            color: var(--ink-40);
+        }
+        
+        /* ========================================
+           LEGAL SECTION
+           ======================================== */
+        .legal-section {
+            background: var(--paper-warm);
+            border-top: 1px solid var(--ink-10);
+        }
+        
+        .legal-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: var(--space-6);
+            margin-top: var(--space-12);
+        }
+        
+        .legal-card {
+            background: white;
+            border: 1px solid var(--ink-10);
+            border-radius: 12px;
+            padding: var(--space-6);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s var(--ease);
+        }
+        
+        .legal-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+        }
+        
+        .legal-card.success::before { background: var(--emerald); }
+        .legal-card.warning::before { background: var(--amber); }
+        .legal-card.danger::before { background: var(--vermillon); }
+        
+        .legal-card:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-4px);
+        }
+        
+        .legal-card-status {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+            font-family: var(--font-mono);
+            font-size: 0.625rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: var(--space-3);
+            padding: var(--space-1) var(--space-2);
+            border-radius: 4px;
+        }
+        
+        .legal-card.success .legal-card-status { 
+            color: var(--emerald); 
+            background: var(--emerald-soft);
+        }
+        .legal-card.warning .legal-card-status { 
+            color: var(--amber); 
+            background: var(--amber-soft);
+        }
+        .legal-card.danger .legal-card-status { 
+            color: var(--vermillon); 
+            background: var(--vermillon-soft);
+        }
+        
+        .legal-card-title {
+            font-family: var(--font-editorial);
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: var(--space-3);
+        }
+        
+        .legal-card-content {
+            font-size: 0.9375rem;
+            color: var(--ink-60);
+            line-height: 1.6;
+        }
+        
+        .legal-card-content strong {
+            color: var(--ink);
+        }
+        
+        .legal-card-content ul {
+            margin: var(--space-3) 0;
+            padding-left: var(--space-6);
+        }
+        
+        .legal-card-content li {
+            margin-bottom: var(--space-2);
+        }
+        
+        .legal-card-source {
+            margin-top: var(--space-4);
+            padding-top: var(--space-3);
+            border-top: 1px solid var(--ink-10);
+            font-family: var(--font-mono);
+            font-size: 0.6875rem;
+            color: var(--ink-40);
+        }
+        
+        /* ========================================
+           FACT CHECK
+           ======================================== */
+        .factcheck-section {
+            background: var(--paper);
+        }
+        
+        .factcheck-summary {
+            display: flex;
+            gap: var(--space-8);
+            margin-bottom: var(--space-8);
+            flex-wrap: wrap;
+        }
+        
+        .factcheck-stat {
+            text-align: center;
+        }
+        
+        .factcheck-stat-value {
+            font-family: var(--font-mono);
+            font-size: 2.5rem;
+            font-weight: 700;
+            line-height: 1;
+        }
+        
+        .factcheck-stat-value.green { color: var(--emerald); }
+        .factcheck-stat-value.yellow { color: var(--amber); }
+        .factcheck-stat-value.red { color: var(--vermillon); }
+        
+        .factcheck-stat-label {
+            font-size: 0.8125rem;
+            color: var(--ink-40);
+            margin-top: var(--space-2);
+        }
+        
+        .factcheck-table-wrapper {
+            background: white;
+            border: 1px solid var(--ink-10);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .factcheck-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .factcheck-table th {
+            background: var(--paper-warm);
+            padding: var(--space-4) var(--space-6);
+            text-align: left;
+            font-family: var(--font-mono);
+            font-size: 0.6875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--ink-40);
+            border-bottom: 1px solid var(--ink-10);
+        }
+        
+        .factcheck-table td {
+            padding: var(--space-4) var(--space-6);
+            border-bottom: 1px solid var(--ink-05);
+            font-size: 0.9375rem;
+        }
+        
+        .factcheck-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .factcheck-table tr:hover td {
+            background: var(--paper-warm);
+        }
+        
+        .factcheck-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-1);
+            padding: var(--space-1) var(--space-3);
+            border-radius: 100px;
+            font-family: var(--font-mono);
+            font-size: 0.625rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .factcheck-badge.confirmed {
+            background: var(--emerald-soft);
+            color: var(--emerald);
+        }
+        
+        .factcheck-badge.warning {
+            background: var(--amber-soft);
+            color: var(--amber);
+        }
+        
+        .factcheck-badge.error {
+            background: var(--vermillon-soft);
+            color: var(--vermillon);
+        }
+        
+        .factcheck-old {
+            text-decoration: line-through;
+            color: var(--ink-40);
+        }
+        
+        .factcheck-new {
+            font-weight: 600;
+            color: var(--vermillon);
+        }
+        
+        /* ========================================
+           TIMELINE
+           ======================================== */
+        .timeline-section {
+            background: var(--paper-warm);
+            border-top: 1px solid var(--ink-10);
+        }
+        
+        .timeline {
+            margin-top: var(--space-12);
+            position: relative;
+            padding-left: var(--space-12);
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 6px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, var(--vermillon), var(--emerald));
+        }
+        
+        .timeline-item {
+            position: relative;
+            padding-bottom: var(--space-12);
+        }
+        
+        .timeline-item:last-child {
+            padding-bottom: 0;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: calc(-1 * var(--space-12) + 1px);
+            top: 4px;
+            width: 12px;
+            height: 12px;
+            background: var(--vermillon);
+            border-radius: 50%;
+            border: 3px solid var(--paper-warm);
+        }
+        
+        .timeline-year {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--vermillon);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: var(--space-2);
+        }
+        
+        .timeline-title {
+            font-family: var(--font-editorial);
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: var(--space-3);
+        }
+        
+        .timeline-content {
+            color: var(--ink-60);
+        }
+        
+        .timeline-content ul {
+            list-style: none;
+            margin-top: var(--space-4);
+        }
+        
+        .timeline-content li {
+            padding: var(--space-3) 0;
+            border-bottom: 1px solid var(--ink-10);
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+        }
+        
+        .timeline-content li::before {
+            content: '→';
+            color: var(--vermillon);
+            font-weight: 700;
+        }
+        
+        /* ========================================
+           PARTNERS
+           ======================================== */
+        .partners-section {
+            background: var(--paper);
+        }
+        
+        .partners-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: var(--space-4);
+            margin-top: var(--space-8);
+        }
+        
+        .partner-card {
+            background: white;
+            border: 1px solid var(--ink-10);
+            border-radius: 10px;
+            padding: var(--space-4) var(--space-6);
+            transition: all 0.2s var(--ease);
+        }
+        
+        .partner-card:hover {
+            border-color: var(--vermillon);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .partner-type {
+            font-family: var(--font-mono);
+            font-size: 0.5625rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--vermillon);
+            margin-bottom: var(--space-1);
+        }
+        
+        .partner-name {
+            font-family: var(--font-editorial);
+            font-size: 1.0625rem;
+            font-weight: 600;
+            margin-bottom: var(--space-1);
+        }
+        
+        .partner-count {
+            font-size: 0.8125rem;
+            color: var(--ink-40);
+        }
+        
+        /* ========================================
+           CTA
+           ======================================== */
+        .cta-section {
+            background: var(--ink);
+            color: white;
+            text-align: center;
+        }
+        
+        .cta-title {
+            font-family: var(--font-editorial);
+            font-size: clamp(1.75rem, 4vw, 2.5rem);
+            font-weight: 500;
+            max-width: 700px;
+            margin: 0 auto var(--space-4);
+        }
+        
+        .cta-subtitle {
+            font-size: 1.125rem;
+            color: var(--ink-40);
+            margin-bottom: var(--space-8);
+        }
+        
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-4);
+            flex-wrap: wrap;
+        }
+        
+        .cta-btn {
+            padding: var(--space-4) var(--space-8);
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s var(--ease);
+        }
+        
+        .cta-btn-primary {
+            background: white;
+            color: var(--ink);
+        }
+        
+        .cta-btn-primary:hover {
+            background: var(--paper-warm);
+            transform: translateY(-2px);
+        }
+        
+        .cta-btn-ghost {
+            background: transparent;
+            color: white;
+            border: 1px solid var(--ink-60);
+        }
+        
+        .cta-btn-ghost:hover {
+            background: var(--ink-80);
+            border-color: var(--ink-40);
+        }
+        
+        /* ========================================
+           FOOTER
+           ======================================== */
+        footer {
+            background: var(--paper-warm);
+            border-top: 1px solid var(--ink-10);
+            padding: var(--space-16) var(--space-6);
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: var(--space-8);
+            max-width: var(--max-width);
+            margin: 0 auto;
+        }
+        
+        .footer-brand {
+            max-width: 280px;
+        }
+        
+        .footer-logo {
+            font-family: var(--font-editorial);
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: var(--space-3);
+        }
+        
+        .footer-desc {
+            font-size: 0.875rem;
+            color: var(--ink-60);
+            line-height: 1.6;
+        }
+        
+        .footer-col-title {
+            font-weight: 700;
+            font-size: 0.8125rem;
+            margin-bottom: var(--space-4);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: var(--space-2);
+        }
+        
+        .footer-links a {
+            color: var(--ink-60);
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: color 0.2s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--vermillon);
+        }
+        
+        .footer-bottom {
+            max-width: var(--max-width);
+            margin: var(--space-8) auto 0;
+            padding-top: var(--space-6);
+            border-top: 1px solid var(--ink-10);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8125rem;
+            color: var(--ink-40);
+        }
+        
+        /* ========================================
+           RESPONSIVE
+           ======================================== */
+        @media (max-width: 1024px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .cost-layout {
+                grid-template-columns: 1fr;
+            }
+            
+            .cost-total {
+                position: static;
+            }
+            
+            .solution-flow {
+                grid-template-columns: 1fr;
+                gap: var(--space-8);
+            }
+            
+            .solution-flow::before {
+                display: none;
+            }
+            
+            .legal-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .trap-diagram {
+                flex-direction: column;
+            }
+            
+            .trap-arrow {
+                transform: rotate(90deg);
+            }
+            
+            .problem-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .factcheck-summary {
+                gap: var(--space-6);
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-bottom {
+                flex-direction: column;
+                gap: var(--space-4);
+                text-align: center;
+            }
+        }
+        
+        /* ========================================
+           ANIMATIONS
+           ======================================== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: all 0.6s var(--ease-out);
+        }
+        
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav" id="nav">
+        <div class="nav-inner">
+            <a href="#" class="nav-logo">
+                <div class="nav-logo-mark">ECP</div>
+                <span class="nav-logo-text">Économie Contributive</span>
+            </a>
+            
+            <ul class="nav-links">
+                <li><a href="#probleme">Problème</a></li>
+                <li><a href="#cout">Coût</a></li>
+                <li><a href="#solution">Solution</a></li>
+                <li><a href="#juridique">Juridique</a></li>
+                <li><a href="#factcheck">Fact-Check</a></li>
+                <li><a href="#roadmap">Feuille de route</a></li>
+                <li><a href="#contact" class="nav-cta">Rejoindre</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-pattern"></div>
+        
+        <div class="hero-content">
+            <div class="hero-eyebrow">
+                <span class="hero-badge">Fact-checké</span>
+                <span class="hero-date">Données vérifiées — Janvier 2026</span>
+            </div>
+            
+            <h1 class="hero-title">
+                <span class="number">975 000</span> Belges<br>
+                piégés hors emploi.<br>
+                <em>Il existe une solution.</em>
+            </h1>
+            
+            <p class="hero-lead">
+                Près d'un million de personnes sont exclues de l'emploi classique. 
+                Coût pour l'État : 21 à 24 milliards € par an. L'Économie Contributive 
+                Provisionnée propose une alternative.
+            </p>
+            
+            <div class="hero-actions">
+                <a href="#solution" class="btn btn-primary">
+                    Découvrir la solution →
+                </a>
+                <a href="#factcheck" class="btn btn-secondary">
+                    Voir les données vérifiées
+                </a>
+            </div>
+            
+            <div class="stats-strip">
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-value">526 507</div>
+                        <div class="stat-label">Incapacité >1 an</div>
+                        <div class="stat-source">INAMI 2023</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">292 790</div>
+                        <div class="stat-label">Chômeurs indemnisés</div>
+                        <div class="stat-source">ONEM 2024</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">158 697</div>
+                        <div class="stat-label">Bénéficiaires RIS</div>
+                        <div class="stat-source">SPP Int. Sociale</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">21-24 Mrd€</div>
+                        <div class="stat-label">Coût annuel État</div>
+                        <div class="stat-source">Cour des Comptes</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem / Trap -->
+    <section id="probleme" class="trap-section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-number">01 — Le Diagnostic</div>
+                <h2 class="section-title reveal">Un gisement humain<br>colossal et gaspillé</h2>
+                <p class="section-subtitle reveal">
+                    Ces personnes ne sont pas "inactives". Elles élèvent des enfants, aident 
+                    leurs proches, s'engagent bénévolement. Mais le système les enferme.
+                </p>
+            </div>
+            
+            <div class="trap-visual reveal">
+                <div class="trap-diagram">
+                    <span class="trap-label">Le piège</span>
+                    
+                    <div class="trap-box danger">
+                        <div class="trap-box-icon">💔</div>
+                        <div class="trap-box-title">Si elle travaille</div>
+                        <div class="trap-box-desc">Perd ses allocations, son statut BIM, parfois son logement</div>
+                    </div>
+                    
+                    <div class="trap-arrow">←</div>
+                    
+                    <div class="trap-box center">
+                        <div class="trap-box-icon">🧑</div>
+                        <div class="trap-box-title">Personne hors emploi</div>
+                        <div class="trap-box-desc">A des compétences, du temps, de l'énergie à offrir</div>
+                    </div>
+                    
+                    <div class="trap-arrow">→</div>
+                    
+                    <div class="trap-box danger">
+                        <div class="trap-box-icon">😔</div>
+                        <div class="trap-box-title">Si elle ne fait rien</div>
+                        <div class="trap-box-desc">Isolement, perte de compétences, dépression</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="problem-grid">
+                <div class="problem-card reveal">
+                    <div class="problem-card-number">526 507</div>
+                    <h3 class="problem-card-title">Incapacité longue durée</h3>
+                    <p class="problem-card-desc">
+                        Personnes en arrêt depuis plus d'un an. Hausse de +65% en 10 ans. 
+                        55% ne retravailleront pas avant la pension.
+                    </p>
+                    <span class="problem-card-source">✓ INAMI 2023</span>
+                </div>
+                
+                <div class="problem-card reveal">
+                    <div class="problem-card-number">292 790</div>
+                    <h3 class="problem-card-title">Chômeurs indemnisés</h3>
+                    <p class="problem-card-desc">
+                        Dont 47% au chômage depuis plus de 2 ans. Perte progressive 
+                        de compétences, de confiance et de réseau.
+                    </p>
+                    <span class="problem-card-source">✓ ONEM 2024</span>
+                </div>
+                
+                <div class="problem-card reveal">
+                    <div class="problem-card-number">158 697</div>
+                    <h3 class="problem-card-title">Bénéficiaires du RIS</h3>
+                    <p class="problem-card-desc">
+                        Personnes percevant le revenu d'intégration sociale via le CPAS. 
+                        Soit 1,35% de la population belge.
+                    </p>
+                    <span class="problem-card-source">✓ SPP Intégration Sociale</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cost -->
+    <section id="cout" class="cost-section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-number">02 — Le Coût</div>
+                <h2 class="section-title reveal">Ce que l'inaction<br>coûte à l'État belge</h2>
+                <p class="section-subtitle reveal">
+                    Des milliards dépensés chaque année en allocations. Sans compter 
+                    les coûts indirects : santé mentale, perte de cohésion sociale.
+                </p>
+            </div>
+            
+            <div class="cost-layout reveal">
+                <div class="cost-bars">
+                    <div class="cost-item">
+                        <div class="cost-item-header">
+                            <span class="cost-item-label">Indemnités d'incapacité de travail</span>
+                            <span class="cost-item-value">13-15 Mrd€</span>
+                        </div>
+                        <div class="cost-item-bar">
+                            <div class="cost-item-bar-fill" style="width: 65%;"></div>
+                        </div>
+                        <div class="cost-item-source">Cour des Comptes, 181e Cahier (oct. 2024) • INAMI 2024</div>
+                    </div>
+                    
+                    <div class="cost-item">
+                        <div class="cost-item-header">
+                            <span class="cost-item-label">Allocations de chômage</span>
+                            <span class="cost-item-value">6,4-7 Mrd€</span>
+                        </div>
+                        <div class="cost-item-bar">
+                            <div class="cost-item-bar-fill" style="width: 30%;"></div>
+                        </div>
+                        <div class="cost-item-source">Cour des Comptes, tableau 6 dépenses 2023</div>
+                    </div>
+                    
+                    <div class="cost-item">
+                        <div class="cost-item-header">
+                            <span class="cost-item-label">RIS et aides CPAS</span>
+                            <span class="cost-item-value">~2-2,5 Mrd€</span>
+                        </div>
+                        <div class="cost-item-bar">
+                            <div class="cost-item-bar-fill" style="width: 11%;"></div>
+                        </div>
+                        <div class="cost-item-source">Estimation basée sur 158 697 bénéficiaires</div>
+                    </div>
+                </div>
+                
+                <div class="cost-total">
+                    <div class="cost-total-label">Coût direct total annuel</div>
+                    <div class="cost-total-value">21-24</div>
+                    <div class="cost-total-unit">milliards € / an</div>
+                    <div class="cost-total-source">
+                        ✓ Cour des Comptes de Belgique<br>
+                        181e Cahier (octobre 2024)
+                    </div>
+                </div>
+            </div>
+            
+            <div class="cost-correction reveal">
+                <div class="cost-correction-icon">⚠️</div>
+                <div>
+                    <div class="cost-correction-title">Correction critique</div>
+                    <div class="cost-correction-text">
+                        Le chiffre de "15,5 milliards €" souvent cité est sous-estimé de 38 à 56%. 
+                        L'incapacité de travail seule coûte 13-15 Mrd€ (pas 8 Mrd€).
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution -->
+    <section id="solution" class="solution-section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-number">03 — La Solution</div>
+                <h2 class="section-title reveal">L'Économie Contributive<br>Provisionnée</h2>
+                <p class="section-subtitle reveal">
+                    Un modèle qui reconnaît et valorise le travail citoyen, 
+                    sans faire perdre les droits sociaux acquis.
+                </p>
+            </div>
+            
+            <div class="solution-flow reveal">
+                <div class="solution-step">
+                    <div class="solution-step-circle">01</div>
+                    <div class="solution-step-title">Contributeurs</div>
+                    <div class="solution-step-desc">Personnes hors emploi souhaitant contribuer</div>
+                </div>
+                
+                <div class="solution-step">
+                    <div class="solution-step-circle">02</div>
+                    <div class="solution-step-title">Porteurs</div>
+                    <div class="solution-step-desc">ASBL, centres culturels, coopératives</div>
+                </div>
+                
+                <div class="solution-step">
+                    <div class="solution-step-circle">03</div>
+                    <div class="solution-step-title">Financement</div>
+                    <div class="solution-step-desc">Appels à projets, fondations, mécénat</div>
+                </div>
+                
+                <div class="solution-step">
+                    <div class="solution-step-circle">04</div>
+                    <div class="solution-step-title">Provisionnement</div>
+                    <div class="solution-step-desc">Fonds mutualisé gérant les comptes</div>
+                </div>
+                
+                <div class="solution-step">
+                    <div class="solution-step-circle">05</div>
+                    <div class="solution-step-title">Versement</div>
+                    <div class="solution-step-desc">Quand le contributeur se stabilise</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Legal -->
+    <section id="juridique" class="legal-section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-number">04 — Analyse Juridique</div>
+                <h2 class="section-title reveal">Ce que dit le droit belge</h2>
+                <p class="section-subtitle reveal">
+                    Une analyse complète de la légalité du dispositif ECP, statut par statut.
+                </p>
+            </div>
+            
+            <div class="legal-grid">
+                <div class="legal-card danger reveal">
+                    <div class="legal-card-status">🔴 Alerte critique</div>
+                    <h3 class="legal-card-title">Fiscalité du provisionnement</h3>
+                    <div class="legal-card-content">
+                        <p><strong>Problème :</strong> En droit fiscal belge, un revenu est imposable l'année où le droit est acquis, pas l'année d'encaissement.</p>
+                        <p>Le "provisionnement différé" ne protège pas fiscalement.</p>
+                        <p><strong>Action requise :</strong> Demander un ruling au SPF Finances.</p>
+                    </div>
+                    <div class="legal-card-source">CIR 92 • Doctrine SPF Finances</div>
+                </div>
+                
+                <div class="legal-card warning reveal">
+                    <div class="legal-card-status">🟠 Risque réel</div>
+                    <h3 class="legal-card-title">Requalification contrat travail</h3>
+                    <div class="legal-card-content">
+                        <p>Un tribunal pourrait requalifier la relation si présence de :</p>
+                        <ul>
+                            <li>Lien de subordination (horaires imposés)</li>
+                            <li>Rémunération régulière en contrepartie</li>
+                            <li>Intégration dans l'organisation</li>
+                        </ul>
+                    </div>
+                    <div class="legal-card-source">Loi 3 juillet 1978 • Jurisprudence</div>
+                </div>
+                
+                <div class="legal-card success reveal">
+                    <div class="legal-card-status">✅ Compatible</div>
+                    <h3 class="legal-card-title">Incapacité + volontariat</h3>
+                    <div class="legal-card-content">
+                        <p>Le volontariat est <strong>autorisé</strong> en incapacité, sans autorisation préalable obligatoire.</p>
+                        <ul>
+                            <li>Médecin-conseil constate compatibilité</li>
+                            <li>Défraiements max 36,84€/jour</li>
+                            <li>Pas de rémunération (même différée)</li>
+                        </ul>
+                    </div>
+                    <div class="legal-card-source">INAMI • Loi volontariat 2005</div>
+                </div>
+                
+                <div class="legal-card success reveal">
+                    <div class="legal-card-status">✅ Encadré</div>
+                    <h3 class="legal-card-title">Chômage + bénévolat</h3>
+                    <div class="legal-card-content">
+                        <p>Le bénévolat pendant le chômage est autorisé.</p>
+                        <ul>
+                            <li>Déclaration C45B AVANT début</li>
+                            <li>ONEM peut refuser (12 jours)</li>
+                            <li>Défraiements dans limites légales</li>
+                        </ul>
+                    </div>
+                    <div class="legal-card-source">Art. 45bis AR 25/11/1991</div>
+                </div>
+                
+                <div class="legal-card success reveal">
+                    <div class="legal-card-status">✅ Favorable</div>
+                    <h3 class="legal-card-title">RIS/CPAS + activité</h3>
+                    <div class="legal-card-content">
+                        <p>Exonération socioprofessionnelle prévue :</p>
+                        <ul>
+                            <li>309,48€/mois pour reprise travail</li>
+                            <li>443,52€/mois métier pénurie</li>
+                            <li>3 713,76€/an activité artistique</li>
+                        </ul>
+                        <p>→ Le contributeur peut gagner PLUS qu'avec le RIS seul.</p>
+                    </div>
+                    <div class="legal-card-source">Loi 26 mai 2002</div>
+                </div>
+                
+                <div class="legal-card warning reveal">
+                    <div class="legal-card-status">🟠 Zone grise</div>
+                    <h3 class="legal-card-title">Nature du provisionnement</h3>
+                    <div class="legal-card-content">
+                        <p><strong>Question centrale :</strong> Le provisionnement = défraiement ou rémunération ?</p>
+                        <p>Arguments des deux côtés. Aucun cadre légal spécifique en Belgique.</p>
+                    </div>
+                    <div class="legal-card-source">Loi volontariat 2005</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Fact Check -->
+    <section id="factcheck" class="factcheck-section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-number">05 — Fact-Check</div>
+                <h2 class="section-title reveal">Données corrigées et sourcées</h2>
+                <p class="section-subtitle reveal">
+                    Chaque chiffre vérifié auprès des sources officielles.
+                </p>
+            </div>
+            
+            <div class="factcheck-summary reveal">
+                <div class="factcheck-stat">
+                    <div class="factcheck-stat-value green">16</div>
+                    <div class="factcheck-stat-label">Confirmés</div>
+                </div>
+                <div class="factcheck-stat">
+                    <div class="factcheck-stat-value yellow">8</div>
+                    <div class="factcheck-stat-label">Approximatifs</div>
+                </div>
+                <div class="factcheck-stat">
+                    <div class="factcheck-stat-value red">5</div>
+                    <div class="factcheck-stat-label">Corrigés</div>
+                </div>
+            </div>
+            
+            <div class="factcheck-table-wrapper reveal">
+                <table class="factcheck-table">
+                    <thead>
+                        <tr>
+                            <th>Donnée</th>
+                            <th>Valeur initiale</th>
+                            <th>Valeur vérifiée</th>
+                            <th>Statut</th>
+                            <th>Source</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Invalides >1 an</td>
+                            <td>~500 000</td>
+                            <td class="factcheck-new">526 507</td>
+                            <td><span class="factcheck-badge confirmed">✓ Confirmé</span></td>
+                            <td>INAMI 2023</td>
+                        </tr>
+                        <tr>
+                            <td>Chômeurs indemnisés</td>
+                            <td class="factcheck-old">~230 000</td>
+                            <td class="factcheck-new">292 790</td>
+                            <td><span class="factcheck-badge error">✗ Corrigé</span></td>
+                            <td>ONEM 2024</td>
+                        </tr>
+                        <tr>
+                            <td>Bénéficiaires RIS</td>
+                            <td>~160 000</td>
+                            <td class="factcheck-new">158 697</td>
+                            <td><span class="factcheck-badge confirmed">✓ Confirmé</span></td>
+                            <td>SPP Int. Sociale</td>
+                        </tr>
+                        <tr>
+                            <td>Coût incapacité</td>
+                            <td class="factcheck-old">~8 Mrd €</td>
+                            <td class="factcheck-new">13-15 Mrd €</td>
+                            <td><span class="factcheck-badge error">✗ Corrigé</span></td>
+                            <td>Cour des Comptes</td>
+                        </tr>
+                        <tr>
+                            <td>Total coûts État</td>
+                            <td class="factcheck-old">~15,5 Mrd €</td>
+                            <td class="factcheck-new">21-24 Mrd €</td>
+                            <td><span class="factcheck-badge error">✗ Corrigé</span></td>
+                            <td>Cour des Comptes</td>
+                        </tr>
+                        <tr>
+                            <td>Affiliés Solidaris</td>
+                            <td class="factcheck-old">4,2 millions</td>
+                            <td class="factcheck-new">~3 millions</td>
+                            <td><span class="factcheck-badge error">✗ Corrigé</span></td>
+                            <td>Solidaris</td>
+                        </tr>
+                        <tr>
+                            <td>Évolution invalides</td>
+                            <td class="factcheck-old">+40% en 10 ans</td>
+                            <td class="factcheck-new">+65% en 10 ans</td>
+                            <td><span class="factcheck-badge error">✗ Corrigé</span></td>
+                            <td>INAMI</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline -->
+    <section id="roadmap" class="timeline-section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-number">06 — Feuille de Route</div>
+                <h2 class="section-title reveal">Du pilote à la loi</h2>
+                <p class="section-subtitle reveal">
+                    Un plan en trois phases pour transformer l'idée en réalité.
+                </p>
+            </div>
+            
+            <div class="timeline reveal">
+                <div class="timeline-item">
+                    <div class="timeline-year">2025 — Démonstration</div>
+                    <h3 class="timeline-title">Prouver que ça marche</h3>
+                    <div class="timeline-content">
+                        <ul>
+                            <li>Lancer 6 arpentages pilotes</li>
+                            <li>Mobiliser 100 contributeurs</li>
+                            <li>Documenter les retours terrain</li>
+                            <li>Présenter aux mutuelles et syndicats</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-year">2026 — Coalition</div>
+                    <h3 class="timeline-title">Construire une alliance</h3>
+                    <div class="timeline-content">
+                        <ul>
+                            <li>Créer le Fonds de Contribution Citoyenne</li>
+                            <li>Obtenir 1 000 contributeurs</li>
+                            <li>Publier un livre blanc</li>
+                            <li>Interpeller le Parlement</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-year">2027-2029 — Institutionnalisation</div>
+                    <h3 class="timeline-title">Obtenir un cadre légal</h3>
+                    <div class="timeline-content">
+                        <ul>
+                            <li>Négocier un projet-pilote officiel</li>
+                            <li>Expérimentation avec évaluation</li>
+                            <li>Proposition de loi "Contributeur Citoyen"</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partners -->
+    <section class="partners-section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-number">07 — Écosystème</div>
+                <h2 class="section-title reveal">Partenaires potentiels</h2>
+            </div>
+            
+            <div class="partners-grid reveal">
+                <div class="partner-card">
+                    <div class="partner-type">Mutuelle</div>
+                    <div class="partner-name">Mutualité Chrétienne</div>
+                    <div class="partner-count">4,6 millions d'affiliés ✓</div>
+                </div>
+                <div class="partner-card">
+                    <div class="partner-type">Mutuelle</div>
+                    <div class="partner-name">Solidaris</div>
+                    <div class="partner-count">~3 millions d'affiliés ✓</div>
+                </div>
+                <div class="partner-card">
+                    <div class="partner-type">Syndicat</div>
+                    <div class="partner-name">FGTB</div>
+                    <div class="partner-count">1,52 million d'affiliés ✓</div>
+                </div>
+                <div class="partner-card">
+                    <div class="partner-type">Syndicat</div>
+                    <div class="partner-name">CSC</div>
+                    <div class="partner-count">~1,6 million d'affiliés</div>
+                </div>
+                <div class="partner-card">
+                    <div class="partner-type">Éducation permanente</div>
+                    <div class="partner-name">CEPAG</div>
+                    <div class="partner-count">Bras EP de la FGTB ✓</div>
+                </div>
+                <div class="partner-card">
+                    <div class="partner-type">Économie sociale</div>
+                    <div class="partner-name">SAW-B</div>
+                    <div class="partner-count">130+ entreprises sociales ✓</div>
+                </div>
+                <div class="partner-card">
+                    <div class="partner-type">Finance solidaire</div>
+                    <div class="partner-name">Financité</div>
+                    <div class="partner-count">~4 000 membres ✓</div>
+                </div>
+                <div class="partner-card">
+                    <div class="partner-type">Fondation</div>
+                    <div class="partner-name">Fondation Roi Baudouin</div>
+                    <div class="partner-count">Financement et recherche</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section id="contact" class="cta-section">
+        <div class="container">
+            <h2 class="cta-title reveal">Prêt à transformer<br>l'inaction en contribution ?</h2>
+            <p class="cta-subtitle reveal">
+                ASBL, mutuelle, syndicat, responsable politique ou citoyen concerné.
+            </p>
+            <div class="cta-buttons reveal">
+                <a href="mailto:contact@ecp.be" class="cta-btn cta-btn-primary">Nous contacter →</a>
+                <a href="#" class="cta-btn cta-btn-ghost">Télécharger le dossier</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <div class="footer-logo">ECP — Économie Contributive Provisionnée</div>
+                <p class="footer-desc">
+                    Projet porté par le CCPLC — Collectif Citoyen pour la 
+                    Participation Libre & Consciente.
+                </p>
+            </div>
+            
+            <div>
+                <div class="footer-col-title">Navigation</div>
+                <ul class="footer-links">
+                    <li><a href="#probleme">Le Problème</a></li>
+                    <li><a href="#cout">Le Coût</a></li>
+                    <li><a href="#solution">La Solution</a></li>
+                    <li><a href="#juridique">Analyse Juridique</a></li>
+                    <li><a href="#factcheck">Fact-Check</a></li>
+                </ul>
+            </div>
+            
+            <div>
+                <div class="footer-col-title">Ressources</div>
+                <ul class="footer-links">
+                    <li><a href="#">Manifeste ECP</a></li>
+                    <li><a href="#">Dossier PCI 2025</a></li>
+                    <li><a href="#">Convention modèle</a></li>
+                </ul>
+            </div>
+            
+            <div>
+                <div class="footer-col-title">Sources officielles</div>
+                <ul class="footer-links">
+                    <li><a href="https://inami.fgov.be" target="_blank">INAMI</a></li>
+                    <li><a href="https://onem.be" target="_blank">ONEM</a></li>
+                    <li><a href="https://courdescomptes.be" target="_blank">Cour des Comptes</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <div>CC BY-NC 4.0 • Données vérifiées janvier 2026</div>
+            <div>Site créé par le CCPLC</div>
+        </div>
+    </footer>
+
+    <script>
+        // Nav scroll effect
+        const nav = document.getElementById('nav');
+        window.addEventListener('scroll', () => {
+            nav.classList.toggle('scrolled', window.scrollY > 50);
+        });
+        
+        // Reveal on scroll
+        const reveals = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry, i) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => entry.target.classList.add('visible'), i * 80);
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+        
+        reveals.forEach(el => revealObserver.observe(el));
+        
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(a => {
+            a.addEventListener('click', e => {
+                e.preventDefault();
+                const target = document.querySelector(a.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+        
+        // Active nav state
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.nav-links a');
+        
+        const navObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === `#${entry.target.id}`) {
+                            link.classList.add('active');
+                        }
+                    });
+                }
+            });
+        }, { rootMargin: '-40% 0px -60% 0px' });
+        
+        sections.forEach(section => navObserver.observe(section));
+        
+        // Animate cost bars
+        const costBars = document.querySelectorAll('.cost-item-bar-fill');
+        const barObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const width = entry.target.style.width;
+                    entry.target.style.width = '0';
+                    setTimeout(() => entry.target.style.width = width, 100);
+                }
+            });
+        }, { threshold: 0.5 });
+        
+        costBars.forEach(bar => barObserver.observe(bar));
+    </script>
+</body>
+</html>
