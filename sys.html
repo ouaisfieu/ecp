@@ -1,0 +1,1364 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Écosystème ECP — Tableau de bord stratégique</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0f0f0f;
+            --bg-card: #1a1a1a;
+            --bg-card-hover: #222;
+            --accent-primary: #6366f1;
+            --accent-secondary: #8b5cf6;
+            --accent-tertiary: #ec4899;
+            --text-primary: #fafafa;
+            --text-secondary: #a1a1aa;
+            --text-muted: #71717a;
+            --border: #27272a;
+            --success: #22c55e;
+            --warning: #f59e0b;
+            --error: #ef4444;
+            --info: #3b82f6;
+            --font-display: 'Playfair Display', Georgia, serif;
+            --font-body: 'DM Sans', -apple-system, sans-serif;
+            --radius: 12px;
+            --radius-sm: 8px;
+            --shadow: 0 4px 6px -1px rgba(0,0,0,0.3), 0 2px 4px -1px rgba(0,0,0,0.2);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        html { scroll-behavior: smooth; }
+        
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Layout */
+        .app {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            min-height: 100vh;
+        }
+
+        @media (max-width: 1024px) {
+            .app { grid-template-columns: 1fr; }
+            .sidebar { display: none; }
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: var(--bg-card);
+            border-right: 1px solid var(--border);
+            padding: 2rem 1.5rem;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .logo {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-tertiary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .logo-sub {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+
+        .nav-section {
+            margin-bottom: 2rem;
+        }
+
+        .nav-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            margin-bottom: 0.75rem;
+            padding-left: 0.75rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            border-radius: var(--radius-sm);
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .nav-link:hover {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--text-primary);
+        }
+
+        .nav-link.active {
+            background: var(--accent-primary);
+            color: white;
+        }
+
+        .nav-link svg {
+            width: 18px;
+            height: 18px;
+            opacity: 0.7;
+        }
+
+        .nav-badge {
+            margin-left: auto;
+            background: var(--border);
+            padding: 0.15rem 0.5rem;
+            border-radius: 100px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        /* Main */
+        .main {
+            padding: 2rem;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        .page-header {
+            margin-bottom: 2rem;
+        }
+
+        .page-title {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+        }
+
+        .stat-card.purple::before { background: var(--accent-primary); }
+        .stat-card.pink::before { background: var(--accent-tertiary); }
+        .stat-card.green::before { background: var(--success); }
+        .stat-card.blue::before { background: var(--info); }
+        .stat-card.orange::before { background: var(--warning); }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        .stat-change {
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .stat-change.positive { color: var(--success); }
+        .stat-change.negative { color: var(--error); }
+
+        /* Toolbar */
+        .toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            align-items: center;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 0.75rem 1rem 0.75rem 2.75rem;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            font-family: var(--font-body);
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+        }
+
+        .search-box svg {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 18px;
+            height: 18px;
+            color: var(--text-muted);
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            padding: 0.5rem 1rem;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: var(--font-body);
+        }
+
+        .filter-btn:hover {
+            border-color: var(--accent-primary);
+            color: var(--text-primary);
+        }
+
+        .filter-btn.active {
+            background: var(--accent-primary);
+            border-color: var(--accent-primary);
+            color: white;
+        }
+
+        /* Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .org-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .org-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow);
+            border-color: var(--accent-primary);
+        }
+
+        .org-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .org-name {
+            font-weight: 700;
+            font-size: 1.1rem;
+            line-height: 1.3;
+            flex: 1;
+            padding-right: 1rem;
+        }
+
+        .org-type {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            background: var(--border);
+            padding: 0.25rem 0.6rem;
+            border-radius: 100px;
+            white-space: nowrap;
+        }
+
+        .org-stat {
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: var(--radius-sm);
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .org-stat-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--accent-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .org-stat-value {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .org-details {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin-bottom: 1rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .org-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .org-contact {
+            font-size: 0.85rem;
+            color: var(--accent-primary);
+            text-decoration: none;
+        }
+
+        .org-contact:hover {
+            text-decoration: underline;
+        }
+
+        .verification-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            font-size: 0.75rem;
+            padding: 0.25rem 0.6rem;
+            border-radius: 100px;
+        }
+
+        .verification-badge.confirmed {
+            background: rgba(34, 197, 94, 0.15);
+            color: var(--success);
+        }
+
+        .verification-badge.corrected {
+            background: rgba(245, 158, 11, 0.15);
+            color: var(--warning);
+        }
+
+        .verification-badge.unverified {
+            background: rgba(113, 113, 122, 0.15);
+            color: var(--text-muted);
+        }
+
+        /* Sections */
+        .section {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Network View */
+        .network-container {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            height: 600px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .network-legend {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(15, 15, 15, 0.9);
+            padding: 1rem;
+            border-radius: var(--radius-sm);
+            z-index: 10;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        /* Segments View */
+        .segments-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .segment-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+        }
+
+        .segment-header {
+            padding: 1.5rem;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+            border-bottom: 1px solid var(--border);
+        }
+
+        .segment-name {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .segment-demo {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .segment-body {
+            padding: 1.5rem;
+        }
+
+        .segment-row {
+            margin-bottom: 1rem;
+        }
+
+        .segment-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .segment-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            margin-bottom: 0.35rem;
+        }
+
+        .segment-value {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+        }
+
+        .segment-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .segment-tag {
+            background: var(--border);
+            padding: 0.25rem 0.75rem;
+            border-radius: 100px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        /* References */
+        .refs-list {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+        }
+
+        .ref-item {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .ref-item:last-child {
+            border-bottom: none;
+        }
+
+        .ref-index {
+            background: var(--accent-primary);
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .ref-text {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: scale(0.9);
+            transition: transform 0.3s;
+        }
+
+        .modal-overlay.active .modal {
+            transform: scale(1);
+        }
+
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .modal-title {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .modal-close:hover {
+            color: var(--text-primary);
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .modal-row {
+            margin-bottom: 1.25rem;
+        }
+
+        .modal-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            margin-bottom: 0.35rem;
+        }
+
+        .modal-value {
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        /* Export Buttons */
+        .export-group {
+            display: flex;
+            gap: 0.75rem;
+            margin-left: auto;
+        }
+
+        .export-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 0.6rem 1rem;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: var(--font-body);
+        }
+
+        .export-btn:hover {
+            border-color: var(--accent-primary);
+            color: var(--text-primary);
+        }
+
+        .export-btn svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-muted);
+        }
+
+        .empty-state svg {
+            width: 64px;
+            height: 64px;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        /* Charts */
+        .chart-container {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .chart-title {
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .bar-chart {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .bar-row {
+            display: grid;
+            grid-template-columns: 200px 1fr 60px;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .bar-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .bar-track {
+            height: 24px;
+            background: var(--border);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        .bar-value {
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-align: right;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main { padding: 1rem; }
+            .page-title { font-size: 1.75rem; }
+            .cards-grid { grid-template-columns: 1fr; }
+            .toolbar { flex-direction: column; align-items: stretch; }
+            .export-group { margin-left: 0; justify-content: center; }
+            .bar-row { grid-template-columns: 120px 1fr 50px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">Écosystème ECP</div>
+            <div class="logo-sub">Tableau de bord stratégique</div>
+
+            <nav class="nav-section">
+                <div class="nav-label">Navigation</div>
+                <a class="nav-link active" data-section="overview">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="7" height="7"/>
+                        <rect x="14" y="3" width="7" height="7"/>
+                        <rect x="14" y="14" width="7" height="7"/>
+                        <rect x="3" y="14" width="7" height="7"/>
+                    </svg>
+                    Vue d'ensemble
+                </a>
+                <a class="nav-link" data-section="organizations">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                        <circle cx="9" cy="7" r="4"/>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                    </svg>
+                    Organisations
+                    <span class="nav-badge">34</span>
+                </a>
+                <a class="nav-link" data-section="segments">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M12 2a10 10 0 0 1 10 10"/>
+                        <path d="M12 2a10 10 0 0 0-10 10"/>
+                        <path d="M2 12h20"/>
+                    </svg>
+                    Segments
+                    <span class="nav-badge">6</span>
+                </a>
+                <a class="nav-link" data-section="references">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+                    </svg>
+                    Références
+                    <span class="nav-badge">38</span>
+                </a>
+            </nav>
+
+            <nav class="nav-section">
+                <div class="nav-label">Catégories</div>
+                <a class="nav-link" data-filter="mutuelle">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                    </svg>
+                    Mutuelles
+                    <span class="nav-badge">4</span>
+                </a>
+                <a class="nav-link" data-filter="education">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+                        <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+                    </svg>
+                    Éducation permanente
+                    <span class="nav-badge">5</span>
+                </a>
+                <a class="nav-link" data-filter="feministe">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="8" r="5"/>
+                        <path d="M12 13v8"/>
+                        <path d="M9 18h6"/>
+                    </svg>
+                    Féministes
+                    <span class="nav-badge">12</span>
+                </a>
+                <a class="nav-link" data-filter="media">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+                    </svg>
+                    Médias
+                    <span class="nav-badge">8</span>
+                </a>
+                <a class="nav-link" data-filter="institution">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 21h18"/>
+                        <path d="M5 21V7l8-4 8 4v14"/>
+                        <path d="M9 21v-4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v4"/>
+                    </svg>
+                    Institutions publiques
+                    <span class="nav-badge">5</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main">
+            <!-- Overview Section -->
+            <section id="overview" class="section active">
+                <header class="page-header">
+                    <h1 class="page-title">Vue d'ensemble</h1>
+                    <p class="page-subtitle">Cartographie complète de l'écosystème ECP en Belgique</p>
+                </header>
+
+                <div class="stats-grid">
+                    <div class="stat-card purple">
+                        <div class="stat-label">Organisations</div>
+                        <div class="stat-value">34</div>
+                        <div class="stat-change positive">+12 médias féministes</div>
+                    </div>
+                    <div class="stat-card pink">
+                        <div class="stat-label">Affiliés totaux</div>
+                        <div class="stat-value">11M+</div>
+                        <div class="stat-change">Mutuelles + Syndicats</div>
+                    </div>
+                    <div class="stat-card green">
+                        <div class="stat-label">Données confirmées</div>
+                        <div class="stat-value">76%</div>
+                        <div class="stat-change positive">Fact-checkées</div>
+                    </div>
+                    <div class="stat-card blue">
+                        <div class="stat-label">Références</div>
+                        <div class="stat-value">38</div>
+                        <div class="stat-change">Sources documentées</div>
+                    </div>
+                    <div class="stat-card orange">
+                        <div class="stat-label">Budget public</div>
+                        <div class="stat-value">16Md€</div>
+                        <div class="stat-change negative">Coût inaction/an</div>
+                    </div>
+                </div>
+
+                <!-- Chart: Types d'organisations -->
+                <div class="chart-container">
+                    <h3 class="chart-title">Répartition par type d'organisation</h3>
+                    <div class="bar-chart" id="typeChart"></div>
+                </div>
+
+                <!-- Chart: Statut de vérification -->
+                <div class="chart-container">
+                    <h3 class="chart-title">Statut de vérification des données</h3>
+                    <div class="bar-chart" id="verificationChart"></div>
+                </div>
+            </section>
+
+            <!-- Organizations Section -->
+            <section id="organizations" class="section">
+                <header class="page-header">
+                    <h1 class="page-title">Organisations</h1>
+                    <p class="page-subtitle">34 entités clés de l'écosystème belge</p>
+                </header>
+
+                <div class="toolbar">
+                    <div class="search-box">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"/>
+                            <path d="m21 21-4.35-4.35"/>
+                        </svg>
+                        <input type="text" id="searchInput" placeholder="Rechercher une organisation...">
+                    </div>
+                    <div class="filter-group">
+                        <button class="filter-btn active" data-status="all">Tous</button>
+                        <button class="filter-btn" data-status="confirmed">Confirmés</button>
+                        <button class="filter-btn" data-status="corrected">Corrigés</button>
+                        <button class="filter-btn" data-status="unverified">Non vérifiés</button>
+                    </div>
+                    <div class="export-group">
+                        <button class="export-btn" onclick="exportJSON()">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                <polyline points="7 10 12 15 17 10"/>
+                                <line x1="12" y1="15" x2="12" y2="3"/>
+                            </svg>
+                            JSON
+                        </button>
+                        <button class="export-btn" onclick="exportCSV()">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                <polyline points="7 10 12 15 17 10"/>
+                                <line x1="12" y1="15" x2="12" y2="3"/>
+                            </svg>
+                            CSV
+                        </button>
+                    </div>
+                </div>
+
+                <div class="cards-grid" id="orgsGrid"></div>
+            </section>
+
+            <!-- Segments Section -->
+            <section id="segments" class="section">
+                <header class="page-header">
+                    <h1 class="page-title">Segments de clientèle</h1>
+                    <p class="page-subtitle">6 personas stratégiques pour l'approche commerciale</p>
+                </header>
+
+                <div class="segments-grid" id="segmentsGrid"></div>
+            </section>
+
+            <!-- References Section -->
+            <section id="references" class="section">
+                <header class="page-header">
+                    <h1 class="page-title">Références</h1>
+                    <p class="page-subtitle">38 sources documentées</p>
+                </header>
+
+                <div class="refs-list" id="refsList"></div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle"></h2>
+                <button class="modal-close" onclick="closeModal()">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"/>
+                        <line x1="6" y1="6" x2="18" y2="18"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody"></div>
+        </div>
+    </div>
+
+    <script>
+        // Data
+        const organizations = [
+            { id: 1, name: "Solidaris (Mutualité Socialiste)", type: "Mutuelle", coverage: "Belgique", stat: "3 millions à 3,2 millions d'affiliés (Corrigé)", details: "Assurance maladie-invalidité, soutien au réseau associatif (Soralia, Sofélia). Organisme lié au mouvement socialiste.", contact: "solidaris.be", verification: "corrected", source: "1-3" },
+            { id: 2, name: "Mutualité Chrétienne (MC)", type: "Mutuelle", coverage: "Belgique", stat: "4,5 millions à 4,6 millions d'affiliés", details: "Plus grande mutualité du pays ; assure la couverture santé. Membre du Mouvement Ouvrier Chrétien (MOC).", contact: "mc.be", verification: "confirmed", source: "1, 2" },
+            { id: 3, name: "Soralia (ex-FPS)", type: "Éducation permanente", coverage: "Wallonie et Bruxelles", stat: "9 régionales / +200 groupes locaux", details: "Mouvement féministe de Solidaris (anc. Femmes Prévoyantes Socialistes). Lutte contre les inégalités, planning familial, écoles de promotion sociale.", contact: "info@soralia.be", verification: "confirmed", source: "2, 4-8" },
+            { id: 4, name: "Présence et Action Culturelles (PAC)", type: "Éducation permanente", coverage: "Wallonie et Bruxelles", stat: "11 régionales / ~200 sections", details: "Éducation populaire, formation (arpentage), écrivains publics, ciné-débats et lutte contre les injustices via la culture.", contact: "info@pac-g.be", verification: "confirmed", source: "5, 9-12" },
+            { id: 5, name: "FGTB", type: "Syndicat", coverage: "Belgique", stat: "1 519 453 affiliés (2022)", details: "Défense des travailleurs, représentations sectorielles, éducation populaire via le CEPAG.", contact: "cepag.be", verification: "confirmed", source: "2" },
+            { id: 6, name: "Amazone asbl", type: "Centre de ressources", coverage: "Bruxelles", stat: "Fondée en 1995", details: "Centre de ressources national pour l'égalité de genre, hôte d'associations, centre de documentation et de congrès, restaurant d'insertion.", contact: "amazone@amazone.be", verification: "confirmed", source: "5, 13-18" },
+            { id: 7, name: "ONEM", type: "Institution publique", coverage: "Belgique", stat: "6 milliards €/an (budget)", details: "Gestion de l'assurance chômage et activation des demandeurs d'emploi.", contact: "www.onem.be", verification: "confirmed", source: "1" },
+            { id: 8, name: "Incapacité de travail (>1 an)", type: "Statistiques INAMI", coverage: "Belgique", stat: "526 507 personnes (2023)", details: "Données relatives à l'invalidité. Coût estimé par la Cour des Comptes : 13-15 milliards €.", contact: "inami.fgov.be", verification: "confirmed", source: "19, 20" },
+            { id: 9, name: "Mutualités Libérales", type: "Mutuelle", coverage: "Belgique", stat: "2,1 à 2,2 millions d'affiliés", details: "Regroupement de mutualités (MLOZ, Helan, etc.).", contact: "-", verification: "confirmed", source: "1" },
+            { id: 10, name: "CAAMI", type: "Institution publique", coverage: "Belgique", stat: "150 000 affiliés", details: "Caisse auxiliaire d'assurance maladie-invalidité pour les personnes non affiliées à une mutuelle classique.", contact: "-", verification: "confirmed", source: "1" },
+            { id: 11, name: "Sofélia", type: "Planning familial", coverage: "Belgique", stat: "20 structures coordonnées", details: "Fédération de Centres de Planning Familial liée à Solidaris.", contact: "sofelia@solidaris.be", verification: "confirmed", source: "-" },
+            { id: 12, name: "axelle magazine", type: "Média féministe", coverage: "Belgique", stat: "Active depuis 1998", details: "Magazine féministe édité par Vie Féminine.", contact: "www.axellemag.be", verification: "confirmed", source: "-" },
+            { id: 13, name: "Cercle féministe de l'ULB", type: "Association étudiante", coverage: "Bruxelles", stat: "Reconnu par l'ULB (>10 ans)", details: "Collectif étudiant féministe de l'Université Libre de Bruxelles.", contact: "cercle.feministe@ulb.be", verification: "confirmed", source: "-" },
+            { id: 14, name: "Le Monde selon les femmes", type: "ONG féministe", coverage: "International", stat: "Active depuis 1994", details: "ONG féministe spécialisée dans le développement et l'approche genre.", contact: "mondefemmes.org", verification: "confirmed", source: "-" },
+            { id: 15, name: "Fédération des Étudiants Libéraux (FEL)", type: "Organisation de jeunesse", coverage: "Belgique", stat: "Fondée en 1974", details: "Organisation politique de jeunesse libérale.", contact: "etudiantsliberaux.be", verification: "confirmed", source: "-" },
+            { id: 16, name: "Maison de la Presse de Charleroi", type: "ASBL", coverage: "Charleroi", stat: "Bâtiment érigé en 1899", details: "Lieu de rencontre des journalistes professionnels.", contact: "www.maison-presse.org", verification: "confirmed", source: "-" },
+            { id: 17, name: "Muntpunt", type: "Bibliothèque", coverage: "Bruxelles", stat: "+32 2 278 11 11", details: "Institution culturelle et bibliothèque au centre de Bruxelles.", contact: "info@muntpunt.be", verification: "confirmed", source: "-" },
+            { id: 18, name: "RIFI", type: "Réseau académique", coverage: "Belgique", stat: "Formation et recherche", details: "Réseau Interculturel Féministe et Intersectionnel.", contact: "info@rifi-belgium.com", verification: "confirmed", source: "-" },
+            { id: 19, name: "Université des Femmes", type: "Centre de recherche", coverage: "Belgique", stat: "-", details: "Centre de recherche féministe.", contact: "www.universitedesfemmes.be", verification: "unverified", source: "-" },
+            { id: 20, name: "Vie Féminine", type: "Mouvement féministe", coverage: "Belgique", stat: "-", details: "Mouvement d'éducation permanente féministe.", contact: "www.viefeminine.be", verification: "unverified", source: "-" },
+            { id: 21, name: "Ligue de l'Enseignement", type: "ASBL", coverage: "Belgique", stat: "-", details: "Association d'éducation permanente laïque.", contact: "www.ligue-enseignement.be", verification: "unverified", source: "-" },
+            { id: 22, name: "Institut pour l'égalité F/H", type: "Institution fédérale", coverage: "Belgique", stat: "-", details: "Institution publique fédérale pour l'égalité des genres.", contact: "-", verification: "unverified", source: "-" },
+            { id: 23, name: "CIEP", type: "Éducation populaire", coverage: "Belgique", stat: "-", details: "Centre d'Information et d'Éducation Populaire du MOC.", contact: "-", verification: "confirmed", source: "-" },
+            { id: 24, name: "InES", type: "Institut de recherche", coverage: "Belgique", stat: "-", details: "Institut d'Études Sociales.", contact: "-", verification: "confirmed", source: "-" },
+            { id: 25, name: "Coalition Arizona", type: "Politique", coverage: "Belgique", stat: "Perte -145€/mois (pension divorce)", details: "Analyse des impacts de la coalition gouvernementale.", contact: "-", verification: "confirmed", source: "-" },
+            { id: 26, name: "The Simones", type: "Média féministe", coverage: "France", stat: "1€ reversé par article vendu", details: "Média féministe et marque engagée.", contact: "Facebook/Instagram", verification: "confirmed", source: "-" },
+            { id: 27, name: "Les Glorieuses", type: "Newsletter féministe", coverage: "France", stat: "6 thématiques", details: "Newsletter féministe influente.", contact: "lesglorieueses.fr", verification: "confirmed", source: "-" },
+            { id: 28, name: "Voxe", type: "Newsletter", coverage: "France", stat: "Cible les jeunes femmes", details: "Newsletter d'actualité ciblée.", contact: "-", verification: "confirmed", source: "-" },
+            { id: 29, name: "L'Importante", type: "Média digital", coverage: "France", stat: "Sélection humaine quotidienne", details: "Curation d'actualité.", contact: "-", verification: "confirmed", source: "-" },
+            { id: 30, name: "Visible média", type: "Média digital", coverage: "France", stat: "Fondé par des femmes", details: "Média d'information fondé par des femmes.", contact: "-", verification: "confirmed", source: "-" },
+            { id: 31, name: "Osez le féminisme ! (OLF)", type: "Association féministe", coverage: "France", stat: "Créée en 2009", details: "Association féministe française.", contact: "osezlefeminisme.fr", verification: "confirmed", source: "-" },
+            { id: 32, name: "La Place des Grenouilles", type: "Association féministe", coverage: "France", stat: "-", details: "Collectif féministe français.", contact: "lapdg.fr", verification: "confirmed", source: "-" },
+            { id: 33, name: "Génération Identitaire", type: "Mouvement dissous", coverage: "France", stat: "Dissous en 2021", details: "Mouvement politique d'extrême-droite dissous.", contact: "-", verification: "confirmed", source: "-" },
+            { id: 34, name: "Groupe Nemesis", type: "Collectif identitaire", coverage: "France", stat: "-", details: "Collectif d'extrême-droite féminin.", contact: "-", verification: "confirmed", source: "-" }
+        ];
+
+        const segments = [
+            { name: "Le Militant Engagé", demo: "35-55 ans, Urbain, Diplômé, Haut revenu", behavior: "Achète des produits éthiques/bio coûteux, fait des dons récurrents, recherche l'impact social.", product: "Logiciel d'impact social ou de gestion RSE/ASBL", frequency: "Mensuelle/Trimestrielle", channels: ["LinkedIn", "Newsletters spécialisées"] },
+            { name: "Le Professionnel Pressé", demo: "25-40 ans, Vie active, Revenu moyen-élevé", behavior: "Recherche l'efficacité, la rapidité. Prêt à payer pour des abonnements qui font gagner du temps.", product: "Outil d'automatisation ou de productivité (SaaS)", frequency: "Annuelle (Abonnement)", channels: ["E-mail professionnel", "Démos en ligne"] },
+            { name: "L'Institutionnel Classique", demo: "45-65 ans, Dirigeant d'ASBL/Institution, Stabilité", behavior: "Achats après longs processus d'appel d'offres. Attachement à la conformité et à la sécurité.", product: "Plateforme de gestion de membres et de subventions (ERP)", frequency: "Pluriannuelle", channels: ["Réunions physiques", "Documents détaillés"] },
+            { name: "Le Digital Nomad", demo: "20-30 ans, Indépendant, International, Flexible", behavior: "Utilise des outils gratuits ou freemium. Achète des formations en ligne, recherche la communauté.", product: "Application mobile simplifiée ou cours en ligne (EdTech)", frequency: "Ponctuelle/Micro-Achat", channels: ["YouTube", "Communautés Slack"] },
+            { name: "Le Petit Entrepreneur Local", demo: "40-60 ans, Régional, Propriétaire de PME", behavior: "Très sensible au prix, recherche des solutions \"tout-en-un\" simples.", product: "Logiciel de facturation et CRM de base (low-cost)", frequency: "Annuelle (Licence simple)", channels: ["E-mail localisé", "Google Ads"] },
+            { name: "L'Éducateur/Formateur", demo: "30-50 ans, Secteur associatif/culturel, Salarié", behavior: "Achète des ressources pédagogiques, des licences de groupe, recherche la facilité de partage.", product: "Plateforme de création de contenu interactif ou de formation", frequency: "Trimestrielle", channels: ["Événements sectoriels", "Forums professionnels"] }
+        ];
+
+        const references = [
+            "Vérification factuelle des documents ECP (Manifeste, Pitch Deck, Plan Institutionnel).docx",
+            "compass_artifact_wf-3467132a-c5fb-4b20-bfac-0e5a278c4735_text_markdown (1).md",
+            "PLAN-APPROCHE-INSTITUTIONS (1).md",
+            "21 médias qui mettent les femmes en lumière - Axelle Mag",
+            "Analyse stratégique et plan opérationnel : Arpentage de l'ouvrage Les Vigilantes à la Maison Amazone",
+            "Service égalité des genres - Soralia | Solidaris Wallonie",
+            "Soralia - Les Associations Solidaris",
+            "Soralia | Solidaris Brabant",
+            "Régionale Liège - PAC",
+            "PAC: Accueil",
+            "P.A.C. - Présences et actions culturelles - Centre culturel de Perwez",
+            "Qui sommes nous ? - PAC",
+            "Projets Amazone",
+            "Amazone asbl: Accueil",
+            "Associations féministes - Genres Pluriels",
+            "CHECKLIST-PCI.md",
+            "Mission et valeurs - Amazone asbl",
+            "Le féminisme et l'enseignement",
+            "DOCUMENTATION.md",
+            "README.md",
+            "Qui sommes-nous ? - Sofelia",
+            "Associations étudiantes - BEA ULB",
+            "Cercles étudiants et folklore - ULB",
+            "Cercle Féministe - L'Association Inter-Cercles - ULB",
+            "Le monde selon les femmes • ONG féministe",
+            "Qui sommes-nous ? - Fédération des Étudiants Libéraux",
+            "Les clubs et maisons de la presse - Association des journalistes professionnels",
+            "Agenda culturel | Région de Bruxelles-Capitale",
+            "RIFI - Réseau Interculturel Féministe et Intersectionnel",
+            "L'arpentage ou le partage collectif du savoir 1 - CIEP",
+            "Policy Brief - Comment le gouvernement Arizona accroît la précarisation des femmes - InES",
+            "L'Arizona démasqué | Un recul pour les femmes - PTB",
+            "5 médias féministes à connaître - infodon.fr",
+            "Agenda – Osez le feminisme !",
+            "[podcast] Femmes dans l'extrême droite – Léane Alestra - La Place des Grenouilles",
+            "LE SYSTÈME THAÏS ?! LÉANE ALESTRA (@mecreantes) BALANCE TOUT !",
+            "Dark agency : la promotion féminine au service de la domination - CONTRETEMPS",
+            "Que veulent les meufs d'extrême-droite ? - LES VIGILANTES ft Léane Alestra"
+        ];
+
+        // Navigation
+        document.querySelectorAll('.nav-link[data-section]').forEach(link => {
+            link.addEventListener('click', () => {
+                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+                
+                const sectionId = link.dataset.section;
+                document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+                document.getElementById(sectionId).classList.add('active');
+            });
+        });
+
+        // Filter by category
+        document.querySelectorAll('.nav-link[data-filter]').forEach(link => {
+            link.addEventListener('click', () => {
+                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+                
+                document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+                document.getElementById('organizations').classList.add('active');
+                
+                const filter = link.dataset.filter;
+                renderOrganizations(filter);
+            });
+        });
+
+        // Render organizations
+        function renderOrganizations(categoryFilter = null, statusFilter = 'all', searchTerm = '') {
+            const grid = document.getElementById('orgsGrid');
+            let filtered = organizations;
+
+            if (categoryFilter) {
+                const categoryMap = {
+                    'mutuelle': ['Mutuelle'],
+                    'education': ['Éducation permanente', 'Éducation populaire'],
+                    'feministe': ['Média féministe', 'ONG féministe', 'Association féministe', 'Mouvement féministe', 'Newsletter féministe', 'Centre de recherche'],
+                    'media': ['Média féministe', 'Média digital', 'Newsletter', 'Newsletter féministe'],
+                    'institution': ['Institution publique', 'Institution fédérale', 'Statistiques INAMI']
+                };
+                const types = categoryMap[categoryFilter] || [];
+                filtered = filtered.filter(o => types.some(t => o.type.includes(t)));
+            }
+
+            if (statusFilter !== 'all') {
+                filtered = filtered.filter(o => o.verification === statusFilter);
+            }
+
+            if (searchTerm) {
+                const term = searchTerm.toLowerCase();
+                filtered = filtered.filter(o => 
+                    o.name.toLowerCase().includes(term) || 
+                    o.type.toLowerCase().includes(term) ||
+                    o.details.toLowerCase().includes(term)
+                );
+            }
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"/>
+                            <path d="m21 21-4.35-4.35"/>
+                        </svg>
+                        <p>Aucune organisation trouvée</p>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = filtered.map(org => `
+                <article class="org-card" onclick="openModal(${org.id})">
+                    <div class="org-card-header">
+                        <h3 class="org-name">${org.name}</h3>
+                        <span class="org-type">${org.type}</span>
+                    </div>
+                    ${org.stat && org.stat !== '-' ? `
+                        <div class="org-stat">
+                            <div class="org-stat-label">Statistique clé</div>
+                            <div class="org-stat-value">${org.stat}</div>
+                        </div>
+                    ` : ''}
+                    <p class="org-details">${org.details}</p>
+                    <div class="org-footer">
+                        ${org.contact && org.contact !== '-' ? `
+                            <a href="${org.contact.includes('@') ? 'mailto:' + org.contact : 'https://' + org.contact}" class="org-contact" onclick="event.stopPropagation()">${org.contact}</a>
+                        ` : '<span></span>'}
+                        <span class="verification-badge ${org.verification}">
+                            ${org.verification === 'confirmed' ? '✓ Confirmé' : org.verification === 'corrected' ? '⚠ Corrigé' : '○ Non vérifié'}
+                        </span>
+                    </div>
+                </article>
+            `).join('');
+        }
+
+        // Render segments
+        function renderSegments() {
+            const grid = document.getElementById('segmentsGrid');
+            grid.innerHTML = segments.map(seg => `
+                <div class="segment-card">
+                    <div class="segment-header">
+                        <h3 class="segment-name">${seg.name}</h3>
+                        <p class="segment-demo">${seg.demo}</p>
+                    </div>
+                    <div class="segment-body">
+                        <div class="segment-row">
+                            <div class="segment-label">Comportement d'achat</div>
+                            <div class="segment-value">${seg.behavior}</div>
+                        </div>
+                        <div class="segment-row">
+                            <div class="segment-label">Produit type</div>
+                            <div class="segment-value">${seg.product}</div>
+                        </div>
+                        <div class="segment-row">
+                            <div class="segment-label">Fréquence d'achat</div>
+                            <div class="segment-value">${seg.frequency}</div>
+                        </div>
+                        <div class="segment-row">
+                            <div class="segment-label">Canaux privilégiés</div>
+                            <div class="segment-tags">
+                                ${seg.channels.map(c => `<span class="segment-tag">${c}</span>`).join('')}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Render references
+        function renderReferences() {
+            const list = document.getElementById('refsList');
+            list.innerHTML = references.map((ref, i) => `
+                <div class="ref-item">
+                    <span class="ref-index">${i + 1}</span>
+                    <span class="ref-text">${ref}</span>
+                </div>
+            `).join('');
+        }
+
+        // Render charts
+        function renderCharts() {
+            // Type chart
+            const typeCounts = {};
+            organizations.forEach(o => {
+                typeCounts[o.type] = (typeCounts[o.type] || 0) + 1;
+            });
+            const sortedTypes = Object.entries(typeCounts).sort((a, b) => b[1] - a[1]).slice(0, 8);
+            const maxType = Math.max(...sortedTypes.map(t => t[1]));
+
+            document.getElementById('typeChart').innerHTML = sortedTypes.map(([type, count]) => `
+                <div class="bar-row">
+                    <span class="bar-label" title="${type}">${type}</span>
+                    <div class="bar-track">
+                        <div class="bar-fill" style="width: ${(count / maxType) * 100}%"></div>
+                    </div>
+                    <span class="bar-value">${count}</span>
+                </div>
+            `).join('');
+
+            // Verification chart
+            const verificationCounts = { confirmed: 0, corrected: 0, unverified: 0 };
+            organizations.forEach(o => verificationCounts[o.verification]++);
+            const verificationLabels = { confirmed: 'Confirmés', corrected: 'Corrigés', unverified: 'Non vérifiés' };
+            const maxVerif = Math.max(...Object.values(verificationCounts));
+
+            document.getElementById('verificationChart').innerHTML = Object.entries(verificationCounts).map(([status, count]) => `
+                <div class="bar-row">
+                    <span class="bar-label">${verificationLabels[status]}</span>
+                    <div class="bar-track">
+                        <div class="bar-fill" style="width: ${(count / maxVerif) * 100}%; background: ${status === 'confirmed' ? 'var(--success)' : status === 'corrected' ? 'var(--warning)' : 'var(--text-muted)'}"></div>
+                    </div>
+                    <span class="bar-value">${count}</span>
+                </div>
+            `).join('');
+        }
+
+        // Modal
+        function openModal(id) {
+            const org = organizations.find(o => o.id === id);
+            if (!org) return;
+
+            document.getElementById('modalTitle').textContent = org.name;
+            document.getElementById('modalBody').innerHTML = `
+                <div class="modal-row">
+                    <div class="modal-label">Type</div>
+                    <div class="modal-value">${org.type}</div>
+                </div>
+                <div class="modal-row">
+                    <div class="modal-label">Couverture</div>
+                    <div class="modal-value">${org.coverage}</div>
+                </div>
+                ${org.stat && org.stat !== '-' ? `
+                    <div class="modal-row">
+                        <div class="modal-label">Statistique clé</div>
+                        <div class="modal-value">${org.stat}</div>
+                    </div>
+                ` : ''}
+                <div class="modal-row">
+                    <div class="modal-label">Description</div>
+                    <div class="modal-value">${org.details}</div>
+                </div>
+                ${org.contact && org.contact !== '-' ? `
+                    <div class="modal-row">
+                        <div class="modal-label">Contact</div>
+                        <div class="modal-value"><a href="${org.contact.includes('@') ? 'mailto:' + org.contact : 'https://' + org.contact}" style="color: var(--accent-primary)">${org.contact}</a></div>
+                    </div>
+                ` : ''}
+                <div class="modal-row">
+                    <div class="modal-label">Statut de vérification</div>
+                    <div class="modal-value">
+                        <span class="verification-badge ${org.verification}">
+                            ${org.verification === 'confirmed' ? '✓ Confirmé' : org.verification === 'corrected' ? '⚠ Corrigé' : '○ Non vérifié'}
+                        </span>
+                    </div>
+                </div>
+                ${org.source && org.source !== '-' ? `
+                    <div class="modal-row">
+                        <div class="modal-label">Sources</div>
+                        <div class="modal-value">Références ${org.source}</div>
+                    </div>
+                ` : ''}
+            `;
+            document.getElementById('modalOverlay').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('modalOverlay').classList.remove('active');
+        }
+
+        document.getElementById('modalOverlay').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) closeModal();
+        });
+
+        // Search
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            renderOrganizations(null, getCurrentStatusFilter(), e.target.value);
+        });
+
+        // Status filter
+        document.querySelectorAll('.filter-btn[data-status]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn[data-status]').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                renderOrganizations(null, btn.dataset.status, document.getElementById('searchInput').value);
+            });
+        });
+
+        function getCurrentStatusFilter() {
+            const activeBtn = document.querySelector('.filter-btn[data-status].active');
+            return activeBtn ? activeBtn.dataset.status : 'all';
+        }
+
+        // Export functions
+        function exportJSON() {
+            const data = JSON.stringify(organizations, null, 2);
+            downloadFile(data, 'organisations-ecp.json', 'application/json');
+        }
+
+        function exportCSV() {
+            const headers = ['Nom', 'Type', 'Couverture', 'Statistique', 'Détails', 'Contact', 'Vérification', 'Source'];
+            const rows = organizations.map(o => [
+                o.name, o.type, o.coverage, o.stat, o.details, o.contact, o.verification, o.source
+            ].map(v => `"${(v || '').replace(/"/g, '""')}"`).join(','));
+            const csv = [headers.join(','), ...rows].join('\n');
+            downloadFile(csv, 'organisations-ecp.csv', 'text/csv');
+        }
+
+        function downloadFile(content, filename, type) {
+            const blob = new Blob([content], { type });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        // Initialize
+        renderOrganizations();
+        renderSegments();
+        renderReferences();
+        renderCharts();
+    </script>
+</body>
+</html>
