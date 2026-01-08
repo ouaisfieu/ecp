@@ -1,0 +1,1818 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Les Vigilantes — Arpentage Citoyen | 22 Janvier 2025</title>
+    <meta name="description" content="378 citoyens, 42 groupes, 7 jours pour explorer ensemble 'Les Vigilantes' de Léane Alestra. Le plus grand arpentage citoyen de Belgique.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Space+Mono:wght@400;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --black: #0a0a0a;
+            --white: #fafafa;
+            --red: #e63946;
+            --red-dark: #c1121f;
+            --yellow: #ffd60a;
+            --cream: #f5f0e8;
+            --gray: #6b7280;
+            --gray-light: #e5e5e5;
+            
+            --font-display: 'Playfair Display', Georgia, serif;
+            --font-mono: 'Space Mono', monospace;
+            --font-body: 'DM Sans', -apple-system, sans-serif;
+            
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+            --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--black);
+            color: var(--white);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        ::selection {
+            background: var(--red);
+            color: var(--white);
+        }
+
+        /* ========== NOISE TEXTURE ========== */
+        .noise {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+        }
+
+        /* ========== CURSOR ========== */
+        .cursor {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--red);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 10000;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s var(--ease-out-expo), 
+                        height 0.3s var(--ease-out-expo),
+                        background 0.3s var(--ease-out-expo);
+            mix-blend-mode: difference;
+        }
+
+        .cursor.hover {
+            width: 60px;
+            height: 60px;
+            background: var(--red);
+        }
+
+        /* ========== NAVIGATION ========== */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1.5rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            mix-blend-mode: difference;
+        }
+
+        .logo {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--white);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--white);
+            text-decoration: none;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--red);
+            transition: width 0.4s var(--ease-out-expo);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-cta {
+            background: var(--red);
+            color: var(--white);
+            padding: 0.75rem 1.5rem;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.3s var(--ease-out-expo);
+        }
+
+        .nav-cta:hover {
+            background: var(--yellow);
+            color: var(--black);
+        }
+
+        /* ========== HERO ========== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 8rem 3rem 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(ellipse at 20% 80%, rgba(230, 57, 70, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(255, 214, 10, 0.1) 0%, transparent 50%),
+                var(--black);
+            z-index: -1;
+        }
+
+        .hero-label {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--red);
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .hero-label::before {
+            content: '';
+            width: 40px;
+            height: 1px;
+            background: var(--red);
+        }
+
+        .hero-title {
+            font-family: var(--font-display);
+            font-size: clamp(3.5rem, 10vw, 9rem);
+            font-weight: 900;
+            line-height: 0.95;
+            margin-bottom: 2rem;
+            max-width: 900px;
+        }
+
+        .hero-title span {
+            display: block;
+        }
+
+        .hero-title .highlight {
+            color: var(--red);
+            font-style: italic;
+            display: inline;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--gray);
+            max-width: 600px;
+            margin-bottom: 3rem;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 4rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat {
+            text-align: left;
+        }
+
+        .stat-number {
+            font-family: var(--font-display);
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: var(--yellow);
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--gray);
+            margin-top: 0.5rem;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            background: var(--red);
+            color: var(--white);
+            padding: 1.25rem 2.5rem;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.4s var(--ease-out-expo);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--yellow);
+            transition: left 0.4s var(--ease-out-expo);
+            z-index: -1;
+        }
+
+        .btn-primary:hover {
+            color: var(--black);
+        }
+
+        .btn-primary:hover::before {
+            left: 0;
+        }
+
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--white);
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .btn-secondary:hover {
+            color: var(--red);
+        }
+
+        .btn-secondary svg {
+            transition: transform 0.3s var(--ease-out-expo);
+        }
+
+        .btn-secondary:hover svg {
+            transform: translateX(5px);
+        }
+
+        /* Countdown */
+        .countdown {
+            position: absolute;
+            right: 3rem;
+            top: 50%;
+            transform: translateY(-50%);
+            text-align: right;
+        }
+
+        .countdown-label {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--gray);
+            margin-bottom: 1rem;
+        }
+
+        .countdown-timer {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .countdown-item {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1rem 1.25rem;
+            text-align: center;
+        }
+
+        .countdown-value {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--white);
+            line-height: 1;
+        }
+
+        .countdown-unit {
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--gray);
+            margin-top: 0.5rem;
+        }
+
+        /* ========== MARQUEE ========== */
+        .marquee {
+            background: var(--red);
+            padding: 1rem 0;
+            overflow: hidden;
+        }
+
+        .marquee-track {
+            display: flex;
+            animation: marquee 30s linear infinite;
+        }
+
+        .marquee-content {
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+            padding-right: 3rem;
+            white-space: nowrap;
+        }
+
+        .marquee-text {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--white);
+        }
+
+        .marquee-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--yellow);
+            border-radius: 50%;
+        }
+
+        @keyframes marquee {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+        }
+
+        /* ========== BOOK SECTION ========== */
+        .book-section {
+            background: var(--cream);
+            color: var(--black);
+            padding: 8rem 3rem;
+            position: relative;
+        }
+
+        .book-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            align-items: center;
+        }
+
+        .book-cover {
+            position: relative;
+        }
+
+        .book-cover-inner {
+            background: linear-gradient(135deg, var(--red-dark), var(--red));
+            aspect-ratio: 3/4;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 2rem;
+            position: relative;
+            box-shadow: 
+                20px 20px 0 var(--black),
+                40px 40px 0 var(--yellow);
+            transform: rotate(-3deg);
+            transition: transform 0.5s var(--ease-out-expo);
+        }
+
+        .book-cover:hover .book-cover-inner {
+            transform: rotate(0deg);
+        }
+
+        .book-cover-label {
+            position: absolute;
+            top: 2rem;
+            left: 2rem;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .book-cover-title {
+            font-family: var(--font-display);
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: var(--white);
+            line-height: 1;
+            margin-bottom: 1rem;
+        }
+
+        .book-cover-author {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            letter-spacing: 0.1em;
+            color: var(--yellow);
+        }
+
+        .book-content {
+            max-width: 550px;
+        }
+
+        .section-label {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--red);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .section-label::before {
+            content: '';
+            width: 30px;
+            height: 1px;
+            background: var(--red);
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 2rem;
+        }
+
+        .book-question {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-style: italic;
+            color: var(--gray);
+            margin-bottom: 2rem;
+            padding-left: 1.5rem;
+            border-left: 3px solid var(--red);
+        }
+
+        .book-description {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--gray);
+            margin-bottom: 2rem;
+        }
+
+        .book-themes {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .theme-tag {
+            background: var(--black);
+            color: var(--white);
+            padding: 0.5rem 1rem;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        /* ========== ARPENTAGE SECTION ========== */
+        .arpentage-section {
+            background: var(--black);
+            padding: 8rem 3rem;
+            position: relative;
+        }
+
+        .arpentage-header {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 6rem;
+        }
+
+        .arpentage-steps {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .step {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 2.5rem;
+            position: relative;
+            transition: all 0.4s var(--ease-out-expo);
+        }
+
+        .step:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--red);
+            transform: translateY(-10px);
+        }
+
+        .step-number {
+            font-family: var(--font-display);
+            font-size: 5rem;
+            font-weight: 900;
+            color: var(--red);
+            opacity: 0.3;
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            line-height: 1;
+        }
+
+        .step-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .step-title {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .step-desc {
+            color: var(--gray);
+            line-height: 1.7;
+        }
+
+        .arpentage-note {
+            max-width: 800px;
+            margin: 4rem auto 0;
+            text-align: center;
+            padding: 2rem;
+            background: rgba(255, 214, 10, 0.1);
+            border: 1px solid var(--yellow);
+        }
+
+        .arpentage-note p {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-style: italic;
+            color: var(--yellow);
+        }
+
+        /* ========== METHOD SECTION ========== */
+        .method-section {
+            background: var(--white);
+            color: var(--black);
+            padding: 8rem 3rem;
+            position: relative;
+        }
+
+        .method-header {
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto 6rem;
+        }
+
+        .method-subtitle {
+            font-size: 1.25rem;
+            color: var(--gray);
+            margin-top: 1.5rem;
+        }
+
+        .timeline {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--gray-light);
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+            align-items: center;
+        }
+
+        .timeline-content {
+            background: var(--cream);
+            padding: 2rem;
+            position: relative;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content {
+            grid-column: 1;
+            text-align: right;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content {
+            grid-column: 3;
+        }
+
+        .timeline-day {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--red);
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-title {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+
+        .timeline-desc {
+            color: var(--gray);
+            font-size: 0.95rem;
+        }
+
+        .timeline-marker {
+            width: 20px;
+            height: 20px;
+            background: var(--red);
+            border-radius: 50%;
+            grid-column: 2;
+            position: relative;
+            z-index: 1;
+        }
+
+        .timeline-marker.highlight {
+            width: 30px;
+            height: 30px;
+            background: var(--yellow);
+            box-shadow: 0 0 0 10px rgba(255, 214, 10, 0.2);
+        }
+
+        /* ========== ADVANTAGES SECTION ========== */
+        .advantages-section {
+            background: var(--red);
+            color: var(--white);
+            padding: 8rem 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .advantages-bg-text {
+            position: absolute;
+            font-family: var(--font-display);
+            font-size: 20vw;
+            font-weight: 900;
+            color: rgba(0, 0, 0, 0.1);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            white-space: nowrap;
+            pointer-events: none;
+        }
+
+        .advantages-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .advantage-card {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 3rem;
+            transition: all 0.4s var(--ease-out-expo);
+        }
+
+        .advantage-card:hover {
+            background: rgba(0, 0, 0, 0.4);
+            transform: scale(1.02);
+        }
+
+        .advantage-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .advantage-title {
+            font-family: var(--font-display);
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .advantage-desc {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.7;
+        }
+
+        .advantages-header {
+            text-align: center;
+            margin-bottom: 4rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .advantages-header .section-label {
+            color: var(--yellow);
+        }
+
+        .advantages-header .section-label::before {
+            background: var(--yellow);
+        }
+
+        /* ========== PARTNERS SECTION ========== */
+        .partners-section {
+            background: var(--black);
+            padding: 8rem 3rem;
+        }
+
+        .partners-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .partners-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .partner-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 3rem;
+            text-align: center;
+            transition: all 0.4s var(--ease-out-expo);
+        }
+
+        .partner-card:hover {
+            border-color: var(--red);
+            transform: translateY(-5px);
+        }
+
+        .partner-logo {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--white);
+            margin-bottom: 1rem;
+        }
+
+        .partner-type {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--red);
+            margin-bottom: 1.5rem;
+        }
+
+        .partner-desc {
+            color: var(--gray);
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+
+        /* ========== EVENT SECTION ========== */
+        .event-section {
+            background: var(--yellow);
+            color: var(--black);
+            padding: 6rem 3rem;
+        }
+
+        .event-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            align-items: center;
+        }
+
+        .event-info h2 {
+            font-family: var(--font-display);
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 2rem;
+        }
+
+        .event-details {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .event-detail {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .event-detail-icon {
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .event-detail-text {
+            font-size: 1.1rem;
+        }
+
+        .event-detail-text strong {
+            display: block;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 0.25rem;
+        }
+
+        .event-map {
+            background: var(--black);
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .event-map-placeholder {
+            font-family: var(--font-mono);
+            color: var(--gray);
+            font-size: 0.85rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        /* ========== CTA SECTION ========== */
+        .cta-section {
+            background: var(--black);
+            padding: 10rem 3rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 30% 70%, rgba(230, 57, 70, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 70% 30%, rgba(255, 214, 10, 0.15) 0%, transparent 50%);
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cta-title {
+            font-family: var(--font-display);
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 900;
+            line-height: 1;
+            margin-bottom: 2rem;
+        }
+
+        .cta-title .highlight {
+            color: var(--red);
+        }
+
+        .cta-text {
+            font-size: 1.25rem;
+            color: var(--gray);
+            margin-bottom: 3rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-large {
+            padding: 1.5rem 3rem;
+            font-size: 1rem;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--white);
+            color: var(--white);
+            padding: 1.25rem 2.5rem;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.4s var(--ease-out-expo);
+        }
+
+        .btn-outline:hover {
+            background: var(--white);
+            color: var(--black);
+        }
+
+        /* ========== FOOTER ========== */
+        footer {
+            background: var(--black);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 4rem 3rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 4rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-brand {
+            max-width: 300px;
+        }
+
+        .footer-logo {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-desc {
+            color: var(--gray);
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+
+        .footer-column h4 {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--red);
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            color: var(--gray);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--white);
+        }
+
+        .footer-bottom {
+            max-width: 1400px;
+            margin: 4rem auto 0;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-copyright {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--gray);
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .footer-social a {
+            color: var(--gray);
+            font-size: 1.25rem;
+            transition: color 0.3s;
+        }
+
+        .footer-social a:hover {
+            color: var(--red);
+        }
+
+        /* ========== SCROLL ANIMATIONS ========== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(60px);
+            transition: all 1s var(--ease-out-expo);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+        .reveal-delay-4 { transition-delay: 0.4s; }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 1024px) {
+            .countdown {
+                display: none;
+            }
+
+            .book-grid,
+            .event-grid {
+                grid-template-columns: 1fr;
+                gap: 4rem;
+            }
+
+            .arpentage-steps {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .advantages-grid,
+            .partners-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 1rem 1.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                padding: 6rem 1.5rem 4rem;
+            }
+
+            .hero-stats {
+                flex-direction: column;
+                gap: 2rem;
+            }
+
+            .hero-cta {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .arpentage-steps,
+            .advantages-grid,
+            .partners-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-item {
+                grid-template-columns: auto 1fr;
+                gap: 1.5rem;
+            }
+
+            .timeline-item .timeline-content {
+                grid-column: 2 !important;
+                text-align: left !important;
+            }
+
+            .timeline-marker {
+                grid-column: 1;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .book-cover-inner {
+                transform: rotate(0deg);
+            }
+
+            section {
+                padding: 4rem 1.5rem;
+            }
+        }
+
+        /* ========== MOBILE MENU ========== */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 2px;
+            background: var(--white);
+            transition: all 0.3s;
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: flex;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="noise"></div>
+    <div class="cursor"></div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">CCPLC</div>
+        <ul class="nav-links">
+            <li><a href="#livre">Le Livre</a></li>
+            <li><a href="#methode">La Méthode</a></li>
+            <li><a href="#avantages">Pourquoi Nous</a></li>
+            <li><a href="#partenaires">Partenaires</a></li>
+        </ul>
+        <a href="#inscription" class="nav-cta">S'inscrire</a>
+        <div class="menu-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        
+        <div class="hero-label reveal">Arpentage Citoyen — 22 Janvier 2025</div>
+        
+        <h1 class="hero-title reveal reveal-delay-1">
+            <span>Les</span>
+            <span class="highlight">Vigilantes</span>
+        </h1>
+        
+        <p class="hero-subtitle reveal reveal-delay-2">
+            Le plus grand arpentage citoyen de Belgique. 378 participants. 42 groupes. 
+            7 jours pour explorer ensemble un livre essentiel sur les femmes et l'extrême droite.
+        </p>
+        
+        <div class="hero-stats reveal reveal-delay-3">
+            <div class="stat">
+                <div class="stat-number">378</div>
+                <div class="stat-label">Participants</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">42</div>
+                <div class="stat-label">Groupes locaux</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">7</div>
+                <div class="stat-label">Jours d'exploration</div>
+            </div>
+        </div>
+        
+        <div class="hero-cta reveal reveal-delay-4">
+            <a href="#inscription" class="btn-primary">
+                Je participe
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+            </a>
+            <a href="#methode" class="btn-secondary">
+                Découvrir la méthode
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+            </a>
+        </div>
+
+        <div class="countdown">
+            <div class="countdown-label">Début dans</div>
+            <div class="countdown-timer">
+                <div class="countdown-item">
+                    <div class="countdown-value" id="days">--</div>
+                    <div class="countdown-unit">Jours</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-value" id="hours">--</div>
+                    <div class="countdown-unit">Heures</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-value" id="minutes">--</div>
+                    <div class="countdown-unit">Min</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Marquee -->
+    <div class="marquee">
+        <div class="marquee-track">
+            <div class="marquee-content">
+                <span class="marquee-text">Gratuit</span>
+                <span class="marquee-dot"></span>
+                <span class="marquee-text">Pas besoin d'avoir lu le livre</span>
+                <span class="marquee-dot"></span>
+                <span class="marquee-text">Ouvert à tous·tes</span>
+                <span class="marquee-dot"></span>
+                <span class="marquee-text">En présentiel & distanciel</span>
+                <span class="marquee-dot"></span>
+                <span class="marquee-text">Boissons et en-cas offerts</span>
+                <span class="marquee-dot"></span>
+            </div>
+            <div class="marquee-content">
+                <span class="marquee-text">Gratuit</span>
+                <span class="marquee-dot"></span>
+                <span class="marquee-text">Pas besoin d'avoir lu le livre</span>
+                <span class="marquee-dot"></span>
+                <span class="marquee-text">Ouvert à tous·tes</span>
+                <span class="marquee-dot"></span>
+                <span class="marquee-text">En présentiel & distanciel</span>
+                <span class="marquee-dot"></span>
+                <span class="marquee-text">Boissons et en-cas offerts</span>
+                <span class="marquee-dot"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Book Section -->
+    <section class="book-section" id="livre">
+        <div class="book-grid">
+            <div class="book-cover reveal">
+                <div class="book-cover-inner">
+                    <div class="book-cover-label">Essai — JC Lattès 2025</div>
+                    <h3 class="book-cover-title">Les Vigilantes</h3>
+                    <p class="book-cover-author">Léane Alestra</p>
+                </div>
+            </div>
+            
+            <div class="book-content">
+                <div class="section-label reveal">Le Livre</div>
+                <h2 class="section-title reveal reveal-delay-1">Pourquoi des femmes soutiennent-elles l'extrême droite ?</h2>
+                
+                <blockquote class="book-question reveal reveal-delay-2">
+                    De Giorgia Meloni à Marine Le Pen, jusqu'aux influenceuses tradwives — comment expliquer cette alliance contre-intuitive ?
+                </blockquote>
+                
+                <p class="book-description reveal reveal-delay-3">
+                    Alors qu'à travers le monde l'extrême droite s'attaque aux droits des femmes, 
+                    celles-ci sont de plus en plus nombreuses à adhérer aux idéologies réactionnaires. 
+                    Léane Alestra décrypte les mécanismes du <strong>fémonationalisme</strong> et ce qu'il 
+                    révèle de notre organisation sociale.
+                </p>
+                
+                <div class="book-themes reveal reveal-delay-4">
+                    <span class="theme-tag">Féminisme</span>
+                    <span class="theme-tag">Extrême droite</span>
+                    <span class="theme-tag">Tradwives</span>
+                    <span class="theme-tag">Politique</span>
+                    <span class="theme-tag">Société</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Arpentage Section -->
+    <section class="arpentage-section" id="arpentage">
+        <div class="arpentage-header">
+            <div class="section-label reveal">La Technique</div>
+            <h2 class="section-title reveal reveal-delay-1">L'arpentage, c'est quoi ?</h2>
+            <p class="reveal reveal-delay-2" style="color: var(--gray); font-size: 1.1rem; margin-top: 1rem;">
+                Une méthode d'intelligence collective née du mouvement ouvrier. 
+                Pas besoin de lire le livre avant. Pas besoin de l'acheter. 
+                Juste l'envie d'apprendre autrement.
+            </p>
+        </div>
+
+        <div class="arpentage-steps">
+            <div class="step reveal">
+                <div class="step-number">01</div>
+                <div class="step-icon">✂️</div>
+                <h3 class="step-title">On découpe</h3>
+                <p class="step-desc">Le livre est physiquement divisé en autant de sections qu'il y a de participants. Chacun·e reçoit 15-20 pages.</p>
+            </div>
+            
+            <div class="step reveal reveal-delay-1">
+                <div class="step-number">02</div>
+                <div class="step-icon">📖</div>
+                <h3 class="step-title">On lit</h3>
+                <p class="step-desc">30 à 45 minutes de lecture individuelle. On note ce qui nous frappe, nous interpelle, nous fait réagir.</p>
+            </div>
+            
+            <div class="step reveal reveal-delay-2">
+                <div class="step-number">03</div>
+                <div class="step-icon">💬</div>
+                <h3 class="step-title">On partage</h3>
+                <p class="step-desc">Tour de parole. Chacun·e restitue non pas un résumé, mais son ressenti, ses questions, ses connexions.</p>
+            </div>
+            
+            <div class="step reveal reveal-delay-3">
+                <div class="step-number">04</div>
+                <div class="step-icon">🧠</div>
+                <h3 class="step-title">On construit</h3>
+                <p class="step-desc">L'intelligence collective émerge. On repart avec la vision de tous·tes sans avoir lu les 200 pages.</p>
+            </div>
+        </div>
+
+        <div class="arpentage-note reveal">
+            <p>« L'arpentage désacralise le livre et place l'expérience vécue au même niveau que l'érudition. »</p>
+        </div>
+    </section>
+
+    <!-- Method Section -->
+    <section class="method-section" id="methode">
+        <div class="method-header">
+            <div class="section-label reveal">Notre Innovation</div>
+            <h2 class="section-title reveal reveal-delay-1">7 jours pour transformer votre regard</h2>
+            <p class="method-subtitle reveal reveal-delay-2">
+                Le CCPLC réinvente l'arpentage avec un format hybride : 
+                6 jours d'exploration asynchrone depuis chez vous + 1 bilan présentiel mémorable.
+            </p>
+        </div>
+
+        <div class="timeline">
+            <div class="timeline-item reveal">
+                <div class="timeline-content">
+                    <div class="timeline-day">Jour 1</div>
+                    <h3 class="timeline-title">Lancement & constitution des groupes</h3>
+                    <p class="timeline-desc">Visio ou présentiel local. Distribution des extraits. Rencontre avec votre groupe de 9.</p>
+                </div>
+                <div class="timeline-marker"></div>
+            </div>
+
+            <div class="timeline-item reveal">
+                <div class="timeline-content">
+                    <div class="timeline-day">Jours 2-5</div>
+                    <h3 class="timeline-title">Exploration asynchrone</h3>
+                    <p class="timeline-desc">Lecture individuelle + notes guidées + échanges quotidiens dans votre groupe local via Telegram.</p>
+                </div>
+                <div class="timeline-marker"></div>
+            </div>
+
+            <div class="timeline-item reveal">
+                <div class="timeline-content">
+                    <div class="timeline-day">Jour 6</div>
+                    <h3 class="timeline-title">Synthèse locale</h3>
+                    <p class="timeline-desc">2h en visio avec votre groupe. Mise en commun des découvertes. Préparation de la restitution collective.</p>
+                </div>
+                <div class="timeline-marker"></div>
+            </div>
+
+            <div class="timeline-item reveal">
+                <div class="timeline-content">
+                    <div class="timeline-day">Jour 7 — 22 Janvier</div>
+                    <h3 class="timeline-title">Bilan présentiel à Bruxelles</h3>
+                    <p class="timeline-desc">Amazone asbl. World café, restitutions croisées, forum ouvert. L'intelligence de 378 cerveaux réunis.</p>
+                </div>
+                <div class="timeline-marker highlight"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Advantages Section -->
+    <section class="advantages-section" id="avantages">
+        <div class="advantages-bg-text">ENSEMBLE</div>
+        
+        <div class="advantages-header">
+            <div class="section-label reveal">Pour les associations</div>
+            <h2 class="section-title reveal reveal-delay-1" style="color: var(--white);">Pourquoi collaborer avec le CCPLC ?</h2>
+        </div>
+
+        <div class="advantages-grid">
+            <div class="advantage-card reveal">
+                <div class="advantage-icon">🎯</div>
+                <h3 class="advantage-title">Démultipliez votre impact</h3>
+                <p class="advantage-desc">Un événement local devient un mouvement national. 42 groupes dans toute la Belgique francophone portent votre message.</p>
+            </div>
+
+            <div class="advantage-card reveal reveal-delay-1">
+                <div class="advantage-icon">🌍</div>
+                <h3 class="advantage-title">Touchez de nouveaux publics</h3>
+                <p class="advantage-desc">Le format hybride asynchrone permet de toucher des personnes éloignées de Bruxelles ou à horaires contraints.</p>
+            </div>
+
+            <div class="advantage-card reveal reveal-delay-2">
+                <div class="advantage-icon">🤝</div>
+                <h3 class="advantage-title">Zéro charge logistique</h3>
+                <p class="advantage-desc">Le CCPLC gère l'inscription, la coordination des 42 groupes, l'infrastructure technique. Vous gardez la visibilité.</p>
+            </div>
+
+            <div class="advantage-card reveal reveal-delay-3">
+                <div class="advantage-icon">📊</div>
+                <h3 class="advantage-title">Données & feedback</h3>
+                <p class="advantage-desc">Rapport complet post-événement : profils des participants, synthèses collectives, pistes d'action identifiées.</p>
+            </div>
+
+            <div class="advantage-card reveal reveal-delay-4">
+                <div class="advantage-icon">🔄</div>
+                <h3 class="advantage-title">Modèle réplicable</h3>
+                <p class="advantage-desc">Tout est documenté en licence libre. Reproduisez la méthode sur vos prochains événements en toute autonomie.</p>
+            </div>
+
+            <div class="advantage-card reveal reveal-delay-5">
+                <div class="advantage-icon">💰</div>
+                <h3 class="advantage-title">100% gratuit & désintéressé</h3>
+                <p class="advantage-desc">Pas de contrepartie financière. Notre seul objectif : co-construire un modèle d'éducation populaire qui fonctionne.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partners Section -->
+    <section class="partners-section" id="partenaires">
+        <div class="partners-header">
+            <div class="section-label reveal">Nos Partenaires</div>
+            <h2 class="section-title reveal reveal-delay-1">Un événement co-organisé par</h2>
+        </div>
+
+        <div class="partners-grid">
+            <div class="partner-card reveal">
+                <div class="partner-logo">AMAZONE</div>
+                <div class="partner-type">Centre de ressources pour l'égalité</div>
+                <p class="partner-desc">Carrefour de l'associatif féministe à Bruxelles. Héberge une vingtaine d'organisations et un centre de documentation unique.</p>
+            </div>
+
+            <div class="partner-card reveal reveal-delay-1">
+                <div class="partner-logo">SORALIA</div>
+                <div class="partner-type">Mouvement féministe</div>
+                <p class="partner-desc">9 régionales, 200+ comités locaux. Adossé au réseau mutualiste Solidaris avec 23 centres de planning familial.</p>
+            </div>
+
+            <div class="partner-card reveal reveal-delay-2">
+                <div class="partner-logo">PAC</div>
+                <div class="partner-type">Présence et Action Culturelles</div>
+                <p class="partner-desc">Plus grand mouvement d'éducation permanente de la FWB. 11 régionales, 200 sections locales, 10 000 exemplaires d'Agir par la Culture.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Event Details Section -->
+    <section class="event-section" id="event">
+        <div class="event-grid">
+            <div class="event-info">
+                <h2>Rendez-vous le 22 janvier</h2>
+                <div class="event-details">
+                    <div class="event-detail">
+                        <span class="event-detail-icon">📅</span>
+                        <div class="event-detail-text">
+                            <strong>Date & Heure</strong>
+                            Jeudi 22 janvier 2025, 18h — 20h30
+                        </div>
+                    </div>
+                    <div class="event-detail">
+                        <span class="event-detail-icon">📍</span>
+                        <div class="event-detail-text">
+                            <strong>Lieu</strong>
+                            Amazone asbl — Rue du Méridien 10, 1210 Bruxelles
+                        </div>
+                    </div>
+                    <div class="event-detail">
+                        <span class="event-detail-icon">🚲</span>
+                        <div class="event-detail-text">
+                            <strong>Accès</strong>
+                            Parking vélo sécurisé dans la cour • Parking voiture au 3 rue de l'Union
+                        </div>
+                    </div>
+                    <div class="event-detail">
+                        <span class="event-detail-icon">☕</span>
+                        <div class="event-detail-text">
+                            <strong>Inclus</strong>
+                            Boissons chaudes et en-cas offerts
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="event-map">
+                <iframe 
+                    src="https://www.openstreetmap.org/export/embed.html?bbox=4.3665%2C50.8505%2C4.3725%2C50.8545&layer=mapnik&marker=50.8525%2C4.3695" 
+                    style="width: 100%; height: 100%; border: none;"
+                    loading="lazy">
+                </iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section" id="inscription">
+        <div class="cta-bg"></div>
+        <div class="cta-content">
+            <h2 class="cta-title reveal">
+                Prêt·e à <span class="highlight">arpenter</span> ?
+            </h2>
+            <p class="cta-text reveal reveal-delay-1">
+                Rejoignez les 378 citoyen·nes qui vont explorer ensemble "Les Vigilantes". 
+                5 minutes par semaine suffisent. Juste un partage ? Ça compte déjà énormément.
+            </p>
+            <div class="cta-buttons reveal reveal-delay-2">
+                <a href="mailto:inscription@ccplc.be?subject=Inscription Arpentage Vigilantes" class="btn-primary btn-large">
+                    Je m'inscris
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </a>
+                <a href="https://ouaisfieu.github.io/tech/ccplc/" class="btn-outline">Découvrir le CCPLC</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <div class="footer-logo">CCPLC</div>
+                <p class="footer-desc">
+                    Collectif Citoyen pour la Participation Libre & Consciente. 
+                    On documente, on forme, on outille — le tout en licence libre.
+                </p>
+            </div>
+            
+            <div class="footer-column">
+                <h4>Liens</h4>
+                <ul class="footer-links">
+                    <li><a href="https://ouaisfieu.github.io/tech/">DOCTech</a></li>
+                    <li><a href="https://ouaisfieu.github.io/tech/ccplc/">Le Collectif</a></li>
+                    <li><a href="https://github.com/ouaisfieu/politika">POLiT!KA</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h4>Partenaires</h4>
+                <ul class="footer-links">
+                    <li><a href="https://www.amazone.be/">Amazone</a></li>
+                    <li><a href="https://www.soralia.be/">Soralia</a></li>
+                    <li><a href="https://www.pac-g.be/">PAC</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h4>Contact</h4>
+                <ul class="footer-links">
+                    <li><a href="mailto:contact@ccplc.be">contact@ccplc.be</a></li>
+                    <li><a href="https://bsky.app/profile/ouaisfieu.bsky.social">Bluesky</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p class="footer-copyright">© 2025 CCPLC — Licence CC BY-NC 4.0</p>
+            <div class="footer-social">
+                <a href="https://github.com/ouaisfieu" aria-label="GitHub">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.385-1.335-1.755-1.335-1.755-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.605-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ========== CUSTOM CURSOR ==========
+        const cursor = document.querySelector('.cursor');
+        let mouseX = 0, mouseY = 0;
+        let cursorX = 0, cursorY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        function animateCursor() {
+            cursorX += (mouseX - cursorX) * 0.15;
+            cursorY += (mouseY - cursorY) * 0.15;
+            cursor.style.left = cursorX + 'px';
+            cursor.style.top = cursorY + 'px';
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
+
+        // Hover effect on interactive elements
+        const interactiveElements = document.querySelectorAll('a, button, .step, .advantage-card, .partner-card');
+        interactiveElements.forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+        });
+
+        // Hide cursor on touch devices
+        if ('ontouchstart' in window) {
+            cursor.style.display = 'none';
+        }
+
+        // ========== COUNTDOWN TIMER ==========
+        const targetDate = new Date('2025-01-22T18:00:00+01:00').getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+
+            document.getElementById('days').textContent = days.toString().padStart(2, '0');
+            document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+            document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+
+            if (distance < 0) {
+                document.querySelector('.countdown').innerHTML = '<div class="countdown-label">C\'est maintenant !</div>';
+            }
+        }
+
+        updateCountdown();
+        setInterval(updateCountdown, 60000);
+
+        // ========== SCROLL REVEAL ==========
+        const revealElements = document.querySelectorAll('.reveal');
+
+        function checkReveal() {
+            const triggerBottom = window.innerHeight * 0.85;
+            
+            revealElements.forEach(el => {
+                const elementTop = el.getBoundingClientRect().top;
+                
+                if (elementTop < triggerBottom) {
+                    el.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', checkReveal);
+        window.addEventListener('load', checkReveal);
+
+        // ========== SMOOTH SCROLL ==========
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // ========== PARALLAX STATS ==========
+        const statsSection = document.querySelector('.hero-stats');
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            if (statsSection) {
+                statsSection.style.transform = `translateY(${scrolled * 0.05}px)`;
+            }
+        });
+
+        // ========== NAV SCROLL EFFECT ==========
+        const nav = document.querySelector('nav');
+        let lastScroll = 0;
+
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll > 100) {
+                nav.style.background = 'rgba(10, 10, 10, 0.9)';
+                nav.style.backdropFilter = 'blur(10px)';
+            } else {
+                nav.style.background = 'transparent';
+                nav.style.backdropFilter = 'none';
+            }
+            
+            lastScroll = currentScroll;
+        });
+
+        // ========== ANIMATE NUMBERS ON SCROLL ==========
+        const statNumbers = document.querySelectorAll('.stat-number');
+        let numbersAnimated = false;
+
+        function animateNumbers() {
+            if (numbersAnimated) return;
+            
+            const heroStats = document.querySelector('.hero-stats');
+            const rect = heroStats.getBoundingClientRect();
+            
+            if (rect.top < window.innerHeight && rect.bottom > 0) {
+                numbersAnimated = true;
+                
+                statNumbers.forEach(num => {
+                    const target = parseInt(num.textContent);
+                    let current = 0;
+                    const increment = target / 50;
+                    const duration = 1500;
+                    const stepTime = duration / 50;
+                    
+                    const timer = setInterval(() => {
+                        current += increment;
+                        if (current >= target) {
+                            num.textContent = target;
+                            clearInterval(timer);
+                        } else {
+                            num.textContent = Math.floor(current);
+                        }
+                    }, stepTime);
+                });
+            }
+        }
+
+        window.addEventListener('scroll', animateNumbers);
+        window.addEventListener('load', animateNumbers);
+    </script>
+</body>
+</html>
