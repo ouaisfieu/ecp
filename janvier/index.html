@@ -1,0 +1,1804 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CCPLC — Arpentages Citoyens | Éducation Populaire Hybride</title>
+    <meta name="description" content="Le CCPLC propose des ateliers d'éducation populaire en distanciel asynchrone sur 7 jours. Démultipliez l'impact de vos événements avec notre méthode gratuite et désintéressée.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Space+Mono:wght@400;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ========== VARIABLES CONFIG ========== */
+        :root {
+            /* COULEURS - Modifiez ici pour personnaliser */
+            --black: #0a0a0a;
+            --white: #fafafa;
+            --primary: #e63946;      /* Rouge militant */
+            --primary-dark: #c1121f;
+            --accent: #ffd60a;       /* Jaune */
+            --cream: #f5f0e8;
+            --gray: #6b7280;
+            --gray-light: #e5e5e5;
+            
+            /* FONTS */
+            --font-display: 'Playfair Display', Georgia, serif;
+            --font-mono: 'Space Mono', monospace;
+            --font-body: 'DM Sans', -apple-system, sans-serif;
+            
+            /* ANIMATIONS */
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+            --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--black);
+            color: var(--white);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        ::selection {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        /* ========== NOISE TEXTURE ========== */
+        .noise {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+        }
+
+        /* ========== CURSOR ========== */
+        .cursor {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--primary);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 10000;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s var(--ease-out-expo), 
+                        height 0.3s var(--ease-out-expo),
+                        background 0.3s var(--ease-out-expo);
+            mix-blend-mode: difference;
+        }
+
+        .cursor.hover {
+            width: 60px;
+            height: 60px;
+            background: var(--primary);
+        }
+
+        /* ========== NAVIGATION ========== */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1.5rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s, backdrop-filter 0.3s;
+        }
+
+        nav.scrolled {
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--white);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--white);
+            text-decoration: none;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.4s var(--ease-out-expo);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-cta {
+            background: var(--primary);
+            color: var(--white);
+            padding: 0.75rem 1.5rem;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.3s var(--ease-out-expo);
+        }
+
+        .nav-cta:hover {
+            background: var(--accent);
+            color: var(--black);
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 2px;
+            background: var(--white);
+            transition: all 0.3s;
+        }
+
+        /* ========== HERO ========== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 8rem 3rem 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(ellipse at 20% 80%, rgba(230, 57, 70, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(255, 214, 10, 0.1) 0%, transparent 50%),
+                var(--black);
+            z-index: -1;
+        }
+
+        .hero-label {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--primary);
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .hero-label::before {
+            content: '';
+            width: 40px;
+            height: 1px;
+            background: var(--primary);
+        }
+
+        .hero-title {
+            font-family: var(--font-display);
+            font-size: clamp(3rem, 9vw, 7rem);
+            font-weight: 900;
+            line-height: 0.95;
+            margin-bottom: 2rem;
+            max-width: 1000px;
+        }
+
+        .hero-title .highlight {
+            color: var(--primary);
+            font-style: italic;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--gray);
+            max-width: 700px;
+            margin-bottom: 3rem;
+            line-height: 1.8;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            background: var(--primary);
+            color: var(--white);
+            padding: 1.25rem 2.5rem;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.4s var(--ease-out-expo);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--accent);
+            transition: left 0.4s var(--ease-out-expo);
+            z-index: -1;
+        }
+
+        .btn-primary:hover {
+            color: var(--black);
+        }
+
+        .btn-primary:hover::before {
+            left: 0;
+        }
+
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--white);
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .btn-secondary:hover {
+            color: var(--primary);
+        }
+
+        .btn-secondary svg {
+            transition: transform 0.3s var(--ease-out-expo);
+        }
+
+        .btn-secondary:hover svg {
+            transform: translateX(5px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--white);
+            color: var(--white);
+            padding: 1.25rem 2.5rem;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.4s var(--ease-out-expo);
+        }
+
+        .btn-outline:hover {
+            background: var(--white);
+            color: var(--black);
+        }
+
+        /* ========== SECTION STYLES ========== */
+        section {
+            padding: 8rem 3rem;
+        }
+
+        .section-label {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .section-label::before {
+            content: '';
+            width: 30px;
+            height: 1px;
+            background: var(--primary);
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 2rem;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto 5rem;
+        }
+
+        .section-header .section-label {
+            justify-content: center;
+        }
+
+        .section-header .section-label::before {
+            display: none;
+        }
+
+        /* ========== MARQUEE ========== */
+        .marquee {
+            background: var(--primary);
+            padding: 1rem 0;
+            overflow: hidden;
+        }
+
+        .marquee-track {
+            display: flex;
+            animation: marquee 30s linear infinite;
+        }
+
+        .marquee-content {
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+            padding-right: 3rem;
+            white-space: nowrap;
+        }
+
+        .marquee-text {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--white);
+        }
+
+        .marquee-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--accent);
+            border-radius: 50%;
+        }
+
+        @keyframes marquee {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+        }
+
+        /* ========== PROBLEM SECTION ========== */
+        .problem-section {
+            background: var(--cream);
+            color: var(--black);
+        }
+
+        .problem-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            align-items: center;
+        }
+
+        .problem-visual {
+            position: relative;
+        }
+
+        .problem-card {
+            background: var(--black);
+            color: var(--white);
+            padding: 3rem;
+            position: relative;
+            transform: rotate(-2deg);
+            box-shadow: 20px 20px 0 var(--primary);
+        }
+
+        .problem-card-number {
+            font-family: var(--font-display);
+            font-size: 8rem;
+            font-weight: 900;
+            color: var(--primary);
+            opacity: 0.3;
+            position: absolute;
+            top: -2rem;
+            right: 2rem;
+            line-height: 1;
+        }
+
+        .problem-card-text {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        .problem-content {
+            max-width: 550px;
+        }
+
+        .problem-list {
+            list-style: none;
+            margin-top: 2rem;
+        }
+
+        .problem-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            color: var(--gray);
+        }
+
+        .problem-list li::before {
+            content: '→';
+            color: var(--primary);
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        /* ========== METHOD SECTION ========== */
+        .method-section {
+            background: var(--black);
+        }
+
+        .method-steps {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .step {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 2.5rem;
+            position: relative;
+            transition: all 0.4s var(--ease-out-expo);
+        }
+
+        .step:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--primary);
+            transform: translateY(-10px);
+        }
+
+        .step-number {
+            font-family: var(--font-display);
+            font-size: 4rem;
+            font-weight: 900;
+            color: var(--primary);
+            opacity: 0.3;
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            line-height: 1;
+        }
+
+        .step-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .step-title {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .step-desc {
+            color: var(--gray);
+            line-height: 1.7;
+        }
+
+        /* ========== TIMELINE SECTION ========== */
+        .timeline-section {
+            background: var(--white);
+            color: var(--black);
+        }
+
+        .timeline {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--gray-light);
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+            align-items: center;
+        }
+
+        .timeline-content {
+            background: var(--cream);
+            padding: 2rem;
+            position: relative;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content {
+            grid-column: 1;
+            text-align: right;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content {
+            grid-column: 3;
+        }
+
+        .timeline-day {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-title {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+
+        .timeline-desc {
+            color: var(--gray);
+            font-size: 0.95rem;
+        }
+
+        .timeline-marker {
+            width: 20px;
+            height: 20px;
+            background: var(--primary);
+            border-radius: 50%;
+            grid-column: 2;
+            position: relative;
+            z-index: 1;
+        }
+
+        .timeline-marker.highlight {
+            width: 30px;
+            height: 30px;
+            background: var(--accent);
+            box-shadow: 0 0 0 10px rgba(255, 214, 10, 0.2);
+        }
+
+        /* ========== ADVANTAGES SECTION ========== */
+        .advantages-section {
+            background: var(--primary);
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .advantages-bg-text {
+            position: absolute;
+            font-family: var(--font-display);
+            font-size: 15vw;
+            font-weight: 900;
+            color: rgba(0, 0, 0, 0.1);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            white-space: nowrap;
+            pointer-events: none;
+        }
+
+        .advantages-header {
+            text-align: center;
+            margin-bottom: 4rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .advantages-header .section-label {
+            color: var(--accent);
+            justify-content: center;
+        }
+
+        .advantages-header .section-label::before {
+            background: var(--accent);
+        }
+
+        .advantages-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .advantage-card {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 2.5rem;
+            transition: all 0.4s var(--ease-out-expo);
+        }
+
+        .advantage-card:hover {
+            background: rgba(0, 0, 0, 0.4);
+            transform: scale(1.02);
+        }
+
+        .advantage-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .advantage-title {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .advantage-desc {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.7;
+        }
+
+        /* ========== ECOSYSTEM SECTION ========== */
+        .ecosystem-section {
+            background: var(--black);
+        }
+
+        .ecosystem-intro {
+            max-width: 800px;
+            margin: 0 auto 4rem;
+            text-align: center;
+        }
+
+        .ecosystem-intro p {
+            font-size: 1.2rem;
+            color: var(--gray);
+            line-height: 1.8;
+        }
+
+        .ecosystem-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto 5rem;
+        }
+
+        .eco-stat {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .eco-stat-number {
+            font-family: var(--font-display);
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: var(--accent);
+            line-height: 1;
+        }
+
+        .eco-stat-label {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--gray);
+            margin-top: 0.75rem;
+        }
+
+        .ecosystem-partners {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .eco-partner {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            transition: all 0.4s var(--ease-out-expo);
+        }
+
+        .eco-partner:hover {
+            border-color: var(--primary);
+        }
+
+        .eco-partner-name {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .eco-partner-type {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .eco-partner-desc {
+            color: var(--gray);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* ========== FUNDING SECTION ========== */
+        .funding-section {
+            background: var(--cream);
+            color: var(--black);
+        }
+
+        .funding-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .funding-content {
+            max-width: 550px;
+        }
+
+        .funding-content p {
+            font-size: 1.1rem;
+            color: var(--gray);
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .funding-highlight {
+            background: var(--black);
+            color: var(--white);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .funding-highlight-title {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .funding-highlight-text {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 700;
+            line-height: 1.4;
+        }
+
+        .funding-sources {
+            background: var(--white);
+            padding: 2rem;
+            border: 2px solid var(--black);
+        }
+
+        .funding-sources h4 {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+        }
+
+        .funding-source-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--gray-light);
+        }
+
+        .funding-source-item:last-child {
+            border-bottom: none;
+        }
+
+        .funding-source-name {
+            font-weight: 600;
+        }
+
+        .funding-source-amount {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            color: var(--primary);
+        }
+
+        .funding-calendar {
+            background: var(--black);
+            color: var(--white);
+            padding: 2rem;
+        }
+
+        .funding-calendar h4 {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+        }
+
+        .calendar-item {
+            display: flex;
+            gap: 1.5rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .calendar-item:last-child {
+            border-bottom: none;
+        }
+
+        .calendar-date {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            color: var(--primary);
+            min-width: 80px;
+        }
+
+        .calendar-desc {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        /* ========== CTA SECTION ========== */
+        .cta-section {
+            background: var(--black);
+            padding: 10rem 3rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 30% 70%, rgba(230, 57, 70, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 70% 30%, rgba(255, 214, 10, 0.15) 0%, transparent 50%);
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cta-title {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 7vw, 5rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 2rem;
+        }
+
+        .cta-title .highlight {
+            color: var(--primary);
+        }
+
+        .cta-text {
+            font-size: 1.25rem;
+            color: var(--gray);
+            margin-bottom: 3rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        /* ========== CONTACT SECTION ========== */
+        .contact-section {
+            background: var(--primary);
+            color: var(--white);
+            padding: 4rem 3rem;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 3rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .contact-item h4 {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .contact-item p,
+        .contact-item a {
+            color: var(--white);
+            font-size: 1rem;
+            text-decoration: none;
+            line-height: 1.6;
+        }
+
+        .contact-item a:hover {
+            text-decoration: underline;
+        }
+
+        /* ========== FOOTER ========== */
+        footer {
+            background: var(--black);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 4rem 3rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 4rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-brand {
+            max-width: 300px;
+        }
+
+        .footer-logo {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-desc {
+            color: var(--gray);
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+
+        .footer-column h4 {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            color: var(--gray);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--white);
+        }
+
+        .footer-bottom {
+            max-width: 1400px;
+            margin: 4rem auto 0;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-copyright {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--gray);
+        }
+
+        /* ========== SCROLL ANIMATIONS ========== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(60px);
+            transition: all 1s var(--ease-out-expo);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+        .reveal-delay-4 { transition-delay: 0.4s; }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 1024px) {
+            .problem-grid,
+            .funding-grid {
+                grid-template-columns: 1fr;
+                gap: 4rem;
+            }
+
+            .method-steps {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .advantages-grid,
+            .ecosystem-partners {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .ecosystem-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-grid,
+            .contact-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 1rem 1.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            .hero {
+                padding: 6rem 1.5rem 4rem;
+            }
+
+            section {
+                padding: 4rem 1.5rem;
+            }
+
+            .method-steps,
+            .advantages-grid,
+            .ecosystem-partners,
+            .ecosystem-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-item {
+                grid-template-columns: auto 1fr;
+                gap: 1.5rem;
+            }
+
+            .timeline-item .timeline-content {
+                grid-column: 2 !important;
+                text-align: left !important;
+            }
+
+            .timeline-marker {
+                grid-column: 1;
+            }
+
+            .footer-grid,
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .problem-card {
+                transform: rotate(0deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="noise"></div>
+    <div class="cursor"></div>
+
+    <!-- Navigation -->
+    <nav>
+        <a href="https://ouaisfieu.github.io/tech/ccplc/" class="logo">CCPLC</a>
+        <ul class="nav-links">
+            <li><a href="#probleme">Le Problème</a></li>
+            <li><a href="#methode">Notre Méthode</a></li>
+            <li><a href="#avantages">Vos Avantages</a></li>
+            <li><a href="#ecosysteme">Écosystème</a></li>
+            <li><a href="#financement">Financement</a></li>
+        </ul>
+        <a href="#contact" class="nav-cta">Collaborer</a>
+        <div class="menu-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        
+        <div class="hero-label reveal">Collectif Citoyen pour la Participation Libre & Consciente</div>
+        
+        <h1 class="hero-title reveal reveal-delay-1">
+            Démultipliez l'impact de vos <span class="highlight">événements</span> d'éducation populaire
+        </h1>
+        
+        <p class="hero-subtitle reveal reveal-delay-2">
+            Le CCPLC propose une méthode hybride en 7 jours — asynchrone + présentiel — 
+            pour transformer un événement local en mouvement citoyen. 
+            <strong>Gratuit, désintéressé, réplicable.</strong>
+        </p>
+        
+        <div class="hero-cta reveal reveal-delay-3">
+            <a href="#contact" class="btn-primary">
+                Proposer un partenariat
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+            </a>
+            <a href="#methode" class="btn-secondary">
+                Découvrir la méthode
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+            </a>
+        </div>
+    </section>
+
+    <!-- Marquee -->
+    <div class="marquee">
+        <div class="marquee-track">
+            <div class="marquee-content">
+                <span class="marquee-text">100% Gratuit</span>
+                <span class="marquee-dot"></span>
+                <span class="marquee-text">Licence libre CC BY-NC</span>
+                <span class="marquee-dot"></span>
+                <span class="marquee-text">42 groupes simultanés</span>
+                <span class="marquee-dot"></span>
+                <span class="marquee-text">378 participants</span>
+                <span class="marquee-dot"></span>
+                <span class="marquee-text">7 jours d'exploration</span>
+                <span class="marquee-dot"></span>
+            </div>
+            <div class="marquee-content">
+                <span class="marquee-text">100% Gratuit</span>
+                <span class="marquee-dot"></span>
+                <span class="marquee-text">Licence libre CC BY-NC</span>
+                <span class="marquee-dot"></span>
+                <span class="marquee-text">42 groupes simultanés</span>
+                <span class="marquee-dot"></span>
+                <span class="marquee-text">378 participants</span>
+                <span class="marquee-dot"></span>
+                <span class="marquee-text">7 jours d'exploration</span>
+                <span class="marquee-dot"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Problem Section -->
+    <section class="problem-section" id="probleme">
+        <div class="problem-grid">
+            <div class="problem-visual reveal">
+                <div class="problem-card">
+                    <div class="problem-card-number">?</div>
+                    <p class="problem-card-text">
+                        Vos événements touchent 20-30 personnes.<br>
+                        Votre réseau pourrait en mobiliser 300.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="problem-content">
+                <div class="section-label reveal">Le Constat</div>
+                <h2 class="section-title reveal reveal-delay-1">L'éducation populaire a un problème d'échelle</h2>
+                
+                <ul class="problem-list reveal reveal-delay-2">
+                    <li>Les événements restent confinés aux cercles militants existants</li>
+                    <li>Les personnes éloignées géographiquement ou à horaires contraints sont exclues</li>
+                    <li>L'organisation logistique absorbe toute l'énergie des équipes</li>
+                    <li>Chaque événement repart de zéro, sans capitalisation</li>
+                    <li>Le public "non-initié" est intimidé par les formats classiques</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Method Section -->
+    <section class="method-section" id="methode">
+        <div class="section-header">
+            <div class="section-label reveal">Notre Solution</div>
+            <h2 class="section-title reveal reveal-delay-1">La méthode CCPLC en 4 piliers</h2>
+            <p class="reveal reveal-delay-2" style="color: var(--gray); font-size: 1.1rem; margin-top: 1rem;">
+                Un format hybride asynchrone-présentiel éprouvé par les MOOC citoyens, 
+                adapté à l'éducation populaire belge.
+            </p>
+        </div>
+
+        <div class="method-steps">
+            <div class="step reveal">
+                <div class="step-number">01</div>
+                <div class="step-icon">🌐</div>
+                <h3 class="step-title">Décentralisé</h3>
+                <p class="step-desc">42 groupes locaux de 9 personnes, répartis dans toute la Belgique francophone. Chaque groupe est autonome.</p>
+            </div>
+            
+            <div class="step reveal reveal-delay-1">
+                <div class="step-number">02</div>
+                <div class="step-icon">⏰</div>
+                <h3 class="step-title">Asynchrone</h3>
+                <p class="step-desc">6 jours d'exploration individuelle et d'échanges quotidiens en ligne. Chacun·e avance à son rythme.</p>
+            </div>
+            
+            <div class="step reveal reveal-delay-2">
+                <div class="step-number">03</div>
+                <div class="step-icon">🤝</div>
+                <h3 class="step-title">Synchronisé</h3>
+                <p class="step-desc">Points de rendez-vous collectifs : lancement J1, synthèse locale J6, bilan présentiel national J7.</p>
+            </div>
+            
+            <div class="step reveal reveal-delay-3">
+                <div class="step-number">04</div>
+                <div class="step-icon">📖</div>
+                <h3 class="step-title">Low-tech</h3>
+                <p class="step-desc">Framapad, Telegram, Jitsi — outils gratuits et éthiques. Pas d'inscription compliquée, fonctionne sur téléphone basique.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline Section -->
+    <section class="timeline-section">
+        <div class="section-header">
+            <div class="section-label reveal">Le Format</div>
+            <h2 class="section-title reveal reveal-delay-1">7 jours pour transformer les participants</h2>
+        </div>
+
+        <div class="timeline">
+            <div class="timeline-item reveal">
+                <div class="timeline-content">
+                    <div class="timeline-day">Jour 1</div>
+                    <h3 class="timeline-title">Lancement & constitution</h3>
+                    <p class="timeline-desc">Visio ou présentiel local. Distribution du matériel. Rencontre avec le groupe de 9.</p>
+                </div>
+                <div class="timeline-marker"></div>
+            </div>
+
+            <div class="timeline-item reveal">
+                <div class="timeline-content">
+                    <div class="timeline-day">Jours 2-5</div>
+                    <h3 class="timeline-title">Exploration asynchrone</h3>
+                    <p class="timeline-desc">Lecture/visionnage individuel + notes guidées + échanges quotidiens dans le groupe local.</p>
+                </div>
+                <div class="timeline-marker"></div>
+            </div>
+
+            <div class="timeline-item reveal">
+                <div class="timeline-content">
+                    <div class="timeline-day">Jour 6</div>
+                    <h3 class="timeline-title">Synthèse locale</h3>
+                    <p class="timeline-desc">2h en visio avec le groupe. Mise en commun. Préparation de la restitution collective.</p>
+                </div>
+                <div class="timeline-marker"></div>
+            </div>
+
+            <div class="timeline-item reveal">
+                <div class="timeline-content">
+                    <div class="timeline-day">Jour 7</div>
+                    <h3 class="timeline-title">Bilan présentiel</h3>
+                    <p class="timeline-desc">Événement national. World café, restitutions croisées, forum ouvert. L'intelligence collective en action.</p>
+                </div>
+                <div class="timeline-marker highlight"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Advantages Section -->
+    <section class="advantages-section" id="avantages">
+        <div class="advantages-bg-text">PARTENAIRES</div>
+        
+        <div class="advantages-header">
+            <div class="section-label reveal">Pour les associations</div>
+            <h2 class="section-title reveal reveal-delay-1" style="color: var(--white);">Pourquoi collaborer avec nous ?</h2>
+        </div>
+
+        <div class="advantages-grid">
+            <div class="advantage-card reveal">
+                <div class="advantage-icon">🎯</div>
+                <h3 class="advantage-title">Démultipliez l'impact</h3>
+                <p class="advantage-desc">Un événement local devient un mouvement national. 42 groupes dans toute la Belgique francophone portent votre message simultanément.</p>
+            </div>
+
+            <div class="advantage-card reveal reveal-delay-1">
+                <div class="advantage-icon">🌍</div>
+                <h3 class="advantage-title">Nouveaux publics</h3>
+                <p class="advantage-desc">Le format hybride touche des personnes éloignées de Bruxelles, à horaires contraints, ou intimidées par les formats militants classiques.</p>
+            </div>
+
+            <div class="advantage-card reveal reveal-delay-2">
+                <div class="advantage-icon">🤝</div>
+                <h3 class="advantage-title">Zéro charge logistique</h3>
+                <p class="advantage-desc">Le CCPLC gère l'inscription, la coordination des 42 groupes, l'infrastructure technique. Vous gardez la visibilité et le contenu.</p>
+            </div>
+
+            <div class="advantage-card reveal reveal-delay-3">
+                <div class="advantage-icon">📊</div>
+                <h3 class="advantage-title">Données & feedback</h3>
+                <p class="advantage-desc">Rapport complet post-événement : profils des participants, synthèses collectives, pistes d'action identifiées, indicateurs d'impact.</p>
+            </div>
+
+            <div class="advantage-card reveal reveal-delay-4">
+                <div class="advantage-icon">🔄</div>
+                <h3 class="advantage-title">Modèle réplicable</h3>
+                <p class="advantage-desc">Tout est documenté en licence libre CC BY-NC. Reproduisez la méthode sur vos prochains événements en toute autonomie.</p>
+            </div>
+
+            <div class="advantage-card reveal">
+                <div class="advantage-icon">💰</div>
+                <h3 class="advantage-title">100% désintéressé</h3>
+                <p class="advantage-desc">Aucune contrepartie financière. Notre seul objectif : co-construire un modèle d'éducation populaire hybride qui fonctionne.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ecosystem Section -->
+    <section class="ecosystem-section" id="ecosysteme">
+        <div class="section-header">
+            <div class="section-label reveal">L'écosystème belge</div>
+            <h2 class="section-title reveal reveal-delay-1">Un potentiel de diffusion exceptionnel</h2>
+        </div>
+
+        <div class="ecosystem-intro reveal">
+            <p>La Fédération Wallonie-Bruxelles reconnaît environ 280 associations d'éducation permanente, employant 2 300 travailleurs. Ce maillage territorial unique permet d'atteindre des publics dans chaque commune.</p>
+        </div>
+
+        <div class="ecosystem-stats">
+            <div class="eco-stat reveal">
+                <div class="eco-stat-number">280</div>
+                <div class="eco-stat-label">Associations EP reconnues</div>
+            </div>
+            <div class="eco-stat reveal reveal-delay-1">
+                <div class="eco-stat-number">2 300</div>
+                <div class="eco-stat-label">Travailleurs du secteur</div>
+            </div>
+            <div class="eco-stat reveal reveal-delay-2">
+                <div class="eco-stat-number">122</div>
+                <div class="eco-stat-label">Centres culturels</div>
+            </div>
+            <div class="eco-stat reveal reveal-delay-3">
+                <div class="eco-stat-number">400+</div>
+                <div class="eco-stat-label">Implantations locales partenaires</div>
+            </div>
+        </div>
+
+        <div class="ecosystem-partners">
+            <div class="eco-partner reveal">
+                <div class="eco-partner-name">PAC</div>
+                <div class="eco-partner-type">Éducation permanente</div>
+                <p class="eco-partner-desc">Plus grand mouvement EP de la FWB. 11 régionales, 200 sections locales, magazine Agir par la Culture (10 000 ex.).</p>
+            </div>
+
+            <div class="eco-partner reveal reveal-delay-1">
+                <div class="eco-partner-name">Soralia</div>
+                <div class="eco-partner-type">Mouvement féministe</div>
+                <p class="eco-partner-desc">9 régionales, 200+ comités locaux, adossé au réseau Solidaris. 23 centres de planning familial via Sofélia.</p>
+            </div>
+
+            <div class="eco-partner reveal reveal-delay-2">
+                <div class="eco-partner-name">Amazone</div>
+                <div class="eco-partner-type">Centre de ressources</div>
+                <p class="eco-partner-desc">Carrefour de l'associatif féministe à Bruxelles. Héberge 20+ organisations et un centre de congrès.</p>
+            </div>
+
+            <div class="eco-partner reveal">
+                <div class="eco-partner-name">Équipes Populaires</div>
+                <div class="eco-partner-type">Mouvement social</div>
+                <p class="eco-partner-desc">~100 groupes locaux. Membre du Mouvement Ouvrier Chrétien (MOC).</p>
+            </div>
+
+            <div class="eco-partner reveal reveal-delay-1">
+                <div class="eco-partner-name">Centre d'Action Laïque</div>
+                <div class="eco-partner-type">Éducation permanente</div>
+                <p class="eco-partner-desc">7 régionales couvrant toute la Wallonie-Bruxelles. Réseau des Maisons de la Laïcité.</p>
+            </div>
+
+            <div class="eco-partner reveal reveal-delay-2">
+                <div class="eco-partner-name">CEPAG</div>
+                <div class="eco-partner-type">Formation syndicale</div>
+                <p class="eco-partner-desc">Bras éducation populaire de la FGTB. Formation des délégués et militants syndicaux.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Funding Section -->
+    <section class="funding-section" id="financement">
+        <div class="funding-grid">
+            <div class="funding-content">
+                <div class="section-label reveal">Opportunités</div>
+                <h2 class="section-title reveal reveal-delay-1">+200 sources de financement identifiées</h2>
+                
+                <p class="reveal reveal-delay-2">
+                    L'écosystème belge offre un large éventail d'opportunités pour financer 
+                    des projets d'éducation permanente. Le CCPLC a cartographié les principales sources 
+                    et peut vous accompagner dans le montage de dossiers.
+                </p>
+
+                <div class="funding-highlight reveal reveal-delay-3">
+                    <div class="funding-highlight-title">Appel prioritaire 2026</div>
+                    <p class="funding-highlight-text">
+                        FRB "Culture, éducation permanente, participation citoyenne" — 
+                        Date limite : 30 avril 2026
+                    </p>
+                </div>
+
+                <div class="funding-sources reveal reveal-delay-4">
+                    <h4>Sources clés</h4>
+                    <div class="funding-source-item">
+                        <span class="funding-source-name">Loterie Nationale</span>
+                        <span class="funding-source-amount">185M €/an</span>
+                    </div>
+                    <div class="funding-source-item">
+                        <span class="funding-source-name">PCS Wallonie</span>
+                        <span class="funding-source-amount">23M €/an</span>
+                    </div>
+                    <div class="funding-source-item">
+                        <span class="funding-source-name">CSEM (médias)</span>
+                        <span class="funding-source-amount">5-50K €/projet</span>
+                    </div>
+                    <div class="funding-source-item">
+                        <span class="funding-source-name">PCI (citoyenneté)</span>
+                        <span class="funding-source-amount">5-35K €/projet</span>
+                    </div>
+                    <div class="funding-source-item">
+                        <span class="funding-source-name">COCOF Impulsion</span>
+                        <span class="funding-source-amount">max 20K €/an</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="funding-calendar reveal">
+                <h4>Prochaines échéances 2025-2026</h4>
+                
+                <div class="calendar-item">
+                    <span class="calendar-date">31/03/25</span>
+                    <span class="calendar-desc">FW-B PCI — Citoyenneté et interculturalité</span>
+                </div>
+                <div class="calendar-item">
+                    <span class="calendar-date">10/06/25</span>
+                    <span class="calendar-desc">FW-B — Lutte contre la pauvreté</span>
+                </div>
+                <div class="calendar-item">
+                    <span class="calendar-date">04/07/25</span>
+                    <span class="calendar-desc">CSEM — Éducation aux médias</span>
+                </div>
+                <div class="calendar-item">
+                    <span class="calendar-date">18/08/25</span>
+                    <span class="calendar-desc">WBI — Coopération internationale</span>
+                </div>
+                <div class="calendar-item">
+                    <span class="calendar-date">30/09/25</span>
+                    <span class="calendar-desc">SPF Économie — Inclusion numérique</span>
+                </div>
+                <div class="calendar-item">
+                    <span class="calendar-date">31/10/25</span>
+                    <span class="calendar-desc">COCOF Impulsion — Cohésion sociale</span>
+                </div>
+                <div class="calendar-item">
+                    <span class="calendar-date">19/01/26</span>
+                    <span class="calendar-desc">FRB — Lutte pauvreté petite échelle</span>
+                </div>
+                <div class="calendar-item">
+                    <span class="calendar-date">30/04/26</span>
+                    <span class="calendar-desc">FRB — Culture, EP, participation</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="cta-bg"></div>
+        <div class="cta-content">
+            <h2 class="cta-title reveal">
+                Prêt·e à <span class="highlight">collaborer</span> ?
+            </h2>
+            <p class="cta-text reveal reveal-delay-1">
+                Vous organisez un événement d'éducation populaire ? 
+                Un arpentage, une projection-débat, une formation ? 
+                Le CCPLC peut démultiplier votre impact — gratuitement.
+            </p>
+            <div class="cta-buttons reveal reveal-delay-2">
+                <a href="mailto:contact@ccplc.be?subject=Proposition de partenariat" class="btn-primary">
+                    Proposer un partenariat
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </a>
+                <a href="https://ouaisfieu.github.io/tech/ccplc/" class="btn-outline">Découvrir le CCPLC</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section" id="contact">
+        <div class="contact-grid">
+            <div class="contact-item">
+                <h4>Email</h4>
+                <a href="mailto:contact@ccplc.be">contact@ccplc.be</a>
+            </div>
+            <div class="contact-item">
+                <h4>Réseaux</h4>
+                <a href="https://bsky.app/profile/ouaisfieu.bsky.social">@ouaisfieu.bsky.social</a>
+            </div>
+            <div class="contact-item">
+                <h4>Documentation</h4>
+                <a href="https://ouaisfieu.github.io/tech/">DOCTech</a>
+            </div>
+            <div class="contact-item">
+                <h4>Code source</h4>
+                <a href="https://github.com/ouaisfieu/politika">GitHub</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <div class="footer-logo">CCPLC</div>
+                <p class="footer-desc">
+                    Collectif Citoyen pour la Participation Libre & Consciente. 
+                    On documente, on forme, on outille — le tout en licence libre CC BY-NC.
+                </p>
+            </div>
+            
+            <div class="footer-column">
+                <h4>Ressources</h4>
+                <ul class="footer-links">
+                    <li><a href="https://ouaisfieu.github.io/tech/">DOCTech</a></li>
+                    <li><a href="https://ouaisfieu.github.io/tech/ccplc/">Le Collectif</a></li>
+                    <li><a href="https://github.com/ouaisfieu/politika">POLiT!KA</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h4>Écosystème</h4>
+                <ul class="footer-links">
+                    <li><a href="https://www.amazone.be/">Amazone</a></li>
+                    <li><a href="https://www.soralia.be/">Soralia</a></li>
+                    <li><a href="https://www.pac-g.be/">PAC</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h4>Financement</h4>
+                <ul class="footer-links">
+                    <li><a href="https://www.subside.cfwb.be/">SUBside FWB</a></li>
+                    <li><a href="https://candidate.kbs-frb.be/">FRB Candidate</a></li>
+                    <li><a href="https://monasbl.be/">MonASBL.be</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p class="footer-copyright">© 2025 CCPLC — Licence CC BY-NC 4.0 — Utilisez, adaptez, diffusez</p>
+        </div>
+    </footer>
+
+    <script>
+        // ========== CUSTOM CURSOR ==========
+        const cursor = document.querySelector('.cursor');
+        let mouseX = 0, mouseY = 0;
+        let cursorX = 0, cursorY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        function animateCursor() {
+            cursorX += (mouseX - cursorX) * 0.15;
+            cursorY += (mouseY - cursorY) * 0.15;
+            cursor.style.left = cursorX + 'px';
+            cursor.style.top = cursorY + 'px';
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
+
+        // Hover effect
+        const interactiveElements = document.querySelectorAll('a, button, .step, .advantage-card, .eco-partner, .eco-stat');
+        interactiveElements.forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+        });
+
+        // Hide on touch
+        if ('ontouchstart' in window) {
+            cursor.style.display = 'none';
+        }
+
+        // ========== SCROLL REVEAL ==========
+        const revealElements = document.querySelectorAll('.reveal');
+
+        function checkReveal() {
+            const triggerBottom = window.innerHeight * 0.85;
+            
+            revealElements.forEach(el => {
+                const elementTop = el.getBoundingClientRect().top;
+                
+                if (elementTop < triggerBottom) {
+                    el.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', checkReveal);
+        window.addEventListener('load', checkReveal);
+
+        // ========== NAV SCROLL EFFECT ==========
+        const nav = document.querySelector('nav');
+
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 100) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // ========== SMOOTH SCROLL ==========
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // ========== ANIMATE NUMBERS ON SCROLL ==========
+        const statNumbers = document.querySelectorAll('.eco-stat-number');
+        let numbersAnimated = false;
+
+        function animateNumbers() {
+            if (numbersAnimated) return;
+            
+            const statsSection = document.querySelector('.ecosystem-stats');
+            if (!statsSection) return;
+            
+            const rect = statsSection.getBoundingClientRect();
+            
+            if (rect.top < window.innerHeight && rect.bottom > 0) {
+                numbersAnimated = true;
+                
+                statNumbers.forEach(num => {
+                    const text = num.textContent;
+                    const target = parseInt(text.replace(/[^0-9]/g, ''));
+                    const suffix = text.includes('+') ? '+' : '';
+                    let current = 0;
+                    const increment = target / 50;
+                    const duration = 1500;
+                    const stepTime = duration / 50;
+                    
+                    const timer = setInterval(() => {
+                        current += increment;
+                        if (current >= target) {
+                            num.textContent = target.toLocaleString('fr-BE') + suffix;
+                            clearInterval(timer);
+                        } else {
+                            num.textContent = Math.floor(current).toLocaleString('fr-BE') + suffix;
+                        }
+                    }, stepTime);
+                });
+            }
+        }
+
+        window.addEventListener('scroll', animateNumbers);
+        window.addEventListener('load', animateNumbers);
+    </script>
+</body>
+</html>
