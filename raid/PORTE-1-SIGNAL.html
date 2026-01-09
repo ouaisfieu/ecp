@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SIGNAL_273 — Decode the Signal</title>
+<meta name="description" content="We intercepted a signal from Brussels. 273 organizations. €50M+/year. Decode the system.">
+<meta property="og:title" content="SIGNAL_273 — Decode the Signal">
+<meta property="og:description" content="273 organizations. €50M+/year. State-funded. What is Belgium hiding?">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--g:#00ff88;--r:#ff2d2d;--b:#0a0a0a}
+body{background:var(--b);color:var(--g);font-family:'Courier New',monospace;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px}
+body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,255,136,.03) 2px,rgba(0,255,136,.03) 4px);pointer-events:none;z-index:999}
+.container{max-width:600px;text-align:center}
+.tag{background:var(--r);color:#000;padding:4px 12px;font-size:11px;display:inline-block;margin-bottom:20px;animation:pulse 2s infinite}
+@keyframes pulse{50%{opacity:.7}}
+h1{font-size:clamp(2.5rem,10vw,4rem);letter-spacing:4px;text-shadow:0 0 30px rgba(0,255,136,.5);margin-bottom:10px}
+h1 span{color:var(--r)}
+.subtitle{opacity:.7;margin-bottom:40px;font-size:14px}
+.stats{display:flex;justify-content:center;gap:30px;margin:30px 0;flex-wrap:wrap}
+.stat{text-align:center}
+.stat b{font-size:1.8rem;color:var(--r);display:block}
+.stat small{opacity:.5;font-size:11px}
+.message{background:#111;border:1px solid #333;padding:20px;margin:30px 0;text-align:left;font-size:13px;line-height:1.8}
+.message .prompt{color:var(--r)}
+.blink{animation:b 1s infinite}
+@keyframes b{50%{opacity:0}}
+.cta{margin-top:40px}
+.btn{display:inline-block;background:var(--g);color:#000;padding:15px 40px;text-decoration:none;font-weight:bold;font-size:16px;transition:.2s;border:none;cursor:pointer;font-family:inherit}
+.btn:hover{box-shadow:0 0 30px var(--g);transform:scale(1.05)}
+.secondary{background:transparent;border:1px solid var(--g);color:var(--g);margin-left:10px}
+.secondary:hover{background:var(--g);color:#000}
+.countdown{margin:30px 0}
+.countdown b{font-size:2rem;color:var(--r)}
+footer{margin-top:50px;opacity:.4;font-size:11px}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="tag">📡 SIGNAL INTERCEPTED</div>
+<h1>SIGNAL_<span>273</span></h1>
+<p class="subtitle">We intercepted a transmission from Brussels.</p>
+
+<div class="stats">
+<div class="stat"><b>273</b><small>ORGANIZATIONS</small></div>
+<div class="stat"><b>€50M+</b><small>PER YEAR</small></div>
+<div class="stat"><b>2,300</b><small>OPERATIVES</small></div>
+</div>
+
+<div class="message">
+<span class="prompt">&gt; DECRYPTING...</span><br><br>
+State-funded network detected.<br>
+Mission: "Critical analysis of society"<br>
+Status: Active since 2003<br>
+Classification: PUBLIC BUT HIDDEN<br><br>
+<span class="prompt">&gt; RAID SCHEDULED:</span> January 22, 2026<span class="blink">_</span>
+</div>
+
+<div class="countdown">
+<p style="opacity:.5;font-size:12px">TIME UNTIL RAID</p>
+<b id="cd">--:--:--:--</b>
+</div>
+
+<div class="cta">
+<a href="https://ouaisfieu.itch.io/signal273" class="btn">🎮 PLAY THE GAME</a>
+<a href="https://ouaisfieu.github.io/ecp/janvier/22/" class="btn secondary">📡 JOIN THE RAID</a>
+</div>
+
+<footer>SIGNAL_273 — The system is real — #BelgiumPaysCritics</footer>
+</div>
+
+<script>
+const t=new Date('2026-01-22T18:00:00+01:00');
+setInterval(()=>{
+const n=t-new Date();
+if(n>0){
+const d=Math.floor(n/864e5),h=Math.floor(n%864e5/36e5),m=Math.floor(n%36e5/6e4),s=Math.floor(n%6e4/1e3);
+document.getElementById('cd').textContent=d+'d '+h+'h '+m+'m '+s+'s';
+}else{document.getElementById('cd').textContent='🔴 LIVE NOW';}
+},1e3);
+</script>
+</body>
+</html>
