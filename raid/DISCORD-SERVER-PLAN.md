@@ -106,7 +106,7 @@ paid by the state to criticize the state.
 3. Share your progress in #general-intel
 4. Prepare for OPERATION RAID_22
 
-⏱️ COUNTDOWN: [days] until January 22, 2025
+⏱️ COUNTDOWN: [days] until January 22, 2026
 
 Good luck.
 
