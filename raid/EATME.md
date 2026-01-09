@@ -39,4 +39,59 @@ OK. Voici la version **réaliste** :
 
 ---
 
-Tu veux que je te fasse un fichier avec les 13 posts pré-écrits, un pour chaque jour, prêts à copier-coller ? Comme ça t'as juste à ouvrir, copier, poster, fermer. 2 minutes par jour.
+Maintenant je crée les fichiers individuels pour chaque plateforme, plus facile à utiliser :## ✅ TOUT LE MATOS EST PRÊT
+
+### 📦 Ce que t'as maintenant :
+
+| Fichier | C'est quoi | Tu fais quoi |
+|---------|------------|--------------|
+| **INDEX-CAMPAGNE.md** | Vue d'ensemble | Ton point de départ |
+| **CAMPAGNE-13-JOURS.md** | Calendrier détaillé | 1 action/jour expliquée |
+| **REDDIT-POSTS-PRETS.md** | 5 posts Reddit | Copier → Coller → Poster |
+| **TWEETS-PRETS.md** | Thread + 10 tweets | Copier → Coller → Poster |
+| **DISCORD-MESSAGES-PRETS.md** | Messages FR/EN/ES/DE | Copier → Coller → Envoyer |
+| **SIGNAL273-2026.html** | Le jeu ARG | Renommer → Zipper → Upload itch.io |
+
+---
+
+### ⚡ AUJOURD'HUI (15 min)
+
+```
+1. Télécharge SIGNAL273-2026.html
+2. Renomme-le en index.html
+3. Zippe-le
+4. Va sur itch.io/game/new
+5. Upload, configure, publie
+```
+
+### 📅 ENSUITE (10 min/jour)
+
+```
+Ouvre CAMPAGNE-13-JOURS.md
+Va au jour correspondant
+Copie le texte
+Colle sur la plateforme indiquée
+Ferme
+```
+
+---
+
+### 🎯 Version ULTRA-MINIMALE (si t'as vraiment pas le temps)
+
+**4 actions en 14 jours :**
+
+1. **Jour 1** → Publie itch.io
+2. **Jour 2** → UN post Reddit
+3. **Jour 13** → UN tweet J-1
+4. **Jour 14** → UN tweet "🔴 LIVE"
+
+**C'est tout. Le reste c'est du bonus.**
+
+---
+
+**URL principale : `https://ouaisfieu.github.io/ecp/janvier/22/`**
+
+**Hashtag : `#BelgiumPaysCritics`**
+
+Go. 🚀
+
