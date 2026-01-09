@@ -1,7 +1,7 @@
 # COMMUNIQUÉ DE PRESSE / PRESS RELEASE
 
 **Embargo : Aucun — Diffusion immédiate**
-**Date : Janvier 2025**
+**Date : Janvier 2026**
 
 ---
 
@@ -9,7 +9,7 @@
 
 ### Des militants internationaux organisent un "raid" pour découvrir comment la Belgique finance 273 organisations de critique sociale
 
-**Bruxelles, janvier 2025** — Un collectif citoyen organise une action internationale le 22 janvier pour attirer l'attention mondiale sur un modèle unique : l'Éducation Permanente belge, un système de financement public de 273 organisations employant 2 300 personnes dont la mission est de développer l'esprit critique des citoyens.
+**Bruxelles, janvier 2026** — Un collectif citoyen organise une action internationale le 22 janvier pour attirer l'attention mondiale sur un modèle unique : l'Éducation Permanente belge, un système de financement public de 273 organisations employant 2 300 personnes dont la mission est de développer l'esprit critique des citoyens.
 
 #### Un modèle inconnu à l'international
 
@@ -38,7 +38,7 @@ L'objectif : amener des observateurs internationaux en ligne pour découvrir le 
 - **Page du raid :** https://ouaisfieu.github.io/ecp/raid/
 - **Événement original :** https://ouaisfieu.github.io/ecp/janvier/22/
 - **Hashtag :** #BelgiumPaysCritics
-- **Date :** 22 janvier 2025, 18h CET
+- **Date :** 22 janvier 2026, 18h CET
 
 #### Contact presse
 
@@ -52,7 +52,7 @@ Site : https://ouaisfieu.github.io/tech/ccplc/
 
 ### International Activists Organize "Raid" to Discover How Belgium Funds 273 Social Critique Organizations
 
-**Brussels, January 2025** — A citizen collective is organizing an international action on January 22nd to draw global attention to a unique model: Belgian "Permanent Education," a public funding system supporting 273 organizations employing 2,300 people whose mission is to develop citizens' critical thinking.
+**Brussels, January 2026** — A citizen collective is organizing an international action on January 22nd to draw global attention to a unique model: Belgian "Permanent Education," a public funding system supporting 273 organizations employing 2,300 people whose mission is to develop citizens' critical thinking.
 
 #### A Model Unknown Internationally
 
@@ -81,7 +81,7 @@ The goal: bring international online observers to discover the Belgian model, as
 - **Raid page:** https://ouaisfieu.github.io/ecp/raid/
 - **Original event:** https://ouaisfieu.github.io/ecp/janvier/22/
 - **Hashtag:** #BelgiumPaysCritics
-- **Date:** January 22, 2025, 6:00 PM CET
+- **Date:** January 22, 2026, 6:00 PM CET
 
 #### Press Contact
 
