@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Belgium Pays Critics — International Raid Jan 22</title>
+    
+    <!-- SEO -->
+    <meta name="description" content="Belgium pays 273 organizations to criticize capitalism. €50M+/year. 2,300 employees. Join the international raid January 22nd.">
+    <meta name="keywords" content="Belgium, Permanent Education, activism, public funding, anti-capitalism, feminism, international raid">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Belgium Pays People to Criticize the System">
+    <meta property="og:description" content="273 organizations. 2,300 employees. €50M+/year. Public funding. Join the international raid January 22nd.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://ouaisfieu.github.io/ecp/raid/">
+    <meta property="og:image" content="https://ouaisfieu.github.io/ecp/raid/og-image.png">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Belgium Pays Critics — International Raid">
+    <meta name="twitter:description" content="273 orgs. €50M+/year. Public money. Join us Jan 22.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --black: #0a0a0a;
+            --white: #fafafa;
+            --red: #ff2d2d;
+            --yellow: #ffd60a;
+            --green: #00ff88;
+            --blue: #00d4ff;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        html { scroll-behavior: smooth; }
+        
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--black);
+            color: var(--white);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Scanline effect */
+        .scanline {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+            background: linear-gradient(transparent, rgba(255,45,45,0.1), transparent);
+            animation: scanline 8s linear infinite;
+            pointer-events: none;
+            z-index: 9999;
+        }
+        
+        @keyframes scanline {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100vh); }
+        }
+        
+        /* Language switcher */
+        .lang-bar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            background: rgba(10,10,10,0.95);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding: 0.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+        
+        .lang-logo {
+            font-weight: 700;
+            color: var(--red);
+            font-size: 0.875rem;
+        }
+        
+        .lang-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .lang-btn {
+            padding: 0.25rem 0.75rem;
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.2);
+            color: var(--white);
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .lang-btn:hover, .lang-btn.active {
+            background: var(--red);
+            border-color: var(--red);
+        }
+        
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 6rem 2rem 4rem;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(255,45,45,0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0,212,255,0.1) 0%, transparent 50%),
+                var(--black);
+            position: relative;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.02) 2px, rgba(255,255,255,0.02) 4px);
+            pointer-events: none;
+        }
+        
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--red);
+            color: var(--black);
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 2rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+        
+        .hero-title {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: 800;
+            line-height: 1.1;
+            max-width: 900px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .hero-title .highlight {
+            color: var(--red);
+            position: relative;
+            display: inline-block;
+        }
+        
+        .hero-sub {
+            font-size: 1.25rem;
+            color: rgba(255,255,255,0.7);
+            max-width: 600px;
+            margin-bottom: 3rem;
+        }
+        
+        /* Countdown */
+        .countdown {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .countdown-item {
+            text-align: center;
+            min-width: 80px;
+        }
+        
+        .countdown-value {
+            font-family: 'Space Mono', monospace;
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--yellow);
+            line-height: 1;
+        }
+        
+        .countdown-label {
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.5);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+        
+        /* Stats */
+        .stats-row {
+            display: flex;
+            gap: 3rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 3rem;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-family: 'Space Mono', monospace;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--yellow);
+        }
+        
+        .stat-label {
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.5);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+        
+        /* Buttons */
+        .cta-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .btn-primary {
+            background: var(--red);
+            color: var(--white);
+        }
+        
+        .btn-primary:hover {
+            background: var(--white);
+            color: var(--black);
+            transform: translateY(-2px);
+        }
+        
+        .btn-ghost {
+            background: transparent;
+            color: var(--white);
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+        
+        .btn-ghost:hover {
+            border-color: var(--white);
+            background: rgba(255,255,255,0.1);
+        }
+        
+        /* Sections */
+        .section {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-label {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--red);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            margin-bottom: 1rem;
+        }
+        
+        .section-title {
+            font-size: clamp(1.75rem, 4vw, 2.5rem);
+            font-weight: 700;
+            margin-bottom: 2rem;
+            max-width: 700px;
+        }
+        
+        /* WTF Grid */
+        .wtf-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .wtf-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 1.5rem;
+            position: relative;
+            transition: all 0.2s;
+        }
+        
+        .wtf-card:hover {
+            border-color: var(--red);
+            transform: translateY(-4px);
+        }
+        
+        .wtf-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 4px; height: 100%;
+            background: var(--red);
+        }
+        
+        .wtf-card-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .wtf-card-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .wtf-card-text {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.9375rem;
+        }
+        
+        /* Quote */
+        .quote {
+            background: linear-gradient(90deg, rgba(255,45,45,0.2), transparent);
+            border-left: 4px solid var(--red);
+            padding: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .quote-text {
+            font-size: 1.25rem;
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+        
+        .quote-source {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.875rem;
+            color: rgba(255,255,255,0.5);
+        }
+        
+        /* Event card */
+        .event-card {
+            background: rgba(255,255,255,0.03);
+            border: 2px solid var(--red);
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .event-date {
+            font-family: 'Space Mono', monospace;
+            color: var(--yellow);
+            margin-bottom: 1rem;
+        }
+        
+        .event-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        /* Partners */
+        .partners {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .partner {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .partner-logo {
+            width: 48px; height: 48px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.75rem;
+        }
+        
+        .partner-name { font-weight: 600; }
+        .partner-desc { font-size: 0.75rem; color: rgba(255,255,255,0.5); }
+        
+        /* Join grid */
+        .join-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .join-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 1.5rem;
+            transition: all 0.2s;
+        }
+        
+        .join-card:hover {
+            border-color: var(--red);
+        }
+        
+        .join-card-number {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--red);
+            margin-bottom: 0.5rem;
+        }
+        
+        .join-card-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .join-card-text {
+            font-size: 0.875rem;
+            color: rgba(255,255,255,0.6);
+        }
+        
+        /* Spread section */
+        .spread {
+            background: var(--red);
+            color: var(--black);
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+        
+        .spread-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .spread-text {
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+        
+        .hashtag {
+            font-family: 'Space Mono', monospace;
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 2rem 0;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--black);
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        
+        .social-link:hover {
+            transform: scale(1.05);
+        }
+        
+        /* Resources */
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .resource-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 1.5rem;
+        }
+        
+        .resource-card h4 {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .resource-card p {
+            font-size: 0.875rem;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 1rem;
+        }
+        
+        .resource-card .btn {
+            width: 100%;
+            justify-content: center;
+            padding: 0.75rem;
+            font-size: 0.875rem;
+        }
+        
+        /* Footer */
+        footer {
+            padding: 4rem 2rem;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        footer p {
+            color: rgba(255,255,255,0.5);
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        footer a { color: var(--red); }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-title { font-size: 2rem; }
+            .countdown-value { font-size: 2rem; }
+            .stat-value { font-size: 1.75rem; }
+            .stats-row { gap: 1.5rem; }
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animate {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+    </style>
+</head>
+<body>
+    <div class="scanline"></div>
+    
+    <!-- Language bar -->
+    <div class="lang-bar">
+        <div class="lang-logo">CCPLC</div>
+        <div class="lang-buttons">
+            <button class="lang-btn active" data-lang="en">EN</button>
+            <button class="lang-btn" data-lang="fr">FR</button>
+            <button class="lang-btn" data-lang="es">ES</button>
+            <button class="lang-btn" data-lang="de">DE</button>
+        </div>
+    </div>
+    
+    <!-- Hero -->
+    <section class="hero">
+        <div class="badge">🚨 INTERNATIONAL RAID — JAN 22, 2025</div>
+        
+        <h1 class="hero-title">
+            Belgium <span class="highlight">Pays People</span> to Criticize the System
+        </h1>
+        
+        <p class="hero-sub">
+            273 organizations. 2,300 employees. €50M+/year in public funding.<br>
+            Join us January 22nd to discover how they built this — and how to replicate it.
+        </p>
+        
+        <!-- Countdown -->
+        <div class="countdown" id="countdown">
+            <div class="countdown-item">
+                <div class="countdown-value" id="days">--</div>
+                <div class="countdown-label">Days</div>
+            </div>
+            <div class="countdown-item">
+                <div class="countdown-value" id="hours">--</div>
+                <div class="countdown-label">Hours</div>
+            </div>
+            <div class="countdown-item">
+                <div class="countdown-value" id="minutes">--</div>
+                <div class="countdown-label">Minutes</div>
+            </div>
+            <div class="countdown-item">
+                <div class="countdown-value" id="seconds">--</div>
+                <div class="countdown-label">Seconds</div>
+            </div>
+        </div>
+        
+        <!-- Stats -->
+        <div class="stats-row">
+            <div class="stat">
+                <div class="stat-value">273</div>
+                <div class="stat-label">Funded organizations</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">2,300</div>
+                <div class="stat-label">Paid employees</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">€50M+</div>
+                <div class="stat-label">Annual budget</div>
+            </div>
+        </div>
+        
+        <div class="cta-group">
+            <a href="#join" class="btn btn-primary">Join the Raid →</a>
+            <a href="#wtf" class="btn btn-ghost">WTF is this?</a>
+        </div>
+    </section>
+    
+    <!-- WTF Section -->
+    <section class="section" id="wtf">
+        <div class="section-label">Wait, what?</div>
+        <h2 class="section-title">Yes, it's real. Belgium funds organizations whose job is to question capitalism, patriarchy, and the state.</h2>
+        
+        <div class="wtf-grid">
+            <div class="wtf-card">
+                <div class="wtf-card-icon">📜</div>
+                <div class="wtf-card-title">The 2003 Decree</div>
+                <div class="wtf-card-text">The Wallonia-Brussels Federation created "Permanent Education" — state funding for organizations that help citizens develop critical thinking about society.</div>
+            </div>
+            <div class="wtf-card">
+                <div class="wtf-card-icon">💰</div>
+                <div class="wtf-card-title">Actual Salaries</div>
+                <div class="wtf-card-text">These aren't volunteers. The state pays €73,395/year per full-time employee. Organizations like ATTAC, Amnesty, and feminist collectives receive public funding.</div>
+            </div>
+            <div class="wtf-card">
+                <div class="wtf-card-icon">⚔️</div>
+                <div class="wtf-card-title">Biting the Hand</div>
+                <div class="wtf-card-text">The funded organizations openly criticize government policies, corporate power, and systemic inequality. It's their literal job description.</div>
+            </div>
+            <div class="wtf-card">
+                <div class="wtf-card-icon">🔄</div>
+                <div class="wtf-card-title">Open Source Model</div>
+                <div class="wtf-card-text">The methodology is public. The reports are free. Anyone can study how Belgium built this ecosystem — and replicate it elsewhere.</div>
+            </div>
+        </div>
+        
+        <div class="quote">
+            <div class="quote-text">"Permanent Education aims to develop active citizenship by enabling individuals to analyze society, understand its mechanisms, and act collectively for social change."</div>
+            <div class="quote-source">— Decree of July 17, 2003, Wallonia-Brussels Federation</div>
+        </div>
+    </section>
+    
+    <!-- Event Section -->
+    <section class="section" id="event">
+        <div class="section-label">The Experiment</div>
+        <h2 class="section-title">Join 378 people across 42 groups for a radical reading experiment</h2>
+        
+        <div class="event-card">
+            <div class="event-date">📅 January 22, 2025 — 6:00 PM CET — Brussels + Online</div>
+            <h3 class="event-title">Les Vigilantes — Citizen Reading Circle</h3>
+            <p>Why do women support the far-right? From Giorgia Meloni to Marine Le Pen to tradwife influencers — Léane Alestra's book deconstructs "femonationalism."</p>
+            <p style="margin-top: 1rem; color: var(--yellow);"><strong>You don't need to read the book.</strong> That's the whole point of "arpentage."</p>
+            
+            <div class="partners">
+                <div class="partner">
+                    <div class="partner-logo">AM</div>
+                    <div>
+                        <div class="partner-name">Amazone</div>
+                        <div class="partner-desc">Gender equality center</div>
+                    </div>
+                </div>
+                <div class="partner">
+                    <div class="partner-logo">SO</div>
+                    <div>
+                        <div class="partner-name">Soralia</div>
+                        <div class="partner-desc">200+ feminist groups</div>
+                    </div>
+                </div>
+                <div class="partner">
+                    <div class="partner-logo">PAC</div>
+                    <div>
+                        <div class="partner-name">PAC</div>
+                        <div class="partner-desc">Largest EP movement</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Join Section -->
+    <section class="section" id="join">
+        <div class="section-label">International Participation</div>
+        <h2 class="section-title">How to join from anywhere in the world</h2>
+        
+        <div class="join-grid">
+            <div class="join-card">
+                <div class="join-card-number">01</div>
+                <div class="join-card-title">Watch Online</div>
+                <div class="join-card-text">The final session will be livestreamed. No registration. Just show up.</div>
+            </div>
+            <div class="join-card">
+                <div class="join-card-number">02</div>
+                <div class="join-card-title">Ask Questions</div>
+                <div class="join-card-text">International Q&A at the end. Ask Belgian activists how they built this.</div>
+            </div>
+            <div class="join-card">
+                <div class="join-card-number">03</div>
+                <div class="join-card-title">Spread the Word</div>
+                <div class="join-card-text">Use #BelgiumPaysCritics. Make noise. Force the conversation.</div>
+            </div>
+            <div class="join-card">
+                <div class="join-card-number">04</div>
+                <div class="join-card-title">Study the Model</div>
+                <div class="join-card-text">All documentation is open-source. Download, analyze, adapt.</div>
+            </div>
+            <div class="join-card">
+                <div class="join-card-number">05</div>
+                <div class="join-card-title">Start Your Own</div>
+                <div class="join-card-text">The "arpentage" method works anywhere. Get the kit, run your own.</div>
+            </div>
+            <div class="join-card">
+                <div class="join-card-number">06</div>
+                <div class="join-card-title">Connect</div>
+                <div class="join-card-text">Join the network of activists studying the Belgian model.</div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Spread Section -->
+    <section class="spread">
+        <h2 class="spread-title">Make some noise</h2>
+        <p class="spread-text">The Belgian government doesn't advertise this system internationally. Most activists have never heard of it. Let's change that.</p>
+        
+        <div class="hashtag">#BelgiumPaysCritics</div>
+        
+        <div class="social-links">
+            <a href="https://twitter.com/intent/tweet?text=Did%20you%20know%20Belgium%20PAYS%20273%20organizations%20to%20criticize%20capitalism%3F%20%E2%82%AC50M%2B%2Fyear.%202%2C300%20employees.%20Public%20money.%20Join%20the%20international%20raid%20Jan%2022%20%23BelgiumPaysCritics&url=https://ouaisfieu.github.io/ecp/raid/" class="social-link" target="_blank">𝕏 Tweet</a>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=https://ouaisfieu.github.io/ecp/raid/" class="social-link" target="_blank">📘 Facebook</a>
+            <a href="https://bsky.app/intent/compose?text=Belgium%20PAYS%20273%20orgs%20to%20criticize%20capitalism.%20Join%20the%20raid%20Jan%2022%20%23BelgiumPaysCritics%20https://ouaisfieu.github.io/ecp/raid/" class="social-link" target="_blank">🦋 Bluesky</a>
+            <a href="https://www.reddit.com/submit?url=https://ouaisfieu.github.io/ecp/raid/&title=Belgium%20Pays%20273%20Organizations%20to%20Criticize%20Capitalism" class="social-link" target="_blank">🔴 Reddit</a>
+            <a href="https://wa.me/?text=Belgium%20pays%20273%20orgs%20to%20criticize%20capitalism.%20%E2%82%AC50M%2B%2Fyear.%20Join%20the%20raid%20Jan%2022%3A%20https://ouaisfieu.github.io/ecp/raid/" class="social-link" target="_blank">💬 WhatsApp</a>
+            <a href="https://t.me/share/url?url=https://ouaisfieu.github.io/ecp/raid/&text=Belgium%20pays%20273%20orgs%20to%20criticize%20capitalism" class="social-link" target="_blank">✈️ Telegram</a>
+        </div>
+    </section>
+    
+    <!-- Resources -->
+    <section class="section" id="resources">
+        <div class="section-label">Open Source Documentation</div>
+        <h2 class="section-title">Study the model. Steal the model. Improve the model.</h2>
+        
+        <div class="resources-grid">
+            <div class="resource-card">
+                <h4>📋 List of 273 Organizations</h4>
+                <p>Complete CSV with names, addresses, emails, and funding axes.</p>
+                <a href="#" class="btn btn-ghost">Download CSV →</a>
+            </div>
+            <div class="resource-card">
+                <h4>⚖️ Legal Framework</h4>
+                <p>The 2003 Decree explained in plain language.</p>
+                <a href="#" class="btn btn-ghost">Read Guide →</a>
+            </div>
+            <div class="resource-card">
+                <h4>📖 Arpentage Method</h4>
+                <p>Step-by-step guide to collective reading circles.</p>
+                <a href="#" class="btn btn-ghost">Get the Kit →</a>
+            </div>
+            <div class="resource-card">
+                <h4>💡 ECP Model</h4>
+                <p>A new model for unemployed people to contribute without losing benefits.</p>
+                <a href="https://ouaisfieu.github.io/ecp/" class="btn btn-ghost">Explore ECP →</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <p>Part of the <a href="https://ouaisfieu.github.io/tech/ccplc/">CCPLC</a> project. License: <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a></p>
+        <p>Event by <a href="https://www.amazone.be/">Amazone</a>, <a href="https://www.soralia.be/">Soralia</a>, and <a href="https://www.pac-g.be/">PAC</a>.</p>
+        <p style="margin-top: 1rem; color: var(--red);">They don't know about this raid. Let's surprise them. 🎁</p>
+    </footer>
+    
+    <script>
+        // Countdown
+        function updateCountdown() {
+            const eventDate = new Date('2025-01-22T18:00:00+01:00');
+            const now = new Date();
+            const diff = eventDate - now;
+            
+            if (diff > 0) {
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+                
+                document.getElementById('days').textContent = days.toString().padStart(2, '0');
+                document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+                document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+                document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+            } else {
+                document.getElementById('countdown').innerHTML = '<div style="font-size: 1.5rem; color: var(--green);">🔴 HAPPENING NOW</div>';
+            }
+        }
+        
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+        
+        // Language switcher (placeholder)
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                // TODO: Implement actual language switching
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Belgium Pays Critics — International Raid Jan 22</title>
+    
+    <!-- SEO -->
+    <meta name="description" content="Belgium pays 273 organizations to criticize capitalism. €50M+/year. 2,300 employees. Join the international raid January 22nd.">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Belgium Pays People to Criticize the System">
+    <meta property="og:description" content="273 organizations. 2,300 employees. €50M+/year. Public funding. Join the international raid January 22nd.">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Belgium Pays Critics — International Raid">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --black: #0a0a0a;
+            --white: #fafafa;
+            --red: #ff2d2d;
+            --yellow: #ffd60a;
+            --green: #00ff88;
+            --blue: #00d4ff;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--black);
+            color: var(--white);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Scanline */
+        .scanline {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+            background: linear-gradient(transparent, rgba(255,45,45,0.1), transparent);
+            animation: scanline 8s linear infinite;
+            pointer-events: none;
+            z-index: 9999;
+        }
+        
+        @keyframes scanline {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100vh); }
+        }
+        
+        /* Language bar */
+        .lang-bar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            background: rgba(10,10,10,0.95);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding: 0.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+        
+        .lang-logo {
+            font-weight: 700;
+            color: var(--red);
+            font-size: 0.875rem;
+        }
+        
+        .lang-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .lang-btn {
+            padding: 0.25rem 0.75rem;
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.2);
+            color: var(--white);
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .lang-btn:hover, .lang-btn.active {
+            background: var(--red);
+            border-color: var(--red);
+        }
+        
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 6rem 2rem 4rem;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(255,45,45,0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0,212,255,0.1) 0%, transparent 50%),
+                var(--black);
+            position: relative;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.02) 2px, rgba(255,255,255,0.02) 4px);
+            pointer-events: none;
+        }
+        
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--red);
+            color: var(--black);
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 2rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+        
+        .hero-title {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: 800;
+            line-height: 1.1;
+            max-width: 900px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .hero-title .highlight {
+            color: var(--red);
+        }
+        
+        .hero-sub {
+            font-size: 1.25rem;
+            color: rgba(255,255,255,0.7);
+            max-width: 600px;
+            margin-bottom: 3rem;
+        }
+        
+        /* Countdown */
+        .countdown {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .countdown-item {
+            text-align: center;
+            min-width: 80px;
+        }
+        
+        .countdown-value {
+            font-family: 'Space Mono', monospace;
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--yellow);
+            line-height: 1;
+        }
+        
+        .countdown-label {
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.5);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+        
+        /* Stats */
+        .stats-row {
+            display: flex;
+            gap: 3rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 3rem;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-family: 'Space Mono', monospace;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--yellow);
+        }
+        
+        .stat-label {
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.5);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+        
+        /* Buttons */
+        .cta-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .btn-primary {
+            background: var(--red);
+            color: var(--white);
+        }
+        
+        .btn-primary:hover {
+            background: var(--white);
+            color: var(--black);
+            transform: translateY(-2px);
+        }
+        
+        .btn-ghost {
+            background: transparent;
+            color: var(--white);
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+        
+        .btn-ghost:hover {
+            border-color: var(--white);
+            background: rgba(255,255,255,0.1);
+        }
+        
+        /* Sections */
+        .section {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-label {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--red);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            margin-bottom: 1rem;
+        }
+        
+        .section-title {
+            font-size: clamp(1.75rem, 4vw, 2.5rem);
+            font-weight: 700;
+            margin-bottom: 2rem;
+            max-width: 700px;
+        }
+        
+        /* WTF Grid */
+        .wtf-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .wtf-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 1.5rem;
+            position: relative;
+            transition: all 0.2s;
+        }
+        
+        .wtf-card:hover {
+            border-color: var(--red);
+            transform: translateY(-4px);
+        }
+        
+        .wtf-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 4px; height: 100%;
+            background: var(--red);
+        }
+        
+        .wtf-card-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .wtf-card-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .wtf-card-text {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.9375rem;
+        }
+        
+        /* Quote */
+        .quote {
+            background: linear-gradient(90deg, rgba(255,45,45,0.2), transparent);
+            border-left: 4px solid var(--red);
+            padding: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .quote-text {
+            font-size: 1.25rem;
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+        
+        .quote-source {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.875rem;
+            color: rgba(255,255,255,0.5);
+        }
+        
+        /* Event card */
+        .event-card {
+            background: rgba(255,255,255,0.03);
+            border: 2px solid var(--red);
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .event-date {
+            font-family: 'Space Mono', monospace;
+            color: var(--yellow);
+            margin-bottom: 1rem;
+        }
+        
+        .event-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        /* Partners */
+        .partners {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .partner {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .partner-logo {
+            width: 48px; height: 48px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.75rem;
+        }
+        
+        .partner-name { font-weight: 600; }
+        .partner-desc { font-size: 0.75rem; color: rgba(255,255,255,0.5); }
+        
+        /* Join grid */
+        .join-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .join-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 1.5rem;
+            transition: all 0.2s;
+        }
+        
+        .join-card:hover {
+            border-color: var(--red);
+        }
+        
+        .join-card-number {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--red);
+            margin-bottom: 0.5rem;
+        }
+        
+        .join-card-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .join-card-text {
+            font-size: 0.875rem;
+            color: rgba(255,255,255,0.6);
+        }
+        
+        /* Spread section */
+        .spread {
+            background: var(--red);
+            color: var(--black);
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+        
+        .spread-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .spread-text {
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+        
+        .hashtag {
+            font-family: 'Space Mono', monospace;
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 2rem 0;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--black);
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        
+        .social-link:hover {
+            transform: scale(1.05);
+        }
+        
+        /* Footer */
+        footer {
+            padding: 4rem 2rem;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        footer p {
+            color: rgba(255,255,255,0.5);
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        footer a { color: var(--red); }
+        
+        .surprise {
+            color: var(--red);
+            margin-top: 1rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-title { font-size: 2rem; }
+            .countdown-value { font-size: 2rem; }
+            .stat-value { font-size: 1.75rem; }
+            .stats-row { gap: 1.5rem; }
+            .lang-bar { padding: 0.5rem 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="scanline"></div>
+    
+    <!-- Language bar -->
+    <div class="lang-bar">
+        <div class="lang-logo">CCPLC</div>
+        <div class="lang-buttons">
+            <button class="lang-btn active" data-lang="en">EN</button>
+            <button class="lang-btn" data-lang="fr">FR</button>
+            <button class="lang-btn" data-lang="es">ES</button>
+            <button class="lang-btn" data-lang="de">DE</button>
+            <button class="lang-btn" data-lang="tr">TR</button>
+        </div>
+    </div>
+    
+    <!-- Hero -->
+    <section class="hero">
+        <div class="badge" data-i18n="badge">🚨 INTERNATIONAL RAID — JAN 22, 2025</div>
+        
+        <h1 class="hero-title">
+            <span data-i18n="title_1">Belgium</span> <span class="highlight" data-i18n="title_2">Pays People</span> <span data-i18n="title_3">to Criticize the System</span>
+        </h1>
+        
+        <p class="hero-sub" data-i18n="subtitle">
+            273 organizations. 2,300 employees. €50M+/year in public funding.
+            Join us January 22nd to discover how they built this — and how to replicate it.
+        </p>
+        
+        <!-- Countdown -->
+        <div class="countdown" id="countdown">
+            <div class="countdown-item">
+                <div class="countdown-value" id="days">--</div>
+                <div class="countdown-label" data-i18n="days">Days</div>
+            </div>
+            <div class="countdown-item">
+                <div class="countdown-value" id="hours">--</div>
+                <div class="countdown-label" data-i18n="hours">Hours</div>
+            </div>
+            <div class="countdown-item">
+                <div class="countdown-value" id="minutes">--</div>
+                <div class="countdown-label" data-i18n="minutes">Minutes</div>
+            </div>
+            <div class="countdown-item">
+                <div class="countdown-value" id="seconds">--</div>
+                <div class="countdown-label" data-i18n="seconds">Seconds</div>
+            </div>
+        </div>
+        
+        <!-- Stats -->
+        <div class="stats-row">
+            <div class="stat">
+                <div class="stat-value">273</div>
+                <div class="stat-label" data-i18n="stat_orgs">Funded organizations</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">2,300</div>
+                <div class="stat-label" data-i18n="stat_employees">Paid employees</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">€50M+</div>
+                <div class="stat-label" data-i18n="stat_budget">Annual budget</div>
+            </div>
+        </div>
+        
+        <div class="cta-group">
+            <a href="#join" class="btn btn-primary" data-i18n="cta_join">Join the Raid →</a>
+            <a href="#wtf" class="btn btn-ghost" data-i18n="cta_wtf">WTF is this?</a>
+        </div>
+    </section>
+    
+    <!-- WTF Section -->
+    <section class="section" id="wtf">
+        <div class="section-label" data-i18n="wtf_label">Wait, what?</div>
+        <h2 class="section-title" data-i18n="wtf_title">Yes, it's real. Belgium funds organizations whose job is to question capitalism, patriarchy, and the state.</h2>
+        
+        <div class="wtf-grid">
+            <div class="wtf-card">
+                <div class="wtf-card-icon">📜</div>
+                <div class="wtf-card-title" data-i18n="card1_title">The 2003 Decree</div>
+                <div class="wtf-card-text" data-i18n="card1_text">The Wallonia-Brussels Federation created "Permanent Education" — state funding for organizations that help citizens develop critical thinking about society.</div>
+            </div>
+            <div class="wtf-card">
+                <div class="wtf-card-icon">💰</div>
+                <div class="wtf-card-title" data-i18n="card2_title">Actual Salaries</div>
+                <div class="wtf-card-text" data-i18n="card2_text">These aren't volunteers. The state pays €73,395/year per full-time employee. Organizations like ATTAC, Amnesty, and feminist collectives receive public funding.</div>
+            </div>
+            <div class="wtf-card">
+                <div class="wtf-card-icon">⚔️</div>
+                <div class="wtf-card-title" data-i18n="card3_title">Biting the Hand</div>
+                <div class="wtf-card-text" data-i18n="card3_text">The funded organizations openly criticize government policies, corporate power, and systemic inequality. It's their literal job description.</div>
+            </div>
+            <div class="wtf-card">
+                <div class="wtf-card-icon">🔄</div>
+                <div class="wtf-card-title" data-i18n="card4_title">Open Source Model</div>
+                <div class="wtf-card-text" data-i18n="card4_text">The methodology is public. The reports are free. Anyone can study how Belgium built this ecosystem — and replicate it elsewhere.</div>
+            </div>
+        </div>
+        
+        <div class="quote">
+            <div class="quote-text" data-i18n="quote_text">"Permanent Education aims to develop active citizenship by enabling individuals to analyze society, understand its mechanisms, and act collectively for social change."</div>
+            <div class="quote-source" data-i18n="quote_source">— Decree of July 17, 2003, Wallonia-Brussels Federation</div>
+        </div>
+    </section>
+    
+    <!-- Event Section -->
+    <section class="section" id="event">
+        <div class="section-label" data-i18n="event_label">The Experiment</div>
+        <h2 class="section-title" data-i18n="event_title">Join 378 people across 42 groups for a radical reading experiment</h2>
+        
+        <div class="event-card">
+            <div class="event-date">📅 <span data-i18n="event_date">January 22, 2025 — 6:00 PM CET — Brussels + Online</span></div>
+            <h3 class="event-title">Les Vigilantes — <span data-i18n="event_subtitle">Citizen Reading Circle</span></h3>
+            <p data-i18n="event_desc">Why do women support the far-right? From Giorgia Meloni to Marine Le Pen to tradwife influencers — Léane Alestra's book deconstructs "femonationalism."</p>
+            <p style="margin-top: 1rem; color: var(--yellow);"><strong data-i18n="event_note">You don't need to read the book. That's the whole point of "arpentage."</strong></p>
+            
+            <div class="partners">
+                <div class="partner">
+                    <div class="partner-logo">AM</div>
+                    <div>
+                        <div class="partner-name">Amazone</div>
+                        <div class="partner-desc" data-i18n="partner1_desc">Gender equality center</div>
+                    </div>
+                </div>
+                <div class="partner">
+                    <div class="partner-logo">SO</div>
+                    <div>
+                        <div class="partner-name">Soralia</div>
+                        <div class="partner-desc" data-i18n="partner2_desc">200+ feminist groups</div>
+                    </div>
+                </div>
+                <div class="partner">
+                    <div class="partner-logo">PAC</div>
+                    <div>
+                        <div class="partner-name">PAC</div>
+                        <div class="partner-desc" data-i18n="partner3_desc">Largest EP movement</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Join Section -->
+    <section class="section" id="join">
+        <div class="section-label" data-i18n="join_label">International Participation</div>
+        <h2 class="section-title" data-i18n="join_title">How to join from anywhere in the world</h2>
+        
+        <div class="join-grid">
+            <div class="join-card">
+                <div class="join-card-number">01</div>
+                <div class="join-card-title" data-i18n="join1_title">Watch Online</div>
+                <div class="join-card-text" data-i18n="join1_text">The final session will be livestreamed. No registration. Just show up.</div>
+            </div>
+            <div class="join-card">
+                <div class="join-card-number">02</div>
+                <div class="join-card-title" data-i18n="join2_title">Ask Questions</div>
+                <div class="join-card-text" data-i18n="join2_text">International Q&A at the end. Ask Belgian activists how they built this.</div>
+            </div>
+            <div class="join-card">
+                <div class="join-card-number">03</div>
+                <div class="join-card-title" data-i18n="join3_title">Spread the Word</div>
+                <div class="join-card-text" data-i18n="join3_text">Use #BelgiumPaysCritics. Make noise. Force the conversation.</div>
+            </div>
+            <div class="join-card">
+                <div class="join-card-number">04</div>
+                <div class="join-card-title" data-i18n="join4_title">Study the Model</div>
+                <div class="join-card-text" data-i18n="join4_text">All documentation is open-source. Download, analyze, adapt.</div>
+            </div>
+            <div class="join-card">
+                <div class="join-card-number">05</div>
+                <div class="join-card-title" data-i18n="join5_title">Start Your Own</div>
+                <div class="join-card-text" data-i18n="join5_text">The "arpentage" method works anywhere. Get the kit, run your own.</div>
+            </div>
+            <div class="join-card">
+                <div class="join-card-number">06</div>
+                <div class="join-card-title" data-i18n="join6_title">Connect</div>
+                <div class="join-card-text" data-i18n="join6_text">Join the network of activists studying the Belgian model.</div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Spread Section -->
+    <section class="spread">
+        <h2 class="spread-title" data-i18n="spread_title">Make some noise</h2>
+        <p class="spread-text" data-i18n="spread_text">The Belgian government doesn't advertise this system internationally. Most activists have never heard of it. Let's change that.</p>
+        
+        <div class="hashtag">#BelgiumPaysCritics</div>
+        
+        <div class="social-links">
+            <a href="https://twitter.com/intent/tweet?text=Did%20you%20know%20Belgium%20PAYS%20273%20organizations%20to%20criticize%20capitalism%3F%20%E2%82%AC50M%2B%2Fyear.%202%2C300%20employees.%20Public%20money.%20Join%20the%20international%20raid%20Jan%2022%20%23BelgiumPaysCritics&url=https://ouaisfieu.github.io/ecp/raid/" class="social-link" target="_blank">𝕏 Tweet</a>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=https://ouaisfieu.github.io/ecp/raid/" class="social-link" target="_blank">📘 Facebook</a>
+            <a href="https://bsky.app/intent/compose?text=Belgium%20PAYS%20273%20orgs%20to%20criticize%20capitalism.%20Join%20the%20raid%20Jan%2022%20%23BelgiumPaysCritics%20https://ouaisfieu.github.io/ecp/raid/" class="social-link" target="_blank">🦋 Bluesky</a>
+            <a href="https://www.reddit.com/submit?url=https://ouaisfieu.github.io/ecp/raid/&title=Belgium%20Pays%20273%20Organizations%20to%20Criticize%20Capitalism" class="social-link" target="_blank">🔴 Reddit</a>
+            <a href="https://wa.me/?text=Belgium%20pays%20273%20orgs%20to%20criticize%20capitalism.%20%E2%82%AC50M%2B%2Fyear.%20Join%20the%20raid%20Jan%2022%3A%20https://ouaisfieu.github.io/ecp/raid/" class="social-link" target="_blank">💬 WhatsApp</a>
+            <a href="https://t.me/share/url?url=https://ouaisfieu.github.io/ecp/raid/&text=Belgium%20pays%20273%20orgs%20to%20criticize%20capitalism" class="social-link" target="_blank">✈️ Telegram</a>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <p><span data-i18n="footer_part">Part of the</span> <a href="https://ouaisfieu.github.io/tech/ccplc/">CCPLC</a> <span data-i18n="footer_project">project</span>. <span data-i18n="footer_license">License:</span> <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a></p>
+        <p><span data-i18n="footer_event">Event by</span> <a href="https://www.amazone.be/">Amazone</a>, <a href="https://www.soralia.be/">Soralia</a>, <span data-i18n="footer_and">and</span> <a href="https://www.pac-g.be/">PAC</a>.</p>
+        <p class="surprise" data-i18n="footer_surprise">They don't know about this raid. Let's surprise them. 🎁</p>
+    </footer>
+    
+    <script>
+        // ========================================
+        // TRANSLATIONS
+        // ========================================
+        const translations = {
+            en: {
+                badge: "🚨 INTERNATIONAL RAID — JAN 22, 2025",
+                title_1: "Belgium",
+                title_2: "Pays People",
+                title_3: "to Criticize the System",
+                subtitle: "273 organizations. 2,300 employees. €50M+/year in public funding. Join us January 22nd to discover how they built this — and how to replicate it.",
+                days: "Days",
+                hours: "Hours",
+                minutes: "Minutes",
+                seconds: "Seconds",
+                stat_orgs: "Funded organizations",
+                stat_employees: "Paid employees",
+                stat_budget: "Annual budget",
+                cta_join: "Join the Raid →",
+                cta_wtf: "WTF is this?",
+                wtf_label: "Wait, what?",
+                wtf_title: "Yes, it's real. Belgium funds organizations whose job is to question capitalism, patriarchy, and the state.",
+                card1_title: "The 2003 Decree",
+                card1_text: "The Wallonia-Brussels Federation created \"Permanent Education\" — state funding for organizations that help citizens develop critical thinking about society.",
+                card2_title: "Actual Salaries",
+                card2_text: "These aren't volunteers. The state pays €73,395/year per full-time employee. Organizations like ATTAC, Amnesty, and feminist collectives receive public funding.",
+                card3_title: "Biting the Hand",
+                card3_text: "The funded organizations openly criticize government policies, corporate power, and systemic inequality. It's their literal job description.",
+                card4_title: "Open Source Model",
+                card4_text: "The methodology is public. The reports are free. Anyone can study how Belgium built this ecosystem — and replicate it elsewhere.",
+                quote_text: "\"Permanent Education aims to develop active citizenship by enabling individuals to analyze society, understand its mechanisms, and act collectively for social change.\"",
+                quote_source: "— Decree of July 17, 2003, Wallonia-Brussels Federation",
+                event_label: "The Experiment",
+                event_title: "Join 378 people across 42 groups for a radical reading experiment",
+                event_date: "January 22, 2025 — 6:00 PM CET — Brussels + Online",
+                event_subtitle: "Citizen Reading Circle",
+                event_desc: "Why do women support the far-right? From Giorgia Meloni to Marine Le Pen to tradwife influencers — Léane Alestra's book deconstructs \"femonationalism.\"",
+                event_note: "You don't need to read the book. That's the whole point of \"arpentage.\"",
+                partner1_desc: "Gender equality center",
+                partner2_desc: "200+ feminist groups",
+                partner3_desc: "Largest EP movement",
+                join_label: "International Participation",
+                join_title: "How to join from anywhere in the world",
+                join1_title: "Watch Online",
+                join1_text: "The final session will be livestreamed. No registration. Just show up.",
+                join2_title: "Ask Questions",
+                join2_text: "International Q&A at the end. Ask Belgian activists how they built this.",
+                join3_title: "Spread the Word",
+                join3_text: "Use #BelgiumPaysCritics. Make noise. Force the conversation.",
+                join4_title: "Study the Model",
+                join4_text: "All documentation is open-source. Download, analyze, adapt.",
+                join5_title: "Start Your Own",
+                join5_text: "The \"arpentage\" method works anywhere. Get the kit, run your own.",
+                join6_title: "Connect",
+                join6_text: "Join the network of activists studying the Belgian model.",
+                spread_title: "Make some noise",
+                spread_text: "The Belgian government doesn't advertise this system internationally. Most activists have never heard of it. Let's change that.",
+                footer_part: "Part of the",
+                footer_project: "project",
+                footer_license: "License:",
+                footer_event: "Event by",
+                footer_and: "and",
+                footer_surprise: "They don't know about this raid. Let's surprise them. 🎁"
+            },
+            fr: {
+                badge: "🚨 RAID INTERNATIONAL — 22 JANVIER 2025",
+                title_1: "La Belgique",
+                title_2: "Paie des Gens",
+                title_3: "pour Critiquer le Système",
+                subtitle: "273 organisations. 2 300 salariés. 50M€+/an de fonds publics. Rejoignez-nous le 22 janvier pour découvrir comment ils ont construit ça — et comment le répliquer.",
+                days: "Jours",
+                hours: "Heures",
+                minutes: "Minutes",
+                seconds: "Secondes",
+                stat_orgs: "Organisations financées",
+                stat_employees: "Salariés",
+                stat_budget: "Budget annuel",
+                cta_join: "Rejoindre le Raid →",
+                cta_wtf: "C'est quoi ce truc ?",
+                wtf_label: "Attends, quoi ?",
+                wtf_title: "Oui, c'est réel. La Belgique finance des organisations dont le boulot est de questionner le capitalisme, le patriarcat et l'État.",
+                card1_title: "Le Décret 2003",
+                card1_text: "La Fédération Wallonie-Bruxelles a créé \"l'Éducation Permanente\" — un financement public pour les organisations qui aident les citoyens à développer leur esprit critique sur la société.",
+                card2_title: "De Vrais Salaires",
+                card2_text: "Ce ne sont pas des bénévoles. L'État paie 73 395€/an par employé à temps plein. Des organisations comme ATTAC, Amnesty et des collectifs féministes reçoivent des fonds publics.",
+                card3_title: "Mordre la Main",
+                card3_text: "Les organisations financées critiquent ouvertement les politiques gouvernementales, le pouvoir des entreprises et les inégalités systémiques. C'est littéralement leur description de poste.",
+                card4_title: "Modèle Open Source",
+                card4_text: "La méthodologie est publique. Les rapports sont gratuits. N'importe qui peut étudier comment la Belgique a construit cet écosystème — et le répliquer ailleurs.",
+                quote_text: "\"L'Éducation Permanente vise à développer la citoyenneté active en permettant aux individus d'analyser la société, de comprendre ses mécanismes et d'agir collectivement pour le changement social.\"",
+                quote_source: "— Décret du 17 juillet 2003, Fédération Wallonie-Bruxelles",
+                event_label: "L'Expérience",
+                event_title: "Rejoignez 378 personnes dans 42 groupes pour une expérience de lecture radicale",
+                event_date: "22 janvier 2025 — 18h CET — Bruxelles + En ligne",
+                event_subtitle: "Cercle de Lecture Citoyen",
+                event_desc: "Pourquoi des femmes soutiennent-elles l'extrême droite ? De Giorgia Meloni à Marine Le Pen aux influenceuses tradwives — le livre de Léane Alestra déconstruit le \"fémonationalisme\".",
+                event_note: "Vous n'avez pas besoin de lire le livre. C'est tout l'intérêt de \"l'arpentage\".",
+                partner1_desc: "Centre pour l'égalité",
+                partner2_desc: "200+ groupes féministes",
+                partner3_desc: "Plus grand mouvement EP",
+                join_label: "Participation Internationale",
+                join_title: "Comment participer depuis n'importe où dans le monde",
+                join1_title: "Regarder en Ligne",
+                join1_text: "La session finale sera diffusée en direct. Pas d'inscription. Venez.",
+                join2_title: "Poser des Questions",
+                join2_text: "Q&A international à la fin. Demandez aux militants belges comment ils ont fait.",
+                join3_title: "Faites du Bruit",
+                join3_text: "Utilisez #BelgiumPaysCritics. Faites du bruit. Forcez la conversation.",
+                join4_title: "Étudiez le Modèle",
+                join4_text: "Toute la documentation est open-source. Téléchargez, analysez, adaptez.",
+                join5_title: "Lancez le Vôtre",
+                join5_text: "La méthode \"arpentage\" fonctionne partout. Prenez le kit, lancez le vôtre.",
+                join6_title: "Connectez-vous",
+                join6_text: "Rejoignez le réseau d'activistes qui étudient le modèle belge.",
+                spread_title: "Faites du bruit",
+                spread_text: "Le gouvernement belge ne fait pas la pub de ce système à l'international. La plupart des militants n'en ont jamais entendu parler. Changeons ça.",
+                footer_part: "Fait partie du",
+                footer_project: "projet",
+                footer_license: "Licence :",
+                footer_event: "Événement organisé par",
+                footer_and: "et",
+                footer_surprise: "Ils ne savent pas qu'on fait ce raid. Faisons-leur la surprise. 🎁"
+            },
+            es: {
+                badge: "🚨 RAID INTERNACIONAL — 22 ENERO 2025",
+                title_1: "Bélgica",
+                title_2: "Paga a Gente",
+                title_3: "para Criticar el Sistema",
+                subtitle: "273 organizaciones. 2.300 empleados. €50M+/año de fondos públicos. Únete el 22 de enero para descubrir cómo lo construyeron — y cómo replicarlo.",
+                days: "Días",
+                hours: "Horas",
+                minutes: "Minutos",
+                seconds: "Segundos",
+                stat_orgs: "Organizaciones financiadas",
+                stat_employees: "Empleados pagados",
+                stat_budget: "Presupuesto anual",
+                cta_join: "Unirse al Raid →",
+                cta_wtf: "¿Qué es esto?",
+                wtf_label: "Espera, ¿qué?",
+                wtf_title: "Sí, es real. Bélgica financia organizaciones cuyo trabajo es cuestionar el capitalismo, el patriarcado y el Estado.",
+                card1_title: "El Decreto 2003",
+                card1_text: "La Federación Valonia-Bruselas creó la \"Educación Permanente\" — financiación estatal para organizaciones que ayudan a los ciudadanos a desarrollar pensamiento crítico sobre la sociedad.",
+                card2_title: "Salarios Reales",
+                card2_text: "No son voluntarios. El Estado paga €73.395/año por empleado a tiempo completo. Organizaciones como ATTAC, Amnistía y colectivos feministas reciben fondos públicos.",
+                card3_title: "Morder la Mano",
+                card3_text: "Las organizaciones financiadas critican abiertamente las políticas gubernamentales, el poder corporativo y la desigualdad sistémica. Es literalmente su descripción de trabajo.",
+                card4_title: "Modelo Open Source",
+                card4_text: "La metodología es pública. Los informes son gratuitos. Cualquiera puede estudiar cómo Bélgica construyó este ecosistema — y replicarlo.",
+                quote_text: "\"La Educación Permanente busca desarrollar la ciudadanía activa permitiendo a los individuos analizar la sociedad, entender sus mecanismos y actuar colectivamente por el cambio social.\"",
+                quote_source: "— Decreto del 17 de julio de 2003, Federación Valonia-Bruselas",
+                event_label: "El Experimento",
+                event_title: "Únete a 378 personas en 42 grupos para un experimento de lectura radical",
+                event_date: "22 de enero 2025 — 18:00 CET — Bruselas + Online",
+                event_subtitle: "Círculo de Lectura Ciudadana",
+                event_desc: "¿Por qué las mujeres apoyan a la extrema derecha? De Giorgia Meloni a Marine Le Pen a las influencers tradwives — el libro de Léane Alestra deconstruye el \"femonacionalismo\".",
+                event_note: "No necesitas leer el libro. Ese es el punto del \"arpentage\".",
+                partner1_desc: "Centro de igualdad de género",
+                partner2_desc: "200+ grupos feministas",
+                partner3_desc: "Mayor movimiento EP",
+                join_label: "Participación Internacional",
+                join_title: "Cómo unirse desde cualquier lugar del mundo",
+                join1_title: "Ver Online",
+                join1_text: "La sesión final será transmitida en vivo. Sin registro. Solo aparece.",
+                join2_title: "Hacer Preguntas",
+                join2_text: "Q&A internacional al final. Pregunta a los activistas belgas cómo lo hicieron.",
+                join3_title: "Corre la Voz",
+                join3_text: "Usa #BelgiumPaysCritics. Haz ruido. Fuerza la conversación.",
+                join4_title: "Estudia el Modelo",
+                join4_text: "Toda la documentación es open-source. Descarga, analiza, adapta.",
+                join5_title: "Empieza el Tuyo",
+                join5_text: "El método \"arpentage\" funciona en cualquier lugar. Toma el kit, lanza el tuyo.",
+                join6_title: "Conéctate",
+                join6_text: "Únete a la red de activistas estudiando el modelo belga.",
+                spread_title: "Haz ruido",
+                spread_text: "El gobierno belga no publicita este sistema internacionalmente. La mayoría de activistas nunca han oído hablar de él. Cambiemos eso.",
+                footer_part: "Parte del",
+                footer_project: "proyecto",
+                footer_license: "Licencia:",
+                footer_event: "Evento organizado por",
+                footer_and: "y",
+                footer_surprise: "No saben de este raid. Sorprendámosles. 🎁"
+            },
+            de: {
+                badge: "🚨 INTERNATIONALER RAID — 22. JANUAR 2025",
+                title_1: "Belgien",
+                title_2: "Bezahlt Menschen",
+                title_3: "um das System zu Kritisieren",
+                subtitle: "273 Organisationen. 2.300 Angestellte. €50M+/Jahr öffentliche Gelder. Sei am 22. Januar dabei um zu entdecken, wie sie das aufgebaut haben — und wie man es repliziert.",
+                days: "Tage",
+                hours: "Stunden",
+                minutes: "Minuten",
+                seconds: "Sekunden",
+                stat_orgs: "Geförderte Organisationen",
+                stat_employees: "Bezahlte Angestellte",
+                stat_budget: "Jahresbudget",
+                cta_join: "Am Raid teilnehmen →",
+                cta_wtf: "Was ist das?",
+                wtf_label: "Warte, was?",
+                wtf_title: "Ja, es ist echt. Belgien finanziert Organisationen, deren Job es ist, Kapitalismus, Patriarchat und den Staat zu hinterfragen.",
+                card1_title: "Das Dekret 2003",
+                card1_text: "Die Wallonien-Brüssel-Föderation schuf \"Permanente Bildung\" — staatliche Förderung für Organisationen, die Bürgern helfen, kritisches Denken über die Gesellschaft zu entwickeln.",
+                card2_title: "Echte Gehälter",
+                card2_text: "Das sind keine Freiwilligen. Der Staat zahlt €73.395/Jahr pro Vollzeitangestellten. Organisationen wie ATTAC, Amnesty und feministische Kollektive erhalten öffentliche Gelder.",
+                card3_title: "Die Hand Beißen",
+                card3_text: "Die geförderten Organisationen kritisieren offen Regierungspolitik, Unternehmensmacht und systemische Ungleichheit. Es ist buchstäblich ihre Jobbeschreibung.",
+                card4_title: "Open Source Modell",
+                card4_text: "Die Methodik ist öffentlich. Die Berichte sind kostenlos. Jeder kann studieren, wie Belgien dieses Ökosystem aufgebaut hat — und es anderswo replizieren.",
+                quote_text: "\"Permanente Bildung zielt darauf ab, aktive Bürgerschaft zu entwickeln, indem sie Individuen ermöglicht, die Gesellschaft zu analysieren, ihre Mechanismen zu verstehen und kollektiv für sozialen Wandel zu handeln.\"",
+                quote_source: "— Dekret vom 17. Juli 2003, Wallonien-Brüssel-Föderation",
+                event_label: "Das Experiment",
+                event_title: "Schließe dich 378 Menschen in 42 Gruppen für ein radikales Leseexperiment an",
+                event_date: "22. Januar 2025 — 18:00 CET — Brüssel + Online",
+                event_subtitle: "Bürger-Lesekreis",
+                event_desc: "Warum unterstützen Frauen die extreme Rechte? Von Giorgia Meloni über Marine Le Pen bis zu Tradwife-Influencerinnen — Léane Alestras Buch dekonstruiert den \"Femonationalismus\".",
+                event_note: "Du musst das Buch nicht lesen. Das ist der ganze Punkt von \"Arpentage\".",
+                partner1_desc: "Gleichstellungszentrum",
+                partner2_desc: "200+ feministische Gruppen",
+                partner3_desc: "Größte EP-Bewegung",
+                join_label: "Internationale Teilnahme",
+                join_title: "Wie man von überall auf der Welt teilnimmt",
+                join1_title: "Online Schauen",
+                join1_text: "Die letzte Sitzung wird live gestreamt. Keine Anmeldung. Einfach auftauchen.",
+                join2_title: "Fragen Stellen",
+                join2_text: "Internationale Q&A am Ende. Frag belgische Aktivisten, wie sie das gemacht haben.",
+                join3_title: "Verbreite es",
+                join3_text: "Nutze #BelgiumPaysCritics. Mach Lärm. Erzwinge das Gespräch.",
+                join4_title: "Studiere das Modell",
+                join4_text: "Alle Dokumentation ist Open-Source. Herunterladen, analysieren, anpassen.",
+                join5_title: "Starte Deinen Eigenen",
+                join5_text: "Die \"Arpentage\"-Methode funktioniert überall. Hol dir das Kit, starte deinen eigenen.",
+                join6_title: "Verbinde Dich",
+                join6_text: "Tritt dem Netzwerk von Aktivisten bei, die das belgische Modell studieren.",
+                spread_title: "Mach Lärm",
+                spread_text: "Die belgische Regierung bewirbt dieses System nicht international. Die meisten Aktivisten haben noch nie davon gehört. Ändern wir das.",
+                footer_part: "Teil des",
+                footer_project: "Projekts",
+                footer_license: "Lizenz:",
+                footer_event: "Veranstaltung von",
+                footer_and: "und",
+                footer_surprise: "Sie wissen nichts von diesem Raid. Überraschen wir sie. 🎁"
+            },
+            tr: {
+                badge: "🚨 ULUSLARARASI BASKIN — 22 OCAK 2025",
+                title_1: "Belçika",
+                title_2: "İnsanlara Para Ödüyor",
+                title_3: "Sistemi Eleştirmeleri için",
+                subtitle: "273 kuruluş. 2.300 çalışan. Yılda €50M+ kamu fonu. Bunu nasıl inşa ettiklerini — ve nasıl kopyalanacağını keşfetmek için 22 Ocak'ta bize katılın.",
+                days: "Gün",
+                hours: "Saat",
+                minutes: "Dakika",
+                seconds: "Saniye",
+                stat_orgs: "Finanse edilen kuruluşlar",
+                stat_employees: "Maaşlı çalışanlar",
+                stat_budget: "Yıllık bütçe",
+                cta_join: "Baskına Katıl →",
+                cta_wtf: "Bu ne?",
+                wtf_label: "Dur, ne?",
+                wtf_title: "Evet, gerçek. Belçika, işi kapitalizmi, ataerkilliği ve devleti sorgulamak olan kuruluşları finanse ediyor.",
+                card1_title: "2003 Kararnamesi",
+                card1_text: "Valonya-Brüksel Federasyonu \"Sürekli Eğitim\" yarattı — vatandaşların toplum hakkında eleştirel düşünce geliştirmesine yardımcı olan kuruluşlar için devlet finansmanı.",
+                card2_title: "Gerçek Maaşlar",
+                card2_text: "Bunlar gönüllü değil. Devlet tam zamanlı çalışan başına yılda €73.395 ödüyor. ATTAC, Uluslararası Af Örgütü ve feminist kolektifler gibi kuruluşlar kamu fonları alıyor.",
+                card3_title: "Eli Isırmak",
+                card3_text: "Finanse edilen kuruluşlar açıkça hükümet politikalarını, kurumsal gücü ve sistemik eşitsizliği eleştiriyor. Bu kelimenin tam anlamıyla iş tanımları.",
+                card4_title: "Açık Kaynak Model",
+                card4_text: "Metodoloji halka açık. Raporlar ücretsiz. Herkes Belçika'nın bu ekosistemi nasıl inşa ettiğini inceleyebilir — ve başka yerde kopyalayabilir.",
+                quote_text: "\"Sürekli Eğitim, bireylerin toplumu analiz etmesini, mekanizmalarını anlamasını ve sosyal değişim için kolektif olarak hareket etmesini sağlayarak aktif vatandaşlık geliştirmeyi amaçlar.\"",
+                quote_source: "— 17 Temmuz 2003 Kararnamesi, Valonya-Brüksel Federasyonu",
+                event_label: "Deney",
+                event_title: "Radikal bir okuma deneyi için 42 grupta 378 kişiye katılın",
+                event_date: "22 Ocak 2025 — 18:00 CET — Brüksel + Online",
+                event_subtitle: "Vatandaş Okuma Çemberi",
+                event_desc: "Kadınlar neden aşırı sağı destekliyor? Giorgia Meloni'den Marine Le Pen'e tradwife influencer'lara — Léane Alestra'nın kitabı \"femonasyonalizmi\" yapısöküme uğratıyor.",
+                event_note: "Kitabı okumanıza gerek yok. \"Arpentage\"ın bütün amacı bu.",
+                partner1_desc: "Toplumsal cinsiyet eşitliği merkezi",
+                partner2_desc: "200+ feminist grup",
+                partner3_desc: "En büyük EP hareketi",
+                join_label: "Uluslararası Katılım",
+                join_title: "Dünyanın herhangi bir yerinden nasıl katılınır",
+                join1_title: "Online İzle",
+                join1_text: "Son oturum canlı yayınlanacak. Kayıt yok. Sadece gel.",
+                join2_title: "Soru Sor",
+                join2_text: "Sonunda uluslararası soru-cevap. Belçikalı aktivistlere bunu nasıl yaptıklarını sor.",
+                join3_title: "Yaymak",
+                join3_text: "#BelgiumPaysCritics kullan. Gürültü yap. Konuşmayı zorla.",
+                join4_title: "Modeli İncele",
+                join4_text: "Tüm belgeler açık kaynak. İndir, analiz et, uyarla.",
+                join5_title: "Kendinininkini Başlat",
+                join5_text: "\"Arpentage\" yöntemi her yerde işe yarar. Kiti al, kendinininkini başlat.",
+                join6_title: "Bağlan",
+                join6_text: "Belçika modelini inceleyen aktivist ağına katıl.",
+                spread_title: "Gürültü yap",
+                spread_text: "Belçika hükümeti bu sistemi uluslararası alanda tanıtmıyor. Çoğu aktivist hiç duymamış. Bunu değiştirelim.",
+                footer_part: "Parçası",
+                footer_project: "projesi",
+                footer_license: "Lisans:",
+                footer_event: "Etkinlik düzenleyen",
+                footer_and: "ve",
+                footer_surprise: "Bu baskını bilmiyorlar. Onları şaşırtalım. 🎁"
+            }
+        };
+        
+        // ========================================
+        // LANGUAGE SWITCHER
+        // ========================================
+        let currentLang = 'en';
+        
+        function setLanguage(lang) {
+            currentLang = lang;
+            const t = translations[lang];
+            
+            // Update all elements with data-i18n attribute
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (t[key]) {
+                    el.textContent = t[key];
+                }
+            });
+            
+            // Update active button
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.getAttribute('data-lang') === lang) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            // Update HTML lang attribute
+            document.documentElement.lang = lang;
+            
+            // Save preference
+            localStorage.setItem('preferredLang', lang);
+        }
+        
+        // Language button listeners
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const lang = this.getAttribute('data-lang');
+                setLanguage(lang);
+            });
+        });
+        
+        // Load saved language or detect from browser
+        const savedLang = localStorage.getItem('preferredLang');
+        if (savedLang && translations[savedLang]) {
+            setLanguage(savedLang);
+        } else {
+            // Try to detect browser language
+            const browserLang = navigator.language.split('-')[0];
+            if (translations[browserLang]) {
+                setLanguage(browserLang);
+            }
+        }
+        
+        // ========================================
+        // COUNTDOWN
+        // ========================================
+        function updateCountdown() {
+            const eventDate = new Date('2025-01-22T18:00:00+01:00');
+            const now = new Date();
+            const diff = eventDate - now;
+            
+            if (diff > 0) {
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+                
+                document.getElementById('days').textContent = days.toString().padStart(2, '0');
+                document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+                document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+                document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+            } else {
+                document.getElementById('countdown').innerHTML = '<div style="font-size: 1.5rem; color: var(--green);">🔴 HAPPENING NOW</div>';
+            }
+        }
+        
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+    </script>
+</body>
+</html>

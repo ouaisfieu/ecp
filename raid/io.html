@@ -1,0 +1,1532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIGNAL_273 — An Alternate Reality Game</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;600;700&display=swap');
+        
+        :root {
+            --bg: #0a0a0a;
+            --terminal: #0d1117;
+            --green: #00ff88;
+            --red: #ff2d2d;
+            --yellow: #ffd60a;
+            --blue: #00d4ff;
+            --purple: #b14aed;
+            --text: #c9d1d9;
+            --dim: #484f58;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'JetBrains Mono', monospace;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* Scanlines */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(0,255,136,0.03) 2px,
+                rgba(0,255,136,0.03) 4px
+            );
+            pointer-events: none;
+            z-index: 9999;
+        }
+        
+        /* CRT flicker */
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            92% { opacity: 1; }
+            93% { opacity: 0.8; }
+            94% { opacity: 1; }
+        }
+        
+        .screen {
+            animation: flicker 0.15s infinite;
+            animation-play-state: paused;
+        }
+        
+        .glitch:hover .screen {
+            animation-play-state: running;
+        }
+        
+        /* Boot sequence */
+        #boot {
+            position: fixed;
+            inset: 0;
+            background: #000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            transition: opacity 0.5s;
+        }
+        
+        #boot.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .boot-text {
+            color: var(--green);
+            font-size: 14px;
+            text-align: left;
+            max-width: 600px;
+            padding: 20px;
+        }
+        
+        .boot-line {
+            opacity: 0;
+            animation: bootLine 0.1s forwards;
+        }
+        
+        @keyframes bootLine {
+            to { opacity: 1; }
+        }
+        
+        /* Main container */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 40px 20px;
+            border-bottom: 1px solid var(--dim);
+            margin-bottom: 30px;
+        }
+        
+        .logo {
+            font-size: clamp(32px, 8vw, 48px);
+            font-weight: 700;
+            color: var(--green);
+            text-shadow: 0 0 20px rgba(0,255,136,0.5);
+            margin-bottom: 10px;
+        }
+        
+        .logo span {
+            color: var(--red);
+        }
+        
+        .tagline {
+            color: var(--dim);
+            font-size: 14px;
+            letter-spacing: 0.2em;
+        }
+        
+        /* Terminal window */
+        .terminal {
+            background: var(--terminal);
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        
+        .terminal-header {
+            background: #161b22;
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid #30363d;
+        }
+        
+        .terminal-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        
+        .terminal-dot.red { background: #ff5f56; }
+        .terminal-dot.yellow { background: #ffbd2e; }
+        .terminal-dot.green { background: #27c93f; }
+        
+        .terminal-title {
+            margin-left: 10px;
+            font-size: 12px;
+            color: var(--dim);
+        }
+        
+        .terminal-body {
+            padding: 20px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        .prompt {
+            color: var(--green);
+        }
+        
+        .prompt::before {
+            content: '> ';
+            color: var(--dim);
+        }
+        
+        .output {
+            color: var(--text);
+            margin: 10px 0;
+        }
+        
+        .error {
+            color: var(--red);
+        }
+        
+        .success {
+            color: var(--green);
+        }
+        
+        .warning {
+            color: var(--yellow);
+        }
+        
+        /* Progress bar */
+        .progress-container {
+            margin: 30px 0;
+        }
+        
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 12px;
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background: #21262d;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--green), var(--blue));
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+        
+        /* Level cards */
+        .levels {
+            display: grid;
+            gap: 15px;
+            margin: 30px 0;
+        }
+        
+        .level {
+            background: var(--terminal);
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .level:hover {
+            border-color: var(--green);
+            transform: translateX(5px);
+        }
+        
+        .level.locked {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .level.locked:hover {
+            border-color: #30363d;
+            transform: none;
+        }
+        
+        .level.completed {
+            border-color: var(--green);
+        }
+        
+        .level.completed::after {
+            content: '✓';
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            color: var(--green);
+            font-size: 20px;
+        }
+        
+        .level.active {
+            border-color: var(--yellow);
+            box-shadow: 0 0 20px rgba(255,214,10,0.2);
+        }
+        
+        .level-number {
+            font-size: 12px;
+            color: var(--dim);
+            margin-bottom: 5px;
+        }
+        
+        .level-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        
+        .level-desc {
+            font-size: 13px;
+            color: var(--dim);
+        }
+        
+        .level-status {
+            margin-top: 10px;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+        
+        .level.locked .level-status { color: var(--red); }
+        .level.active .level-status { color: var(--yellow); }
+        .level.completed .level-status { color: var(--green); }
+        
+        /* Mission screen */
+        .mission {
+            display: none;
+        }
+        
+        .mission.active {
+            display: block;
+        }
+        
+        .mission-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .back-btn {
+            background: none;
+            border: 1px solid var(--dim);
+            color: var(--text);
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 12px;
+        }
+        
+        .back-btn:hover {
+            border-color: var(--green);
+            color: var(--green);
+        }
+        
+        /* Puzzle input */
+        .puzzle-input {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .puzzle-input input {
+            flex: 1;
+            background: #0d1117;
+            border: 1px solid #30363d;
+            color: var(--green);
+            padding: 12px 15px;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 14px;
+        }
+        
+        .puzzle-input input:focus {
+            outline: none;
+            border-color: var(--green);
+        }
+        
+        .puzzle-input button {
+            background: var(--green);
+            color: #000;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: 600;
+        }
+        
+        .puzzle-input button:hover {
+            background: #00cc6a;
+        }
+        
+        /* Document reveal */
+        .document {
+            background: #000;
+            border: 1px solid var(--green);
+            padding: 20px;
+            margin: 20px 0;
+            position: relative;
+        }
+        
+        .document::before {
+            content: 'DECLASSIFIED';
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            background: var(--green);
+            color: #000;
+            padding: 2px 10px;
+            font-size: 10px;
+            font-weight: 700;
+        }
+        
+        .document h4 {
+            color: var(--green);
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+        
+        .document p {
+            font-size: 13px;
+            line-height: 1.8;
+            color: var(--text);
+        }
+        
+        /* Hints */
+        .hint {
+            background: rgba(255,214,10,0.1);
+            border-left: 3px solid var(--yellow);
+            padding: 15px;
+            margin: 15px 0;
+            font-size: 13px;
+        }
+        
+        .hint-toggle {
+            color: var(--yellow);
+            cursor: pointer;
+            font-size: 12px;
+        }
+        
+        .hint-content {
+            display: none;
+            margin-top: 10px;
+            color: var(--text);
+        }
+        
+        .hint.open .hint-content {
+            display: block;
+        }
+        
+        /* Database search mini-game */
+        .db-search {
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        
+        .db-results {
+            max-height: 200px;
+            overflow-y: auto;
+            margin-top: 15px;
+        }
+        
+        .db-item {
+            padding: 10px;
+            border-bottom: 1px solid #21262d;
+            font-size: 12px;
+            cursor: pointer;
+        }
+        
+        .db-item:hover {
+            background: #161b22;
+        }
+        
+        .db-item.found {
+            border-left: 3px solid var(--green);
+            background: rgba(0,255,136,0.05);
+        }
+        
+        /* Countdown */
+        .countdown-box {
+            background: linear-gradient(135deg, rgba(255,45,45,0.2), rgba(0,255,136,0.1));
+            border: 1px solid var(--red);
+            border-radius: 8px;
+            padding: 30px;
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .countdown-label {
+            font-size: 12px;
+            color: var(--dim);
+            margin-bottom: 15px;
+            letter-spacing: 0.2em;
+        }
+        
+        .countdown-time {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        
+        .countdown-unit {
+            text-align: center;
+        }
+        
+        .countdown-value {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--red);
+        }
+        
+        .countdown-name {
+            font-size: 10px;
+            color: var(--dim);
+            text-transform: uppercase;
+        }
+        
+        /* Community */
+        .community {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 30px 0;
+        }
+        
+        .community-link {
+            background: var(--terminal);
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            text-decoration: none;
+            color: var(--text);
+            transition: all 0.2s;
+        }
+        
+        .community-link:hover {
+            border-color: var(--green);
+            transform: translateY(-3px);
+        }
+        
+        .community-icon {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        
+        .community-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .community-desc {
+            font-size: 11px;
+            color: var(--dim);
+        }
+        
+        /* Achievements */
+        .achievements {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .achievement {
+            background: #21262d;
+            border-radius: 20px;
+            padding: 5px 15px;
+            font-size: 11px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .achievement.unlocked {
+            background: rgba(0,255,136,0.2);
+            color: var(--green);
+        }
+        
+        /* Stats */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin: 30px 0;
+        }
+        
+        .stat {
+            text-align: center;
+            padding: 20px;
+            background: var(--terminal);
+            border-radius: 8px;
+        }
+        
+        .stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--yellow);
+        }
+        
+        .stat-label {
+            font-size: 10px;
+            color: var(--dim);
+            text-transform: uppercase;
+            margin-top: 5px;
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            border-top: 1px solid #21262d;
+            margin-top: 40px;
+        }
+        
+        .footer-text {
+            font-size: 12px;
+            color: var(--dim);
+        }
+        
+        .footer-text a {
+            color: var(--green);
+        }
+        
+        /* Responsive */
+        @media (max-width: 600px) {
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .countdown-time {
+                gap: 10px;
+            }
+            
+            .countdown-value {
+                font-size: 24px;
+            }
+        }
+        
+        /* Glitch text effect */
+        .glitch-text {
+            position: relative;
+        }
+        
+        .glitch-text::before,
+        .glitch-text::after {
+            content: attr(data-text);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .glitch-text::before {
+            left: 2px;
+            text-shadow: -2px 0 var(--red);
+            clip: rect(24px, 550px, 90px, 0);
+            animation: glitch-anim 2s infinite linear alternate-reverse;
+        }
+        
+        .glitch-text::after {
+            left: -2px;
+            text-shadow: -2px 0 var(--blue);
+            clip: rect(85px, 550px, 140px, 0);
+            animation: glitch-anim 2s infinite linear alternate-reverse;
+            animation-delay: -1s;
+        }
+        
+        @keyframes glitch-anim {
+            0% { clip: rect(17px, 9999px, 94px, 0); }
+            10% { clip: rect(33px, 9999px, 1px, 0); }
+            20% { clip: rect(75px, 9999px, 77px, 0); }
+            30% { clip: rect(61px, 9999px, 85px, 0); }
+            40% { clip: rect(92px, 9999px, 65px, 0); }
+            50% { clip: rect(54px, 9999px, 53px, 0); }
+            60% { clip: rect(84px, 9999px, 26px, 0); }
+            70% { clip: rect(63px, 9999px, 52px, 0); }
+            80% { clip: rect(31px, 9999px, 16px, 0); }
+            90% { clip: rect(28px, 9999px, 71px, 0); }
+            100% { clip: rect(18px, 9999px, 85px, 0); }
+        }
+        
+        /* Typewriter */
+        .typewriter {
+            overflow: hidden;
+            border-right: 2px solid var(--green);
+            white-space: nowrap;
+            animation: typing 3s steps(40, end), blink-caret 0.75s step-end infinite;
+        }
+        
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+        
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: var(--green) }
+        }
+    </style>
+</head>
+<body>
+    <!-- Boot Sequence -->
+    <div id="boot">
+        <div class="boot-text" id="bootText"></div>
+    </div>
+    
+    <div class="container" id="mainContent" style="display: none;">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo glitch">
+                <span class="glitch-text" data-text="SIGNAL">SIGNAL</span>_<span>273</span>
+            </div>
+            <div class="tagline">AN ALTERNATE REALITY GAME</div>
+        </header>
+        
+        <!-- Main Menu -->
+        <div id="menuScreen">
+            <!-- Story intro terminal -->
+            <div class="terminal">
+                <div class="terminal-header">
+                    <div class="terminal-dot red"></div>
+                    <div class="terminal-dot yellow"></div>
+                    <div class="terminal-dot green"></div>
+                    <div class="terminal-title">transmission_intercepted.log</div>
+                </div>
+                <div class="terminal-body">
+                    <div class="output">
+                        <span class="warning">[SIGNAL DETECTED]</span> Encrypted transmission from Brussels.<br><br>
+                        We've intercepted fragments of a classified system. A network of <span class="success">273 nodes</span> operating in plain sight. State-funded. Publicly listed. Yet invisible to the world.<br><br>
+                        <span class="prompt">Mission:</span> Decode the system. Map the network. Prepare for the raid.<br><br>
+                        <span class="dim">// The Belgian government is hiding something in plain sight.</span><br>
+                        <span class="dim">// They call it "Éducation Permanente".</span><br>
+                        <span class="dim">// 2,300 operatives. €50M annual budget.</span><br>
+                        <span class="dim">// Their mission: criticize the system that funds them.</span><br><br>
+                        <span class="error">RAID COUNTDOWN ACTIVE</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Countdown -->
+            <div class="countdown-box">
+                <div class="countdown-label">TIME UNTIL OPERATION: RAID_22</div>
+                <div class="countdown-time">
+                    <div class="countdown-unit">
+                        <div class="countdown-value" id="c-days">--</div>
+                        <div class="countdown-name">Days</div>
+                    </div>
+                    <div class="countdown-unit">
+                        <div class="countdown-value" id="c-hours">--</div>
+                        <div class="countdown-name">Hours</div>
+                    </div>
+                    <div class="countdown-unit">
+                        <div class="countdown-value" id="c-mins">--</div>
+                        <div class="countdown-name">Minutes</div>
+                    </div>
+                    <div class="countdown-unit">
+                        <div class="countdown-value" id="c-secs">--</div>
+                        <div class="countdown-name">Seconds</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Progress -->
+            <div class="progress-container">
+                <div class="progress-label">
+                    <span>DECRYPTION PROGRESS</span>
+                    <span id="progressPercent">0%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                </div>
+            </div>
+            
+            <!-- Levels -->
+            <div class="levels">
+                <div class="level active" data-level="0" onclick="startLevel(0)">
+                    <div class="level-number">LEVEL_00</div>
+                    <div class="level-title">THE DISCOVERY</div>
+                    <div class="level-desc">Intercept the first transmission. Learn about the Decree.</div>
+                    <div class="level-status">▶ START HERE</div>
+                </div>
+                
+                <div class="level locked" data-level="1">
+                    <div class="level-number">LEVEL_01</div>
+                    <div class="level-title">THE DATABASE</div>
+                    <div class="level-desc">Access the registry of 273 organizations. Find the pattern.</div>
+                    <div class="level-status">🔒 LOCKED</div>
+                </div>
+                
+                <div class="level locked" data-level="2">
+                    <div class="level-number">LEVEL_02</div>
+                    <div class="level-title">THE NETWORK</div>
+                    <div class="level-desc">Map the connections. Identify the key nodes.</div>
+                    <div class="level-status">🔒 LOCKED</div>
+                </div>
+                
+                <div class="level locked" data-level="3">
+                    <div class="level-number">LEVEL_03</div>
+                    <div class="level-title">THE METHOD</div>
+                    <div class="level-desc">Decode "Arpentage". Understand collective intelligence.</div>
+                    <div class="level-status">🔒 LOCKED</div>
+                </div>
+                
+                <div class="level locked" data-level="4">
+                    <div class="level-number">LEVEL_04</div>
+                    <div class="level-title">THE REPLICATION</div>
+                    <div class="level-desc">Extract the blueprint. Prepare for export.</div>
+                    <div class="level-status">🔒 LOCKED</div>
+                </div>
+                
+                <div class="level locked" data-level="5">
+                    <div class="level-number">LEVEL_05</div>
+                    <div class="level-title">THE RAID</div>
+                    <div class="level-desc">Join the operation. January 22, 2025.</div>
+                    <div class="level-status">🔒 FINAL MISSION</div>
+                </div>
+            </div>
+            
+            <!-- Stats -->
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-value" id="statPlayers">???</div>
+                    <div class="stat-label">Agents</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value" id="statOrgs">0</div>
+                    <div class="stat-label">Orgs Found</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value" id="statDocs">0</div>
+                    <div class="stat-label">Docs Decoded</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value" id="statLevel">0</div>
+                    <div class="stat-label">Level</div>
+                </div>
+            </div>
+            
+            <!-- Community -->
+            <h3 style="color: var(--green); margin: 30px 0 20px; font-size: 14px;">JOIN THE NETWORK</h3>
+            <div class="community">
+                <a href="#" class="community-link" target="_blank">
+                    <div class="community-icon">💬</div>
+                    <div class="community-name">Discord</div>
+                    <div class="community-desc">Coordinate with other agents</div>
+                </a>
+                <a href="#" class="community-link" target="_blank">
+                    <div class="community-icon">🔐</div>
+                    <div class="community-name">Matrix</div>
+                    <div class="community-desc">Encrypted communications</div>
+                </a>
+                <a href="https://twitter.com/search?q=%23BelgiumPaysCritics" class="community-link" target="_blank">
+                    <div class="community-icon">📡</div>
+                    <div class="community-name">#BelgiumPaysCritics</div>
+                    <div class="community-desc">Public transmissions</div>
+                </a>
+            </div>
+        </div>
+        
+        <!-- LEVEL 0: THE DISCOVERY -->
+        <div class="mission" id="level0">
+            <div class="mission-header">
+                <button class="back-btn" onclick="showMenu()">← BACK TO HQ</button>
+                <span style="color: var(--dim)">LEVEL_00</span>
+            </div>
+            
+            <div class="terminal">
+                <div class="terminal-header">
+                    <div class="terminal-dot red"></div>
+                    <div class="terminal-dot yellow"></div>
+                    <div class="terminal-dot green"></div>
+                    <div class="terminal-title">mission_brief.log</div>
+                </div>
+                <div class="terminal-body">
+                    <div class="output">
+                        <span class="success">[MISSION: THE DISCOVERY]</span><br><br>
+                        In 2003, the Belgian government passed a secret decree.<br>
+                        Not secret in the classified sense — hidden in plain sight.<br><br>
+                        They created a system to fund organizations whose job is to <span class="warning">criticize the system itself</span>.<br><br>
+                        Your first task: <span class="prompt">Find the year the decree was signed.</span><br><br>
+                        <span class="dim">HINT: The transmission mentioned "17 juillet" and a 4-digit number.</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="puzzle-input">
+                <input type="text" id="puzzle0" placeholder="Enter the year (YYYY)..." maxlength="4">
+                <button onclick="checkPuzzle0()">DECRYPT</button>
+            </div>
+            
+            <div id="result0"></div>
+            
+            <div class="hint" onclick="this.classList.toggle('open')">
+                <div class="hint-toggle">💡 NEED A HINT? (click to reveal)</div>
+                <div class="hint-content">
+                    The decree was signed on July 17th. The year is mentioned in our intercepted transmission. Look for "Decree of July 17, ____".
+                </div>
+            </div>
+        </div>
+        
+        <!-- LEVEL 1: THE DATABASE -->
+        <div class="mission" id="level1">
+            <div class="mission-header">
+                <button class="back-btn" onclick="showMenu()">← BACK TO HQ</button>
+                <span style="color: var(--dim)">LEVEL_01</span>
+            </div>
+            
+            <div class="terminal">
+                <div class="terminal-header">
+                    <div class="terminal-dot red"></div>
+                    <div class="terminal-dot yellow"></div>
+                    <div class="terminal-dot green"></div>
+                    <div class="terminal-title">database_access.log</div>
+                </div>
+                <div class="terminal-body">
+                    <div class="output">
+                        <span class="success">[MISSION: THE DATABASE]</span><br><br>
+                        We've gained access to the registry of funded organizations.<br>
+                        <span class="warning">273 nodes in the network.</span><br><br>
+                        Your task: Search the database. Find <span class="prompt">3 specific organizations</span>:<br><br>
+                        1. An anti-globalization group with "ATTAC" in its name<br>
+                        2. A feminist movement with 200+ local groups<br>
+                        3. The largest "movement" in the system (hint: acronym = PAC)<br><br>
+                        <span class="dim">When you find all 3, enter their names to proceed.</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="db-search">
+                <input type="text" id="dbSearchInput" placeholder="Search organizations..." style="width: 100%; background: #0d1117; border: 1px solid #30363d; color: var(--green); padding: 10px; border-radius: 4px; font-family: inherit;">
+                <div class="db-results" id="dbResults"></div>
+            </div>
+            
+            <div style="margin: 20px 0;">
+                <div style="font-size: 12px; color: var(--dim); margin-bottom: 10px;">TARGETS IDENTIFIED:</div>
+                <div id="targetsFound" style="display: flex; gap: 10px; flex-wrap: wrap;"></div>
+            </div>
+            
+            <div id="result1"></div>
+        </div>
+        
+        <!-- LEVEL 2: THE NETWORK -->
+        <div class="mission" id="level2">
+            <div class="mission-header">
+                <button class="back-btn" onclick="showMenu()">← BACK TO HQ</button>
+                <span style="color: var(--dim)">LEVEL_02</span>
+            </div>
+            
+            <div class="terminal">
+                <div class="terminal-header">
+                    <div class="terminal-dot red"></div>
+                    <div class="terminal-dot yellow"></div>
+                    <div class="terminal-dot green"></div>
+                    <div class="terminal-title">network_analysis.log</div>
+                </div>
+                <div class="terminal-body">
+                    <div class="output">
+                        <span class="success">[MISSION: THE NETWORK]</span><br><br>
+                        The system operates on <span class="warning">4 axes</span>. Each organization works on 1-4 of these.<br><br>
+                        Decode what each axis represents:<br><br>
+                        <span class="prompt">AXE 1:</span> C_____n participation & political education<br>
+                        <span class="prompt">AXE 2:</span> T______g activists & organizers<br>
+                        <span class="prompt">AXE 3:</span> Producing critical a______s & tools<br>
+                        <span class="prompt">AXE 4:</span> Public a_______s campaigns<br><br>
+                        <span class="dim">Fill in the missing words to proceed.</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="display: grid; gap: 10px; margin: 20px 0;">
+                <input type="text" id="axe1" placeholder="AXE 1: C_____n..." style="background: #0d1117; border: 1px solid #30363d; color: var(--green); padding: 10px; border-radius: 4px; font-family: inherit;">
+                <input type="text" id="axe2" placeholder="AXE 2: T______g..." style="background: #0d1117; border: 1px solid #30363d; color: var(--green); padding: 10px; border-radius: 4px; font-family: inherit;">
+                <input type="text" id="axe3" placeholder="AXE 3: A______s..." style="background: #0d1117; border: 1px solid #30363d; color: var(--green); padding: 10px; border-radius: 4px; font-family: inherit;">
+                <input type="text" id="axe4" placeholder="AXE 4: A_______s..." style="background: #0d1117; border: 1px solid #30363d; color: var(--green); padding: 10px; border-radius: 4px; font-family: inherit;">
+            </div>
+            
+            <button onclick="checkPuzzle2()" style="background: var(--green); color: #000; border: none; padding: 12px 24px; border-radius: 4px; cursor: pointer; font-family: inherit; font-weight: 600; width: 100%;">DECRYPT NETWORK</button>
+            
+            <div id="result2"></div>
+        </div>
+        
+        <!-- LEVEL 3: THE METHOD -->
+        <div class="mission" id="level3">
+            <div class="mission-header">
+                <button class="back-btn" onclick="showMenu()">← BACK TO HQ</button>
+                <span style="color: var(--dim)">LEVEL_03</span>
+            </div>
+            
+            <div class="terminal">
+                <div class="terminal-header">
+                    <div class="terminal-dot red"></div>
+                    <div class="terminal-dot yellow"></div>
+                    <div class="terminal-dot green"></div>
+                    <div class="terminal-title">method_decoded.log</div>
+                </div>
+                <div class="terminal-body">
+                    <div class="output">
+                        <span class="success">[MISSION: THE METHOD]</span><br><br>
+                        We've discovered their primary technique: <span class="warning">ARPENTAGE</span><br><br>
+                        A collective reading method where:<br>
+                        • The book is <span class="prompt">physically divided</span> among participants<br>
+                        • Each person reads only their section<br>
+                        • Collective intelligence emerges from sharing<br><br>
+                        The January 22 event uses this method on a book called:<br>
+                        "<span class="prompt">Les V________s</span>" by Léane Alestra<br><br>
+                        <span class="dim">Find the book title to proceed.</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="puzzle-input">
+                <input type="text" id="puzzle3" placeholder="Les V________s...">
+                <button onclick="checkPuzzle3()">DECRYPT</button>
+            </div>
+            
+            <div id="result3"></div>
+        </div>
+        
+        <!-- LEVEL 4: THE REPLICATION -->
+        <div class="mission" id="level4">
+            <div class="mission-header">
+                <button class="back-btn" onclick="showMenu()">← BACK TO HQ</button>
+                <span style="color: var(--dim)">LEVEL_04</span>
+            </div>
+            
+            <div class="terminal">
+                <div class="terminal-header">
+                    <div class="terminal-dot red"></div>
+                    <div class="terminal-dot yellow"></div>
+                    <div class="terminal-dot green"></div>
+                    <div class="terminal-title">blueprint_extracted.log</div>
+                </div>
+                <div class="terminal-body">
+                    <div class="output">
+                        <span class="success">[MISSION: THE REPLICATION]</span><br><br>
+                        You've decoded the Belgian model. Now extract the key numbers:<br><br>
+                        <span class="prompt">FUNDING:</span> €______/year per full-time employee<br>
+                        <span class="prompt">NETWORK:</span> ___ recognized organizations<br>
+                        <span class="prompt">WORKFORCE:</span> _,___ paid employees<br><br>
+                        <span class="dim">Calculate the total: FUNDING × NETWORK ÷ 1000 = ?</span><br>
+                        <span class="dim">(Round to nearest whole number)</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="puzzle-input">
+                <input type="text" id="puzzle4" placeholder="Enter the calculation result...">
+                <button onclick="checkPuzzle4()">VERIFY</button>
+            </div>
+            
+            <div id="result4"></div>
+            
+            <div class="hint" onclick="this.classList.toggle('open')">
+                <div class="hint-toggle">💡 CALCULATION HELP</div>
+                <div class="hint-content">
+                    €73,395 × 273 ÷ 1000 = ?<br>
+                    The answer represents the approximate budget in thousands of euros.
+                </div>
+            </div>
+        </div>
+        
+        <!-- LEVEL 5: THE RAID -->
+        <div class="mission" id="level5">
+            <div class="mission-header">
+                <button class="back-btn" onclick="showMenu()">← BACK TO HQ</button>
+                <span style="color: var(--dim)">LEVEL_05 — FINAL</span>
+            </div>
+            
+            <div class="terminal">
+                <div class="terminal-header">
+                    <div class="terminal-dot red"></div>
+                    <div class="terminal-dot yellow"></div>
+                    <div class="terminal-dot green"></div>
+                    <div class="terminal-title">operation_raid.log</div>
+                </div>
+                <div class="terminal-body">
+                    <div class="output">
+                        <span class="success">[FINAL MISSION: THE RAID]</span><br><br>
+                        <span class="warning">OPERATION PARAMETERS:</span><br>
+                        📅 Date: January 22, 2025<br>
+                        🕕 Time: 18:00 CET (Brussels time)<br>
+                        📍 Location: Brussels + ONLINE<br>
+                        🎯 Target: Amazone / Soralia / PAC event<br><br>
+                        <span class="prompt">MISSION OBJECTIVES:</span><br>
+                        1. Join the livestream<br>
+                        2. Observe the arpentage method in action<br>
+                        3. Ask questions about replicating the model<br>
+                        4. Use hashtag #BelgiumPaysCritics<br>
+                        5. Document everything<br><br>
+                        <span class="error">⚠️ THE HOST ORGANIZATIONS DON'T KNOW ABOUT THIS RAID.</span><br>
+                        <span class="dim">We're surprising them with international attention.</span><br><br>
+                        <span class="success">Enter the hashtag to confirm participation:</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="puzzle-input">
+                <input type="text" id="puzzle5" placeholder="#...">
+                <button onclick="checkPuzzle5()">CONFIRM</button>
+            </div>
+            
+            <div id="result5"></div>
+        </div>
+        
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-text">
+                SIGNAL_273 — An ARG by <a href="https://ouaisfieu.github.io/tech/ccplc/">CCPLC</a><br>
+                <span style="color: var(--dim)">This is a real investigation into a real system.</span><br>
+                <a href="https://ouaisfieu.github.io/ecp/raid/" style="color: var(--red);">Learn more about the raid →</a>
+            </div>
+        </footer>
+    </div>
+    
+    <script>
+// ========================================
+// GAME STATE
+// ========================================
+let gameState = {
+    level: 0,
+    orgsFound: 0,
+    docsDecoded: 0,
+    completedLevels: [],
+    targets: []
+};
+
+// Load saved state
+const saved = localStorage.getItem('signal273');
+if (saved) {
+    gameState = JSON.parse(saved);
+}
+
+// Save state
+function saveGame() {
+    localStorage.setItem('signal273', JSON.stringify(gameState));
+    updateUI();
+}
+
+// ========================================
+// BOOT SEQUENCE
+// ========================================
+const bootLines = [
+    '[SYSTEM] Initializing SIGNAL_273...',
+    '[NETWORK] Establishing secure connection...',
+    '[CRYPTO] Loading decryption modules...',
+    '[DATABASE] Accessing Belgian registry...',
+    '[ALERT] 273 nodes detected',
+    '[ALERT] €50,000,000+ annual budget confirmed',
+    '[ALERT] 2,300 operatives identified',
+    '[STATUS] Connection established',
+    '[STATUS] Welcome, Agent.',
+    '',
+    '> Entering the game...'
+];
+
+async function runBoot() {
+    const bootText = document.getElementById('bootText');
+    
+    for (let i = 0; i < bootLines.length; i++) {
+        const line = document.createElement('div');
+        line.className = 'boot-line';
+        line.style.animationDelay = `${i * 0.1}s`;
+        line.innerHTML = bootLines[i] || '&nbsp;';
+        
+        if (bootLines[i].includes('ALERT')) {
+            line.style.color = '#ff2d2d';
+        } else if (bootLines[i].includes('STATUS')) {
+            line.style.color = '#00ff88';
+        }
+        
+        bootText.appendChild(line);
+        await new Promise(r => setTimeout(r, 150));
+    }
+    
+    await new Promise(r => setTimeout(r, 1000));
+    
+    document.getElementById('boot').classList.add('hidden');
+    document.getElementById('mainContent').style.display = 'block';
+    updateUI();
+}
+
+// ========================================
+// UI UPDATES
+// ========================================
+function updateUI() {
+    // Update stats
+    document.getElementById('statOrgs').textContent = gameState.orgsFound;
+    document.getElementById('statDocs').textContent = gameState.docsDecoded;
+    document.getElementById('statLevel').textContent = gameState.level;
+    
+    // Update progress
+    const progress = (gameState.level / 5) * 100;
+    document.getElementById('progressFill').style.width = `${progress}%`;
+    document.getElementById('progressPercent').textContent = `${Math.round(progress)}%`;
+    
+    // Update level cards
+    document.querySelectorAll('.level').forEach((el, i) => {
+        el.classList.remove('locked', 'active', 'completed');
+        
+        if (gameState.completedLevels.includes(i)) {
+            el.classList.add('completed');
+            el.querySelector('.level-status').textContent = '✓ COMPLETED';
+            el.onclick = () => startLevel(i);
+        } else if (i === gameState.level) {
+            el.classList.add('active');
+            el.querySelector('.level-status').textContent = '▶ IN PROGRESS';
+            el.onclick = () => startLevel(i);
+        } else if (i < gameState.level) {
+            el.classList.add('completed');
+            el.onclick = () => startLevel(i);
+        } else {
+            el.classList.add('locked');
+            el.querySelector('.level-status').textContent = '🔒 LOCKED';
+            el.onclick = null;
+        }
+    });
+}
+
+// ========================================
+// NAVIGATION
+// ========================================
+function showMenu() {
+    document.querySelectorAll('.mission').forEach(m => m.classList.remove('active'));
+    document.getElementById('menuScreen').style.display = 'block';
+}
+
+function startLevel(n) {
+    if (n > gameState.level && !gameState.completedLevels.includes(n)) return;
+    
+    document.getElementById('menuScreen').style.display = 'none';
+    document.querySelectorAll('.mission').forEach(m => m.classList.remove('active'));
+    document.getElementById(`level${n}`).classList.add('active');
+    
+    if (n === 1) initDatabase();
+}
+
+// ========================================
+// PUZZLES
+// ========================================
+
+// Level 0: The Discovery
+function checkPuzzle0() {
+    const answer = document.getElementById('puzzle0').value.trim();
+    const result = document.getElementById('result0');
+    
+    if (answer === '2003') {
+        result.innerHTML = `
+            <div class="document">
+                <h4>📄 DOCUMENT DECLASSIFIED</h4>
+                <p>
+                    <strong>Decree of July 17, 2003</strong><br><br>
+                    "Permanent Education aims to develop active citizenship by enabling individuals to analyze society, understand its mechanisms, and act collectively for social change."<br><br>
+                    <span style="color: var(--green)">✓ The Belgian government has been funding anti-system organizations for over 20 years.</span>
+                </p>
+            </div>
+        `;
+        
+        gameState.level = Math.max(gameState.level, 1);
+        gameState.docsDecoded++;
+        if (!gameState.completedLevels.includes(0)) {
+            gameState.completedLevels.push(0);
+        }
+        saveGame();
+        
+        setTimeout(() => {
+            result.innerHTML += `<div class="success" style="margin-top: 20px;">Level complete! Return to HQ to continue.</div>`;
+        }, 1000);
+    } else {
+        result.innerHTML = `<div class="error">❌ Decryption failed. Try again.</div>`;
+    }
+}
+
+// Level 1: The Database
+const organizations = [
+    {name: "ATTAC Bruxelles", type: "Anti-globalization", axes: "1"},
+    {name: "ATTAC Liège", type: "Anti-globalization", axes: "1"},
+    {name: "Soralia (FPS)", type: "Feminist movement", axes: "Mouv."},
+    {name: "PAC - Présence et Action Culturelles", type: "Largest EP movement", axes: "Mouv."},
+    {name: "Vie Féminine", type: "Feminist movement", axes: "Mouv."},
+    {name: "MOC", type: "Christian workers movement", axes: "Mouv."},
+    {name: "CIEP", type: "Workers education", axes: "Mouv."},
+    {name: "CEPAG", type: "Socialist education", axes: "Mouv."},
+    {name: "Amnesty International Belgique", type: "Human rights", axes: "1 + 4"},
+    {name: "ATD Quart-Monde", type: "Anti-poverty", axes: "1"},
+    {name: "Amis de la Terre", type: "Environmental", axes: "1"},
+    {name: "Centre d'Action Laïque", type: "Secular movement", axes: "Mouv."},
+    {name: "Lire et Écrire", type: "Literacy", axes: "1 + 2"},
+    {name: "Article 27", type: "Cultural access", axes: "1 + 3"},
+    {name: "Financité", type: "Alternative finance", axes: "1 + 3"},
+    {name: "SAW-B", type: "Social economy", axes: "1 + 3"},
+    {name: "CNCD-11.11.11", type: "Development", axes: "1 + 3"},
+    {name: "Amazone", type: "Gender equality center", axes: "3"},
+    {name: "Barricade", type: "Alternative culture", axes: "1 + 3"},
+    {name: "CRISP", type: "Political research", axes: "3"},
+];
+
+function initDatabase() {
+    const input = document.getElementById('dbSearchInput');
+    const results = document.getElementById('dbResults');
+    
+    input.addEventListener('input', () => {
+        const query = input.value.toLowerCase();
+        if (query.length < 2) {
+            results.innerHTML = '<div style="color: var(--dim); padding: 10px;">Type to search...</div>';
+            return;
+        }
+        
+        const matches = organizations.filter(o => 
+            o.name.toLowerCase().includes(query) || 
+            o.type.toLowerCase().includes(query)
+        );
+        
+        results.innerHTML = matches.map(o => `
+            <div class="db-item ${gameState.targets.includes(o.name) ? 'found' : ''}" onclick="selectOrg('${o.name}')">
+                <strong>${o.name}</strong><br>
+                <span style="color: var(--dim)">${o.type} | Axe: ${o.axes}</span>
+            </div>
+        `).join('') || '<div style="color: var(--dim); padding: 10px;">No results</div>';
+    });
+    
+    updateTargetsDisplay();
+}
+
+function selectOrg(name) {
+    const targets = ['ATTAC Bruxelles', 'ATTAC Liège', 'Soralia (FPS)', 'PAC - Présence et Action Culturelles'];
+    
+    if (targets.some(t => name.includes('ATTAC') || name.includes('Soralia') || name.includes('PAC'))) {
+        if (!gameState.targets.includes(name)) {
+            gameState.targets.push(name);
+            gameState.orgsFound++;
+            saveGame();
+            updateTargetsDisplay();
+        }
+    }
+    
+    // Check if level complete
+    const hasATTAC = gameState.targets.some(t => t.includes('ATTAC'));
+    const hasSoralia = gameState.targets.some(t => t.includes('Soralia'));
+    const hasPAC = gameState.targets.some(t => t.includes('PAC'));
+    
+    if (hasATTAC && hasSoralia && hasPAC) {
+        document.getElementById('result1').innerHTML = `
+            <div class="document">
+                <h4>📄 NETWORK NODES IDENTIFIED</h4>
+                <p>
+                    <strong>Key organizations confirmed:</strong><br><br>
+                    ✓ ATTAC — Anti-globalization, fights financial speculation<br>
+                    ✓ Soralia — Feminist movement with 200+ local groups<br>
+                    ✓ PAC — Largest "movement" in the EP system<br><br>
+                    <span style="color: var(--green)">All three receive public funding to criticize the system.</span>
+                </p>
+            </div>
+            <div class="success" style="margin-top: 20px;">Level complete! Return to HQ.</div>
+        `;
+        
+        gameState.level = Math.max(gameState.level, 2);
+        gameState.docsDecoded++;
+        if (!gameState.completedLevels.includes(1)) {
+            gameState.completedLevels.push(1);
+        }
+        saveGame();
+    }
+}
+
+function updateTargetsDisplay() {
+    const container = document.getElementById('targetsFound');
+    if (!container) return;
+    
+    const hasATTAC = gameState.targets.some(t => t.includes('ATTAC'));
+    const hasSoralia = gameState.targets.some(t => t.includes('Soralia'));
+    const hasPAC = gameState.targets.some(t => t.includes('PAC'));
+    
+    container.innerHTML = `
+        <span class="achievement ${hasATTAC ? 'unlocked' : ''}">
+            ${hasATTAC ? '✓' : '○'} ATTAC
+        </span>
+        <span class="achievement ${hasSoralia ? 'unlocked' : ''}">
+            ${hasSoralia ? '✓' : '○'} Soralia
+        </span>
+        <span class="achievement ${hasPAC ? 'unlocked' : ''}">
+            ${hasPAC ? '✓' : '○'} PAC
+        </span>
+    `;
+}
+
+// Level 2: The Network
+function checkPuzzle2() {
+    const a1 = document.getElementById('axe1').value.toLowerCase();
+    const a2 = document.getElementById('axe2').value.toLowerCase();
+    const a3 = document.getElementById('axe3').value.toLowerCase();
+    const a4 = document.getElementById('axe4').value.toLowerCase();
+    
+    const correct1 = a1.includes('citizen');
+    const correct2 = a2.includes('training');
+    const correct3 = a3.includes('analy');
+    const correct4 = a4.includes('aware');
+    
+    if (correct1 && correct2 && correct3 && correct4) {
+        document.getElementById('result2').innerHTML = `
+            <div class="document">
+                <h4>📄 NETWORK STRUCTURE DECODED</h4>
+                <p>
+                    <strong>The 4 Axes of Permanent Education:</strong><br><br>
+                    <span style="color: var(--green)">AXE 1:</span> Citizen participation & political education<br>
+                    <span style="color: var(--blue)">AXE 2:</span> Training activists & organizers<br>
+                    <span style="color: var(--yellow)">AXE 3:</span> Producing critical analyses & tools<br>
+                    <span style="color: var(--purple)">AXE 4:</span> Public awareness campaigns<br><br>
+                    Organizations can work on 1-4 axes. "Movements" must work on at least 3, including Axe 1.
+                </p>
+            </div>
+            <div class="success" style="margin-top: 20px;">Level complete! Return to HQ.</div>
+        `;
+        
+        gameState.level = Math.max(gameState.level, 3);
+        gameState.docsDecoded++;
+        if (!gameState.completedLevels.includes(2)) {
+            gameState.completedLevels.push(2);
+        }
+        saveGame();
+    } else {
+        document.getElementById('result2').innerHTML = `<div class="error">❌ Some axes are incorrect. Check the intercepted transmissions.</div>`;
+    }
+}
+
+// Level 3: The Method
+function checkPuzzle3() {
+    const answer = document.getElementById('puzzle3').value.toLowerCase().trim();
+    
+    if (answer.includes('vigilante')) {
+        document.getElementById('result3').innerHTML = `
+            <div class="document">
+                <h4>📄 ARPENTAGE METHOD DECODED</h4>
+                <p>
+                    <strong>"Les Vigilantes" by Léane Alestra</strong><br><br>
+                    The book explores why women support the far-right. It will be read collectively on January 22 using the arpentage method.<br><br>
+                    <strong>Key insight:</strong> You don't need to read the whole book. The collective reads it together, each person contributing their piece. This is how Permanent Education works — collective intelligence over individual expertise.
+                </p>
+            </div>
+            <div class="success" style="margin-top: 20px;">Level complete! Return to HQ.</div>
+        `;
+        
+        gameState.level = Math.max(gameState.level, 4);
+        gameState.docsDecoded++;
+        if (!gameState.completedLevels.includes(3)) {
+            gameState.completedLevels.push(3);
+        }
+        saveGame();
+    } else {
+        document.getElementById('result3').innerHTML = `<div class="error">❌ Book title not recognized. Look for "Les V..."</div>`;
+    }
+}
+
+// Level 4: The Replication
+function checkPuzzle4() {
+    const answer = parseInt(document.getElementById('puzzle4').value);
+    // 73395 × 273 / 1000 = 20036.835 ≈ 20037
+    
+    if (answer >= 20000 && answer <= 20100) {
+        document.getElementById('result4').innerHTML = `
+            <div class="document">
+                <h4>📄 BLUEPRINT EXTRACTED</h4>
+                <p>
+                    <strong>Belgian Permanent Education — Key Figures:</strong><br><br>
+                    💰 €73,395/year per FTE<br>
+                    🏢 273 recognized organizations<br>
+                    👥 2,300 paid employees<br>
+                    📊 ~€20M in direct salary funding<br>
+                    📈 €50M+ total annual budget (with activities)<br><br>
+                    <span style="color: var(--green)">This model is replicable. The decree is public. The methodology is documented. The only missing piece: political will.</span>
+                </p>
+            </div>
+            <div class="success" style="margin-top: 20px;">Level complete! Final mission unlocked.</div>
+        `;
+        
+        gameState.level = Math.max(gameState.level, 5);
+        gameState.docsDecoded++;
+        if (!gameState.completedLevels.includes(4)) {
+            gameState.completedLevels.push(4);
+        }
+        saveGame();
+    } else {
+        document.getElementById('result4').innerHTML = `<div class="error">❌ Calculation error. Check your math.</div>`;
+    }
+}
+
+// Level 5: The Raid
+function checkPuzzle5() {
+    const answer = document.getElementById('puzzle5').value.trim();
+    
+    if (answer.toLowerCase().includes('belgiumpayscritic')) {
+        document.getElementById('result5').innerHTML = `
+            <div class="document" style="border-color: var(--red); background: rgba(255,45,45,0.1);">
+                <h4 style="color: var(--red);">🎯 OPERATION CONFIRMED</h4>
+                <p>
+                    <strong>You are now registered for OPERATION: RAID_22</strong><br><br>
+                    📅 January 22, 2025<br>
+                    🕕 18:00 CET<br>
+                    📍 Online (livestream link TBA)<br><br>
+                    <strong>Your mission:</strong><br>
+                    1. Join the event<br>
+                    2. Observe the arpentage method<br>
+                    3. Ask about replication<br>
+                    4. Use #BelgiumPaysCritics<br>
+                    5. Share what you learn<br><br>
+                    <span style="color: var(--green)">The host organizations don't know about this raid. We're bringing unexpected international attention to their work.</span><br><br>
+                    <a href="https://ouaisfieu.github.io/ecp/raid/" style="color: var(--red);" target="_blank">→ Access full raid briefing</a>
+                </p>
+            </div>
+            <div class="success" style="margin-top: 20px; font-size: 18px;">🎉 GAME COMPLETE — See you on January 22!</div>
+        `;
+        
+        if (!gameState.completedLevels.includes(5)) {
+            gameState.completedLevels.push(5);
+        }
+        saveGame();
+    } else {
+        document.getElementById('result5').innerHTML = `<div class="error">❌ Incorrect hashtag. Remember: #Belgium...</div>`;
+    }
+}
+
+// ========================================
+// COUNTDOWN
+// ========================================
+function updateCountdown() {
+    const target = new Date('2025-01-22T18:00:00+01:00');
+    const now = new Date();
+    const diff = target - now;
+    
+    if (diff > 0) {
+        document.getElementById('c-days').textContent = Math.floor(diff / 86400000);
+        document.getElementById('c-hours').textContent = Math.floor((diff % 86400000) / 3600000);
+        document.getElementById('c-mins').textContent = Math.floor((diff % 3600000) / 60000);
+        document.getElementById('c-secs').textContent = Math.floor((diff % 60000) / 1000);
+    }
+}
+
+// ========================================
+// INIT
+// ========================================
+runBoot();
+updateCountdown();
+setInterval(updateCountdown, 1000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Belgium Pays Critics — Infographic</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&display=swap');
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+        
+        .infographic {
+            width: 1080px;
+            max-width: 100%;
+            background: linear-gradient(180deg, #0a0a0a 0%, #1a0a0a 100%);
+            border: 2px solid #ff2d2d;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .infographic::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,45,45,0.03) 2px, rgba(255,45,45,0.03) 4px);
+            pointer-events: none;
+        }
+        
+        /* Header */
+        .header {
+            background: #ff2d2d;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+        }
+        
+        .header-badge {
+            display: inline-block;
+            background: #000;
+            color: #ff2d2d;
+            padding: 0.5rem 1rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            margin-bottom: 1rem;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #000;
+            line-height: 1.1;
+            margin-bottom: 0.5rem;
+        }
+        
+        .header p {
+            color: rgba(0,0,0,0.7);
+            font-size: 1rem;
+        }
+        
+        /* Stats row */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            background: #000;
+            border-bottom: 2px solid #ff2d2d;
+        }
+        
+        .stat {
+            padding: 2rem;
+            text-align: center;
+            border-right: 1px solid rgba(255,45,45,0.3);
+        }
+        
+        .stat:last-child {
+            border-right: none;
+        }
+        
+        .stat-value {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #ffd60a;
+            line-height: 1;
+        }
+        
+        .stat-label {
+            font-size: 0.875rem;
+            color: rgba(255,255,255,0.6);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-top: 0.5rem;
+        }
+        
+        /* Content */
+        .content {
+            padding: 2rem;
+        }
+        
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #ff2d2d;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .section-title::before {
+            content: '';
+            width: 4px;
+            height: 1.5rem;
+            background: #ff2d2d;
+        }
+        
+        /* What they fund */
+        .funded-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .funded-item {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .funded-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(255,45,45,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+        
+        .funded-text h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        
+        .funded-text p {
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.5);
+        }
+        
+        /* Quote */
+        .quote {
+            background: linear-gradient(90deg, rgba(255,45,45,0.2), transparent);
+            border-left: 4px solid #ff2d2d;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .quote p {
+            font-style: italic;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 0.5rem;
+        }
+        
+        .quote cite {
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.5);
+            font-style: normal;
+        }
+        
+        /* CTA */
+        .cta {
+            background: #ff2d2d;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .cta h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #000;
+            margin-bottom: 0.5rem;
+        }
+        
+        .cta p {
+            color: rgba(0,0,0,0.7);
+            margin-bottom: 1rem;
+        }
+        
+        .cta-url {
+            display: inline-block;
+            background: #000;
+            color: #fff;
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+        
+        .hashtag {
+            margin-top: 1rem;
+            font-weight: 700;
+            color: #000;
+            font-size: 1.25rem;
+        }
+        
+        /* Footer */
+        .footer {
+            background: #000;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .footer-logo {
+            font-weight: 700;
+            color: #ff2d2d;
+        }
+        
+        .footer-date {
+            font-size: 0.875rem;
+            color: rgba(255,255,255,0.5);
+        }
+    </style>
+</head>
+<body>
+    <div class="infographic">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-badge">🚨 INTERNATIONAL RAID — JAN 22</div>
+            <h1>BELGIUM PAYS PEOPLE<br>TO CRITICIZE THE SYSTEM</h1>
+            <p>State-funded radical education since 2003</p>
+        </div>
+        
+        <!-- Stats -->
+        <div class="stats-row">
+            <div class="stat">
+                <div class="stat-value">273</div>
+                <div class="stat-label">Organizations Funded</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">2,300</div>
+                <div class="stat-label">Paid Employees</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">€50M+</div>
+                <div class="stat-label">Annual Budget</div>
+            </div>
+        </div>
+        
+        <!-- What they fund -->
+        <div class="content">
+            <div class="section-title">WHAT THE GOVERNMENT FUNDS</div>
+            
+            <div class="funded-grid">
+                <div class="funded-item">
+                    <div class="funded-icon">✊</div>
+                    <div class="funded-text">
+                        <h4>Anti-Capitalist Groups</h4>
+                        <p>ATTAC chapters, anti-globalization orgs</p>
+                    </div>
+                </div>
+                <div class="funded-item">
+                    <div class="funded-icon">♀️</div>
+                    <div class="funded-text">
+                        <h4>Feminist Collectives</h4>
+                        <p>Soralia, Vie Féminine, Amazone</p>
+                    </div>
+                </div>
+                <div class="funded-item">
+                    <div class="funded-icon">🏭</div>
+                    <div class="funded-text">
+                        <h4>Union Education Wings</h4>
+                        <p>CEPAG (socialist), CIEP (christian)</p>
+                    </div>
+                </div>
+                <div class="funded-item">
+                    <div class="funded-icon">🌍</div>
+                    <div class="funded-text">
+                        <h4>Environmental Activists</h4>
+                        <p>Climate justice, degrowth movements</p>
+                    </div>
+                </div>
+                <div class="funded-item">
+                    <div class="funded-icon">🏠</div>
+                    <div class="funded-text">
+                        <h4>Anti-Poverty Organizations</h4>
+                        <p>ATD Quart-Monde, housing rights</p>
+                    </div>
+                </div>
+                <div class="funded-item">
+                    <div class="funded-icon">📚</div>
+                    <div class="funded-text">
+                        <h4>Critical Research Centers</h4>
+                        <p>CRISP, think tanks, policy analysis</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Quote -->
+            <div class="quote">
+                <p>"Permanent Education aims to develop active citizenship by enabling individuals to analyze society, understand its mechanisms, and act collectively for social change."</p>
+                <cite>— Decree of July 17, 2003, Wallonia-Brussels Federation</cite>
+            </div>
+        </div>
+        
+        <!-- CTA -->
+        <div class="cta">
+            <h3>JOIN THE INTERNATIONAL RAID</h3>
+            <p>January 22, 2025 — 6:00 PM CET — Brussels + Online</p>
+            <div class="cta-url">ouaisfieu.github.io/ecp/raid/</div>
+            <div class="hashtag">#BelgiumPaysCritics</div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="footer">
+            <div class="footer-logo">CCPLC</div>
+            <div class="footer-date">CC BY-NC 4.0 — Share freely</div>
+        </div>
+    </div>
+</body>
+</html>

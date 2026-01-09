@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Belgium Pays People to Criticize the System — International Raid</title>
+    
+    <meta property="og:title" content="Belgium Pays People to Criticize the System">
+    <meta property="og:description" content="273 organizations. 2,300 employees. Public funding. Join us January 22nd to discover how Belgian activists are paid to question capitalism, patriarchy and the state.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://ouaisfieu.github.io/ecp/raid/">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --black: #0a0a0a;
+            --white: #fafafa;
+            --red: #ff2d2d;
+            --red-dark: #cc0000;
+            --yellow: #ffd60a;
+            --green: #00ff88;
+            --blue: #00d4ff;
+            --purple: #b14aed;
+            
+            --font: 'Space Grotesk', sans-serif;
+            --mono: 'Space Mono', monospace;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: var(--font);
+            background: var(--black);
+            color: var(--white);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Glitch effect */
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
+        }
+        
+        @keyframes scanline {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100vh); }
+        }
+        
+        .scanline {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(transparent, rgba(255,45,45,0.1), transparent);
+            animation: scanline 8s linear infinite;
+            pointer-events: none;
+            z-index: 1000;
+        }
+        
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(255,45,45,0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0,212,255,0.1) 0%, transparent 50%),
+                var(--black);
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(255,255,255,0.02) 2px,
+                rgba(255,255,255,0.02) 4px
+            );
+            pointer-events: none;
+        }
+        
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--red);
+            color: var(--black);
+            font-family: var(--mono);
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 2rem;
+            animation: glitch 0.3s ease infinite;
+            animation-play-state: paused;
+        }
+        
+        .badge:hover {
+            animation-play-state: running;
+        }
+        
+        .hero-title {
+            font-size: clamp(2.5rem, 8vw, 6rem);
+            font-weight: 700;
+            line-height: 1.1;
+            max-width: 900px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .hero-title .highlight {
+            color: var(--red);
+            position: relative;
+        }
+        
+        .hero-title .highlight::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: var(--red);
+            opacity: 0.3;
+        }
+        
+        .hero-sub {
+            font-size: 1.25rem;
+            color: rgba(255,255,255,0.7);
+            max-width: 600px;
+            margin-bottom: 3rem;
+        }
+        
+        .stats-row {
+            display: flex;
+            gap: 3rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 3rem;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-family: var(--mono);
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--yellow);
+        }
+        
+        .stat-label {
+            font-size: 0.875rem;
+            color: rgba(255,255,255,0.5);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+        
+        .cta-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            font-family: var(--font);
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .btn-primary {
+            background: var(--red);
+            color: var(--white);
+        }
+        
+        .btn-primary:hover {
+            background: var(--white);
+            color: var(--black);
+            transform: translateY(-2px);
+        }
+        
+        .btn-ghost {
+            background: transparent;
+            color: var(--white);
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+        
+        .btn-ghost:hover {
+            border-color: var(--white);
+            background: rgba(255,255,255,0.1);
+        }
+        
+        /* Section */
+        .section {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-label {
+            font-family: var(--mono);
+            font-size: 0.75rem;
+            color: var(--red);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            margin-bottom: 1rem;
+        }
+        
+        .section-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            margin-bottom: 2rem;
+            max-width: 700px;
+        }
+        
+        /* WTF Section */
+        .wtf-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .wtf-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .wtf-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--red);
+        }
+        
+        .wtf-card-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .wtf-card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+        
+        .wtf-card-text {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.9375rem;
+        }
+        
+        /* Quote */
+        .quote-section {
+            background: linear-gradient(135deg, rgba(255,45,45,0.1), transparent);
+            border-left: 4px solid var(--red);
+            padding: 3rem;
+            margin: 4rem 0;
+        }
+        
+        .quote-text {
+            font-size: 1.5rem;
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+        
+        .quote-source {
+            font-family: var(--mono);
+            font-size: 0.875rem;
+            color: rgba(255,255,255,0.5);
+        }
+        
+        /* Event */
+        .event-card {
+            background: rgba(255,255,255,0.03);
+            border: 2px solid var(--red);
+            padding: 3rem;
+            margin-top: 3rem;
+        }
+        
+        .event-date {
+            font-family: var(--mono);
+            font-size: 1rem;
+            color: var(--yellow);
+            margin-bottom: 1rem;
+        }
+        
+        .event-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .event-book {
+            display: flex;
+            gap: 2rem;
+            align-items: flex-start;
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: rgba(255,255,255,0.02);
+        }
+        
+        .event-book-cover {
+            width: 120px;
+            height: 180px;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--mono);
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.5);
+            flex-shrink: 0;
+        }
+        
+        .event-book-info h4 {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .event-book-info p {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.9375rem;
+        }
+        
+        .event-partners {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .partner {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .partner-logo {
+            width: 48px;
+            height: 48px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.75rem;
+        }
+        
+        .partner-name {
+            font-weight: 600;
+        }
+        
+        .partner-desc {
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.5);
+        }
+        
+        /* How to join */
+        .join-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+        
+        .join-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 1.5rem;
+            transition: all 0.2s;
+        }
+        
+        .join-card:hover {
+            border-color: var(--red);
+            transform: translateY(-4px);
+        }
+        
+        .join-card-number {
+            font-family: var(--mono);
+            font-size: 0.75rem;
+            color: var(--red);
+            margin-bottom: 0.75rem;
+        }
+        
+        .join-card-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .join-card-text {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.875rem;
+        }
+        
+        /* Spread */
+        .spread-section {
+            background: var(--red);
+            color: var(--black);
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+        
+        .spread-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .spread-text {
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+        
+        .hashtag {
+            font-family: var(--mono);
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 2rem 0;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--black);
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        
+        .social-link:hover {
+            transform: scale(1.05);
+        }
+        
+        /* Footer */
+        footer {
+            padding: 4rem 2rem;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        footer p {
+            color: rgba(255,255,255,0.5);
+            font-size: 0.875rem;
+        }
+        
+        footer a {
+            color: var(--red);
+        }
+        
+        /* Language switcher */
+        .lang-switch {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            display: flex;
+            gap: 0.5rem;
+            z-index: 100;
+        }
+        
+        .lang-btn {
+            padding: 0.5rem 0.75rem;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: var(--white);
+            font-family: var(--mono);
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .lang-btn:hover, .lang-btn.active {
+            background: var(--red);
+            border-color: var(--red);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .stats-row {
+                gap: 2rem;
+            }
+            
+            .stat-value {
+                font-size: 2rem;
+            }
+            
+            .event-book {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="scanline"></div>
+    
+    <div class="lang-switch">
+        <button class="lang-btn active">EN</button>
+        <button class="lang-btn">FR</button>
+        <button class="lang-btn">ES</button>
+    </div>
+    
+    <!-- Hero -->
+    <section class="hero">
+        <div class="badge">🚨 INTERNATIONAL RAID — JAN 22</div>
+        
+        <h1 class="hero-title">
+            Belgium <span class="highlight">Pays People</span> to Criticize the System
+        </h1>
+        
+        <p class="hero-sub">
+            273 organizations. 2,300 employees. Public funding.<br>
+            Join us January 22nd to discover how Belgian activists built a state-funded ecosystem for radical education.
+        </p>
+        
+        <div class="stats-row">
+            <div class="stat">
+                <div class="stat-value">273</div>
+                <div class="stat-label">Funded organizations</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">2,300</div>
+                <div class="stat-label">Paid employees</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">€50M+</div>
+                <div class="stat-label">Annual budget</div>
+            </div>
+        </div>
+        
+        <div class="cta-group">
+            <a href="#join" class="btn btn-primary">Join the Raid →</a>
+            <a href="#wtf" class="btn btn-ghost">WTF is this?</a>
+        </div>
+    </section>
+    
+    <!-- WTF Section -->
+    <section class="section" id="wtf">
+        <div class="section-label">Wait, what?</div>
+        <h2 class="section-title">Yes, it's real. Belgium funds organizations whose job is to question capitalism, patriarchy, and the state.</h2>
+        
+        <div class="wtf-grid">
+            <div class="wtf-card">
+                <div class="wtf-card-icon">📜</div>
+                <div class="wtf-card-title">The 2003 Decree</div>
+                <div class="wtf-card-text">
+                    The Wallonia-Brussels Federation passed a law creating "Permanent Education" — state funding for organizations that help citizens develop critical thinking about society.
+                </div>
+            </div>
+            
+            <div class="wtf-card">
+                <div class="wtf-card-icon">💰</div>
+                <div class="wtf-card-title">Actual Salaries</div>
+                <div class="wtf-card-text">
+                    These aren't volunteers. The state pays €73,000/year per full-time employee. Organizations like ATTAC, Amnesty, and feminist collectives receive public funding.
+                </div>
+            </div>
+            
+            <div class="wtf-card">
+                <div class="wtf-card-icon">⚔️</div>
+                <div class="wtf-card-title">Biting the Hand</div>
+                <div class="wtf-card-text">
+                    The funded organizations openly criticize government policies, corporate power, and systemic inequality. It's their literal job description.
+                </div>
+            </div>
+            
+            <div class="wtf-card">
+                <div class="wtf-card-icon">🔄</div>
+                <div class="wtf-card-title">Open Source Model</div>
+                <div class="wtf-card-text">
+                    The methodology is public. The reports are free. Anyone can study how Belgium built this ecosystem — and replicate it elsewhere.
+                </div>
+            </div>
+        </div>
+        
+        <div class="quote-section">
+            <div class="quote-text">
+                "Permanent Education aims to develop active citizenship by enabling individuals to analyze society, understand its mechanisms, and act collectively for social change."
+            </div>
+            <div class="quote-source">— Decree of July 17, 2003, Wallonia-Brussels Federation</div>
+        </div>
+    </section>
+    
+    <!-- Event Section -->
+    <section class="section" id="event">
+        <div class="section-label">The Experiment</div>
+        <h2 class="section-title">Join 378 people across 42 groups for a radical reading experiment</h2>
+        
+        <div class="event-card">
+            <div class="event-date">📅 January 22, 2025 — 6:00 PM CET — Brussels + Online</div>
+            <h3 class="event-title">Les Vigilantes — Citizen Reading Circle</h3>
+            
+            <div class="event-book">
+                <div class="event-book-cover">📖 COVER</div>
+                <div class="event-book-info">
+                    <h4>"Les Vigilantes" by Léane Alestra</h4>
+                    <p>
+                        Why do women support the far-right? From Giorgia Meloni to Marine Le Pen to tradwife influencers — Alestra deconstructs "femonationalism" and what it reveals about our society.
+                    </p>
+                    <p style="margin-top: 1rem; color: var(--yellow);">
+                        <strong>You don't need to read the book.</strong> That's the whole point.
+                    </p>
+                </div>
+            </div>
+            
+            <p>
+                <strong>"Arpentage"</strong> is a collective reading method born in the French labor movement. The book is physically divided among participants. Each person reads 15-20 pages and shares their reactions. The group reconstructs collective intelligence without anyone reading the whole thing.
+            </p>
+            
+            <div class="event-partners">
+                <div class="partner">
+                    <div class="partner-logo">AM</div>
+                    <div>
+                        <div class="partner-name">Amazone</div>
+                        <div class="partner-desc">Gender equality resource center</div>
+                    </div>
+                </div>
+                <div class="partner">
+                    <div class="partner-logo">SO</div>
+                    <div>
+                        <div class="partner-name">Soralia</div>
+                        <div class="partner-desc">200+ feminist local groups</div>
+                    </div>
+                </div>
+                <div class="partner">
+                    <div class="partner-logo">PAC</div>
+                    <div>
+                        <div class="partner-name">PAC</div>
+                        <div class="partner-desc">Largest EP movement in Belgium</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- How to Join -->
+    <section class="section" id="join">
+        <div class="section-label">International Participation</div>
+        <h2 class="section-title">How to join from anywhere in the world</h2>
+        
+        <div class="join-grid">
+            <div class="join-card">
+                <div class="join-card-number">01</div>
+                <div class="join-card-title">Watch Online</div>
+                <div class="join-card-text">
+                    The final session (Jan 22, 6PM CET) will be livestreamed. No registration needed. Just show up.
+                </div>
+            </div>
+            
+            <div class="join-card">
+                <div class="join-card-number">02</div>
+                <div class="join-card-title">Ask Questions Live</div>
+                <div class="join-card-text">
+                    A dedicated international Q&A will happen at the end. Ask Belgian activists how they built this ecosystem.
+                </div>
+            </div>
+            
+            <div class="join-card">
+                <div class="join-card-number">03</div>
+                <div class="join-card-title">Spread the Word</div>
+                <div class="join-card-text">
+                    Share this page with your networks. Use #BelgiumPaysCritics. The more people discover this model, the more pressure to replicate it.
+                </div>
+            </div>
+            
+            <div class="join-card">
+                <div class="join-card-number">04</div>
+                <div class="join-card-title">Study the Model</div>
+                <div class="join-card-text">
+                    We've documented everything: the legal framework, the funding structure, the list of organizations. All open-source.
+                </div>
+            </div>
+            
+            <div class="join-card">
+                <div class="join-card-number">05</div>
+                <div class="join-card-title">Start Your Own</div>
+                <div class="join-card-text">
+                    The "arpentage" method works anywhere. Download the kit, adapt it to your context, run your own radical reading circle.
+                </div>
+            </div>
+            
+            <div class="join-card">
+                <div class="join-card-number">06</div>
+                <div class="join-card-title">Connect</div>
+                <div class="join-card-text">
+                    Join the international network of activists studying the Belgian model. We're building something together.
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Spread -->
+    <section class="spread-section">
+        <h2 class="spread-title">Make some noise</h2>
+        <p class="spread-text">
+            The Belgian government doesn't advertise this system internationally. Most activists around the world have never heard of it. Let's change that.
+        </p>
+        
+        <div class="hashtag">#BelgiumPaysCritics</div>
+        
+        <div class="social-links">
+            <a href="https://twitter.com/intent/tweet?text=Did%20you%20know%20Belgium%20PAYS%20273%20organizations%20to%20criticize%20capitalism%2C%20patriarchy%2C%20and%20the%20state%3F%20Join%20the%20international%20raid%20Jan%2022%20%23BelgiumPaysCritics&url=https://ouaisfieu.github.io/ecp/raid/" class="social-link" target="_blank">
+                𝕏 Share on X
+            </a>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=https://ouaisfieu.github.io/ecp/raid/" class="social-link" target="_blank">
+                📘 Share on Facebook
+            </a>
+            <a href="https://bsky.app/intent/compose?text=Did%20you%20know%20Belgium%20PAYS%20273%20organizations%20to%20criticize%20the%20system%3F%20Join%20the%20international%20raid%20Jan%2022%20%23BelgiumPaysCritics%20https://ouaisfieu.github.io/ecp/raid/" class="social-link" target="_blank">
+                🦋 Share on Bluesky
+            </a>
+            <a href="https://www.reddit.com/submit?url=https://ouaisfieu.github.io/ecp/raid/&title=Belgium%20Pays%20People%20to%20Criticize%20the%20System" class="social-link" target="_blank">
+                🔴 Post on Reddit
+            </a>
+        </div>
+    </section>
+    
+    <!-- Resources -->
+    <section class="section">
+        <div class="section-label">Open Source Documentation</div>
+        <h2 class="section-title">Study the model. Steal the model. Improve the model.</h2>
+        
+        <div class="wtf-grid">
+            <div class="wtf-card">
+                <div class="wtf-card-icon">📋</div>
+                <div class="wtf-card-title">List of 273 Organizations</div>
+                <div class="wtf-card-text">
+                    Complete CSV with names, addresses, emails, and funding axes. Download and analyze.
+                </div>
+                <a href="#" class="btn btn-ghost" style="margin-top: 1rem; display: inline-flex;">Download CSV →</a>
+            </div>
+            
+            <div class="wtf-card">
+                <div class="wtf-card-icon">⚖️</div>
+                <div class="wtf-card-title">Legal Framework</div>
+                <div class="wtf-card-text">
+                    The 2003 Decree explained in plain language. How to get recognized. How funding works.
+                </div>
+                <a href="#" class="btn btn-ghost" style="margin-top: 1rem; display: inline-flex;">Read Guide →</a>
+            </div>
+            
+            <div class="wtf-card">
+                <div class="wtf-card-icon">📖</div>
+                <div class="wtf-card-title">Arpentage Method</div>
+                <div class="wtf-card-text">
+                    Step-by-step guide to run collective reading circles. Templates, timings, facilitation tips.
+                </div>
+                <a href="#" class="btn btn-ghost" style="margin-top: 1rem; display: inline-flex;">Get the Kit →</a>
+            </div>
+            
+            <div class="wtf-card">
+                <div class="wtf-card-icon">💡</div>
+                <div class="wtf-card-title">ECP Model</div>
+                <div class="wtf-card-text">
+                    "Économie Contributive Provisionnée" — a new model for unemployed people to contribute without losing benefits.
+                </div>
+                <a href="https://ouaisfieu.github.io/ecp/" class="btn btn-ghost" style="margin-top: 1rem; display: inline-flex;">Explore ECP →</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <p>
+            This page is part of the <a href="https://ouaisfieu.github.io/tech/ccplc/">CCPLC</a> project.<br>
+            License: <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a> — Use it, adapt it, spread it.
+        </p>
+        <p style="margin-top: 1rem;">
+            Event organized by <a href="https://www.amazone.be/">Amazone</a>, <a href="https://www.soralia.be/">Soralia</a>, and <a href="https://www.pac-g.be/">PAC</a>.<br>
+            They don't know about this international raid. Let's surprise them. 🎁
+        </p>
+    </footer>
+    
+    <script>
+        // Countdown timer
+        function updateCountdown() {
+            const eventDate = new Date('2025-01-22T18:00:00+01:00');
+            const now = new Date();
+            const diff = eventDate - now;
+            
+            if (diff > 0) {
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                
+                // Update countdown if elements exist
+            }
+        }
+        
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+    </script>
+</body>
+</html>
