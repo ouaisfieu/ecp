@@ -39,7 +39,9 @@ OK. Voici la version **réaliste** :
 
 ---
 
-Maintenant je crée les fichiers individuels pour chaque plateforme, plus facile à utiliser :## ✅ TOUT LE MATOS EST PRÊT
+Maintenant je crée les fichiers individuels pour chaque plateforme, plus facile à utiliser :
+
+## ✅ TOUT LE MATOS EST PRÊT
 
 ### 📦 Ce que t'as maintenant :
 
