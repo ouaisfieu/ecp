@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIGNAL_273 — Cover Options</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&family=Space+Grotesk:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: #1a1a1a;
+            padding: 40px;
+            font-family: sans-serif;
+            color: #fff;
+        }
+        
+        h2 {
+            margin: 40px 0 20px;
+            color: #888;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+        }
+        
+        .cover {
+            width: 630px;
+            height: 500px;
+            margin: 0 auto 60px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* ====== OPTION 1: TERMINAL GLITCH ====== */
+        .cover-1 {
+            background: #0a0a0a;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        
+        .cover-1::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(0,255,136,0.03) 2px,
+                rgba(0,255,136,0.03) 4px
+            );
+            pointer-events: none;
+        }
+        
+        .cover-1 .logo {
+            font-size: 72px;
+            font-weight: 800;
+            color: #00ff88;
+            text-shadow: 
+                0 0 20px rgba(0,255,136,0.5),
+                0 0 40px rgba(0,255,136,0.3),
+                0 0 60px rgba(0,255,136,0.2);
+            letter-spacing: -2px;
+            position: relative;
+        }
+        
+        .cover-1 .logo span {
+            color: #ff2d2d;
+        }
+        
+        .cover-1 .subtitle {
+            font-size: 14px;
+            color: #484f58;
+            letter-spacing: 0.3em;
+            margin-top: 20px;
+            text-transform: uppercase;
+        }
+        
+        .cover-1 .tagline {
+            font-size: 18px;
+            color: #c9d1d9;
+            margin-top: 40px;
+            text-align: center;
+            line-height: 1.6;
+            max-width: 400px;
+        }
+        
+        .cover-1 .tagline em {
+            color: #ffd60a;
+            font-style: normal;
+        }
+        
+        .cover-1 .stats {
+            display: flex;
+            gap: 40px;
+            margin-top: 40px;
+        }
+        
+        .cover-1 .stat {
+            text-align: center;
+        }
+        
+        .cover-1 .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: #ff2d2d;
+        }
+        
+        .cover-1 .stat-label {
+            font-size: 10px;
+            color: #484f58;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+        
+        .cover-1 .prompt {
+            position: absolute;
+            bottom: 30px;
+            left: 30px;
+            font-size: 12px;
+            color: #00ff88;
+        }
+        
+        .cover-1 .prompt::before {
+            content: '> ';
+            color: #484f58;
+        }
+        
+        .cover-1 .cursor {
+            display: inline-block;
+            width: 8px;
+            height: 14px;
+            background: #00ff88;
+            margin-left: 4px;
+            animation: blink 1s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+        
+        /* ====== OPTION 2: REDACTED DOCUMENT ====== */
+        .cover-2 {
+            background: #f5f5dc;
+            padding: 40px;
+            font-family: 'Courier New', monospace;
+            position: relative;
+        }
+        
+        .cover-2::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.1'/%3E%3C/svg%3E");
+            pointer-events: none;
+        }
+        
+        .cover-2 .stamp {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            border: 4px solid #cc0000;
+            color: #cc0000;
+            padding: 10px 20px;
+            font-size: 24px;
+            font-weight: 700;
+            transform: rotate(12deg);
+            opacity: 0.8;
+        }
+        
+        .cover-2 .header {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #999;
+            padding-bottom: 10px;
+        }
+        
+        .cover-2 .title {
+            font-size: 48px;
+            font-weight: 700;
+            color: #000;
+            margin-bottom: 20px;
+        }
+        
+        .cover-2 .title span {
+            color: #cc0000;
+        }
+        
+        .cover-2 .redacted {
+            background: #000;
+            color: #000;
+            padding: 2px 8px;
+            margin: 0 4px;
+        }
+        
+        .cover-2 .content {
+            font-size: 16px;
+            line-height: 2;
+            color: #333;
+        }
+        
+        .cover-2 .highlight {
+            background: #ffff00;
+            padding: 2px 4px;
+        }
+        
+        .cover-2 .bottom {
+            position: absolute;
+            bottom: 30px;
+            left: 40px;
+            right: 40px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            color: #666;
+            border-top: 1px solid #999;
+            padding-top: 15px;
+        }
+        
+        /* ====== OPTION 3: MATRIX RAIN ====== */
+        .cover-3 {
+            background: #000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        
+        .cover-3 .matrix-bg {
+            position: absolute;
+            inset: 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            color: rgba(0,255,136,0.15);
+            line-height: 1.2;
+            overflow: hidden;
+            word-break: break-all;
+        }
+        
+        .cover-3 .center-box {
+            background: rgba(0,0,0,0.9);
+            border: 2px solid #00ff88;
+            padding: 40px 60px;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .cover-3 .center-box::before {
+            content: 'SIGNAL INTERCEPTED';
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #00ff88;
+            color: #000;
+            padding: 4px 16px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+        }
+        
+        .cover-3 .number {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 120px;
+            font-weight: 800;
+            color: #00ff88;
+            line-height: 1;
+            text-shadow: 0 0 30px rgba(0,255,136,0.5);
+        }
+        
+        .cover-3 .label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            color: #fff;
+            margin-top: 10px;
+            letter-spacing: 0.2em;
+        }
+        
+        .cover-3 .question {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 16px;
+            color: #ff2d2d;
+            margin-top: 30px;
+        }
+        
+        /* ====== OPTION 4: CONSPIRACY BOARD ====== */
+        .cover-4 {
+            background: #2a2520;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cover-4::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: 
+                repeating-linear-gradient(
+                    90deg,
+                    transparent,
+                    transparent 50px,
+                    rgba(255,255,255,0.02) 50px,
+                    rgba(255,255,255,0.02) 51px
+                ),
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 50px,
+                    rgba(255,255,255,0.02) 50px,
+                    rgba(255,255,255,0.02) 51px
+                );
+        }
+        
+        .cover-4 .string {
+            position: absolute;
+            background: #ff2d2d;
+            height: 2px;
+            transform-origin: left center;
+        }
+        
+        .cover-4 .string-1 { top: 150px; left: 100px; width: 200px; transform: rotate(25deg); }
+        .cover-4 .string-2 { top: 200px; left: 250px; width: 180px; transform: rotate(-15deg); }
+        .cover-4 .string-3 { top: 300px; left: 150px; width: 250px; transform: rotate(10deg); }
+        .cover-4 .string-4 { top: 350px; left: 350px; width: 150px; transform: rotate(-30deg); }
+        
+        .cover-4 .pin {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #ff2d2d;
+            border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .cover-4 .pin-1 { top: 145px; left: 95px; }
+        .cover-4 .pin-2 { top: 180px; left: 280px; }
+        .cover-4 .pin-3 { top: 290px; left: 145px; }
+        .cover-4 .pin-4 { top: 320px; left: 380px; }
+        .cover-4 .pin-5 { top: 380px; left: 240px; }
+        
+        .cover-4 .photo {
+            position: absolute;
+            background: #fff;
+            padding: 8px 8px 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            text-align: center;
+            color: #000;
+        }
+        
+        .cover-4 .photo-inner {
+            background: #1a1a1a;
+            color: #00ff88;
+            padding: 20px;
+            font-size: 14px;
+        }
+        
+        .cover-4 .photo-1 {
+            top: 80px; left: 60px;
+            transform: rotate(-5deg);
+        }
+        
+        .cover-4 .photo-2 {
+            top: 120px; left: 350px;
+            transform: rotate(8deg);
+        }
+        
+        .cover-4 .photo-3 {
+            top: 280px; left: 420px;
+            transform: rotate(-3deg);
+        }
+        
+        .cover-4 .main-card {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #000;
+            border: 3px solid #00ff88;
+            padding: 30px 50px;
+            text-align: center;
+            font-family: 'JetBrains Mono', monospace;
+            z-index: 10;
+        }
+        
+        .cover-4 .main-card .title {
+            font-size: 36px;
+            font-weight: 700;
+            color: #00ff88;
+            margin-bottom: 10px;
+        }
+        
+        .cover-4 .main-card .sub {
+            font-size: 12px;
+            color: #ff2d2d;
+            letter-spacing: 0.2em;
+        }
+        
+        .cover-4 .question-mark {
+            position: absolute;
+            font-size: 200px;
+            font-weight: 800;
+            color: rgba(255,45,45,0.1);
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        
+        .cover-4 .qm-1 { top: -30px; right: 50px; }
+        .cover-4 .qm-2 { bottom: -50px; left: 30px; transform: rotate(15deg); }
+        
+        /* ====== OPTION 5: MINIMAL THREAT ====== */
+        .cover-5 {
+            background: #000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        
+        .cover-5 .warning-stripe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 30px;
+            background: repeating-linear-gradient(
+                45deg,
+                #ffd60a,
+                #ffd60a 20px,
+                #000 20px,
+                #000 40px
+            );
+        }
+        
+        .cover-5 .warning-stripe-bottom {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 30px;
+            background: repeating-linear-gradient(
+                45deg,
+                #ffd60a,
+                #ffd60a 20px,
+                #000 20px,
+                #000 40px
+            );
+        }
+        
+        .cover-5 .alert {
+            font-size: 14px;
+            color: #ff2d2d;
+            letter-spacing: 0.3em;
+            margin-bottom: 30px;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .cover-5 .main-text {
+            font-size: 24px;
+            color: #fff;
+            text-align: center;
+            line-height: 1.8;
+            max-width: 500px;
+        }
+        
+        .cover-5 .main-text .highlight {
+            color: #00ff88;
+            font-weight: 700;
+        }
+        
+        .cover-5 .main-text .number {
+            color: #ff2d2d;
+            font-size: 48px;
+            font-weight: 700;
+        }
+        
+        .cover-5 .cta {
+            margin-top: 40px;
+            border: 2px solid #00ff88;
+            padding: 15px 40px;
+            color: #00ff88;
+            font-size: 16px;
+            letter-spacing: 0.1em;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center; margin-bottom: 60px;">SIGNAL_273 — Cover Options (630×500)</h1>
+    
+    <!-- OPTION 1 -->
+    <h2>Option 1: Terminal Glitch (Recommandé)</h2>
+    <div class="cover cover-1">
+        <div class="logo">SIGNAL_<span>273</span></div>
+        <div class="subtitle">Alternate Reality Game</div>
+        <div class="tagline">Belgium pays <em>273 organizations</em><br>to criticize the system</div>
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-value">€50M+</div>
+                <div class="stat-label">Annual Budget</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">2,300</div>
+                <div class="stat-label">Operatives</div>
+            </div>
+        </div>
+        <div class="prompt">Decode the signal<span class="cursor"></span></div>
+    </div>
+    
+    <!-- OPTION 2 -->
+    <h2>Option 2: Redacted Document</h2>
+    <div class="cover cover-2">
+        <div class="stamp">DECLASSIFIED</div>
+        <div class="header">FEDERATION WALLONIE-BRUXELLES // CLASSIFIED DOCUMENT // REF: EP-2003-0717</div>
+        <div class="title">SIGNAL_<span>273</span></div>
+        <div class="content">
+            Subject: <span class="highlight">Permanent Education</span> Network<br><br>
+            Status: <span class="redacted">XXXXXX</span> ACTIVE<br>
+            Budget: <span class="redacted">XXX</span> €50,000,000+/year<br>
+            Personnel: <span class="redacted">XXXX</span> 2,300 operatives<br>
+            Mission: <span class="highlight">Criticize the system</span><br><br>
+            Organizations funded to <span class="redacted">XXXXXXX</span><br>
+            question capitalism, patriarchy, and <span class="redacted">XXXX</span><br>
+            government policies using public <span class="redacted">XXXXX</span>
+        </div>
+        <div class="bottom">
+            <span>DECREE OF JULY 17, 2003</span>
+            <span>AN ALTERNATE REALITY GAME</span>
+        </div>
+    </div>
+    
+    <!-- OPTION 3 -->
+    <h2>Option 3: The Number</h2>
+    <div class="cover cover-3">
+        <div class="matrix-bg">01001010101110010101001010101010101001010101011100101010010101010101010010101010111001010100101010101010100101010101110010101001010101010101001010101011100101010010101010101010010101010111001010100101010101010100101010101110010101001010101010101001010101011100101010010101010101010010101010111001010100101010101010100101010101110010101001010101010101001010101011100101010010101010101010010101010111001010100101010101010100101010101110010101001010101010101001010101011100101010010101010101010010101010111001010100101010101010100101010101110010101001010101010101001010101011100101010010101010101010010101010111001010100101010101010100101010101110010101001010101010101001010101011100101010010101010101010010101010111001010100101010101010100</div>
+        <div class="center-box">
+            <div class="number">273</div>
+            <div class="label">ORGANIZATIONS DETECTED</div>
+            <div class="question">What is Belgium hiding?</div>
+        </div>
+    </div>
+    
+    <!-- OPTION 4 -->
+    <h2>Option 4: Conspiracy Board</h2>
+    <div class="cover cover-4">
+        <div class="question-mark qm-1">?</div>
+        <div class="question-mark qm-2">?</div>
+        
+        <div class="string string-1"></div>
+        <div class="string string-2"></div>
+        <div class="string string-3"></div>
+        <div class="string string-4"></div>
+        
+        <div class="pin pin-1"></div>
+        <div class="pin pin-2"></div>
+        <div class="pin pin-3"></div>
+        <div class="pin pin-4"></div>
+        <div class="pin pin-5"></div>
+        
+        <div class="photo photo-1">
+            <div class="photo-inner">ATTAC</div>
+            Anti-globalization
+        </div>
+        
+        <div class="photo photo-2">
+            <div class="photo-inner">SORALIA</div>
+            200+ groups
+        </div>
+        
+        <div class="photo photo-3">
+            <div class="photo-inner">PAC</div>
+            Largest movement
+        </div>
+        
+        <div class="main-card">
+            <div class="title">SIGNAL_273</div>
+            <div class="sub">DECODE THE NETWORK</div>
+        </div>
+    </div>
+    
+    <!-- OPTION 5 -->
+    <h2>Option 5: Warning/Threat</h2>
+    <div class="cover cover-5">
+        <div class="warning-stripe"></div>
+        <div class="warning-stripe-bottom"></div>
+        <div class="alert">⚠ SIGNAL INTERCEPTED ⚠</div>
+        <div class="main-text">
+            Belgium pays<br>
+            <span class="number">273</span><br>
+            <span class="highlight">organizations</span><br>
+            to criticize the system
+        </div>
+        <div class="cta">INVESTIGATE →</div>
+    </div>
+    
+    <div style="text-align: center; padding: 60px; color: #666;">
+        <p>Pour créer la cover :</p>
+        <ol style="text-align: left; max-width: 400px; margin: 20px auto;">
+            <li>Ouvre cette page dans Chrome</li>
+            <li>Zoom à 100%</li>
+            <li>Screenshot la cover choisie (630×500)</li>
+            <li>Upload sur itch.io</li>
+        </ol>
+    </div>
+</body>
+</html>
