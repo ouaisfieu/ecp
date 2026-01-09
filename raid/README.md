@@ -173,7 +173,7 @@ L'idée est de leur faire la surprise d'une vague d'attention internationale. Ç
 
 ---
 
-*CCPLC — Janvier 2025 — Licence CC BY-NC 4.0*
+*CCPLC — Janvier 2026 — Licence CC BY-NC 4.0*
 
 **LET'S FUCKING GO.** 🔥
 
