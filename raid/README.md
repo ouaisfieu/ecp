@@ -33,7 +33,7 @@
 
 **Objectif :** Faire découvrir au monde entier que la Belgique finance 273 organisations pour critiquer le système.
 
-**Date :** 22 janvier 2025, 18h CET
+**Date :** 22 janvier 2026, 18h CET
 
 **Hashtag :** #BelgiumPaysCritics
 
