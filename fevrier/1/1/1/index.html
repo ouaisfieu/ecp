@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>🔮 NEXUS v2 :: Station ECP — 117 cartes fact-checkées 2026</title>
+<meta name="description" content="Station de travail ECP : 117 flashcards fact-checkées, benchmark européen, plaidoyer stratégique. Données sourcées février 2026.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@300;500;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+/* ═══ DESIGN TOKENS — #B!Mi DNA ═══ */
+:root {
+  --mg:#48bb78;--mg-d:#38a169;--mg-l:#68d391;
+  --bg:#0d0d14;--bg2:#12121a;--bg3:#1a1a26;--bg4:#222233;
+  --glow:0 0 10px rgba(72,187,120,.35),0 0 22px rgba(72,187,120,.15);
+  --cyan:#63b3ed;--lilac:#b794f4;--orange:#f6ad55;--yellow:#faf089;
+  --red:#fc8181;--ok:#68d391;--panel:rgba(13,13,20,.92);
+  --glass:rgba(72,187,120,.05);--bd:rgba(72,187,120,.2);
+  --lilac2:#9f7aea;--lilac-g:rgba(159,122,234,.25);
+  --f-body:'Outfit',system-ui,sans-serif;
+  --f-mono:'JetBrains Mono',monospace;
+  --f-display:'Orbitron',sans-serif;
+  --ease:cubic-bezier(.4,0,.2,1);
+}
+[data-t="80s"] {
+  --mg:#00ff66;--mg-d:#00cc55;--mg-l:#39ff14;
+  --bg:#0a0012;--bg2:#100020;--bg3:#180028;--bg4:#220038;
+  --glow:0 0 10px #00ff66,0 0 25px #00ff66,0 0 50px #00ff66;
+  --cyan:#00d4ff;--lilac:#ff00cc;--orange:#ff6600;--yellow:#ffff00;
+  --red:#ff0040;--ok:#00ff88;--panel:rgba(10,0,18,.92);
+  --glass:rgba(0,255,102,.08);--bd:rgba(0,255,102,.3);
+  --lilac2:#ff00cc;--lilac-g:rgba(255,0,204,.3);
+}
+
+/* ═══ RESET ═══ */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scrollbar-width:thin;scrollbar-color:var(--mg) var(--bg)}
+::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--mg);border-radius:3px}
+::selection{background:var(--lilac);color:#fff}
+
+body{font-family:var(--f-body);background:var(--bg);color:var(--mg);min-height:100vh;overflow-x:hidden;transition:background .4s var(--ease),color .4s var(--ease)}
+
+/* ═══ SCANLINES ═══ */
+.scan::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,rgba(0,0,0,.12),rgba(0,0,0,.12) 1px,transparent 1px,transparent 2px);pointer-events:none;z-index:9999}
+[data-t="80s"] .scan::before{background:repeating-linear-gradient(0deg,rgba(0,0,0,.2),rgba(0,0,0,.2) 1px,transparent 1px,transparent 3px)}
+
+/* ═══ LAYOUT ═══ */
+.app{display:grid;grid-template-columns:260px 1fr 280px;grid-template-rows:54px 1fr;min-height:100vh;gap:1px;position:relative;z-index:1}
+@media(max-width:1100px){.app{grid-template-columns:1fr;grid-template-rows:54px 1fr}}
+
+/* ═══ HEADER ═══ */
+.hdr{grid-column:1/-1;background:linear-gradient(180deg,var(--panel) 0%,rgba(13,13,20,.96) 100%);border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;padding:0 16px;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);z-index:10}
+.logo{font-family:var(--f-display);font-size:1.2rem;font-weight:900;text-shadow:var(--glow);display:flex;align-items:center;gap:8px}
+.logo-ic{width:34px;height:34px;border:2px solid var(--mg);border-radius:50%;display:flex;align-items:center;justify-content:center;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 5px var(--mg)}50%{box-shadow:0 0 18px var(--mg),0 0 28px var(--mg-d)}}
+.logo sub{font-size:.55rem;opacity:.5;font-weight:400;vertical-align:baseline;margin-left:4px}
+.hdr-stats{display:flex;gap:20px;font-size:.75rem}
+.st-v{font-size:1rem;font-weight:700;color:var(--cyan);text-shadow:0 0 8px var(--cyan);display:block;text-align:center}
+.st-l{font-size:.55rem;opacity:.6;text-transform:uppercase;letter-spacing:.06em;text-align:center}
+.hdr-act{display:flex;gap:6px;align-items:center}
+@media(max-width:1100px){.hdr-stats{display:none}}
+
+/* ═══ BUTTONS ═══ */
+.btn{background:transparent;border:1px solid var(--bd);color:var(--mg);padding:6px 12px;cursor:pointer;font-family:var(--f-mono);font-size:.72rem;transition:all .25s var(--ease);border-radius:4px;position:relative;overflow:hidden;white-space:nowrap}
+.btn:hover{background:rgba(72,187,120,.08);border-color:var(--mg);box-shadow:var(--glow);transform:translateY(-1px)}
+.btn-cyan{border-color:var(--cyan);color:var(--cyan)}.btn-cyan:hover{background:rgba(99,179,237,.1);box-shadow:0 0 14px var(--cyan)}
+.btn-danger{border-color:var(--red);color:var(--red)}.btn-danger:hover{background:rgba(252,129,129,.1)}
+
+/* ═══ 80s TOGGLE ═══ */
+.t80{background:var(--bg3);border:1px solid var(--bd);border-radius:50px;padding:3px 10px;display:inline-flex;align-items:center;gap:5px;cursor:pointer;color:var(--mg);font-family:var(--f-mono);font-size:.58rem;letter-spacing:.04em;transition:all .3s var(--ease)}
+.t80:hover{border-color:var(--lilac2);box-shadow:0 0 12px var(--lilac-g)}
+[data-t="80s"] .t80{border-color:var(--lilac);box-shadow:0 0 16px var(--lilac-g),inset 0 0 6px var(--lilac-g)}
+.t80 .dot{width:7px;height:7px;border-radius:50%;background:var(--mg);transition:all .3s}
+[data-t="80s"] .t80 .dot{background:var(--lilac);box-shadow:0 0 8px var(--lilac)}
+
+/* ═══ SIDEBAR ═══ */
+.side{background:var(--panel);border-right:1px solid var(--bd);padding:12px;overflow-y:auto;display:flex;flex-direction:column;gap:12px}
+.side-r{background:var(--panel);border-left:1px solid var(--bd);padding:12px;overflow-y:auto;display:flex;flex-direction:column;gap:12px}
+@media(max-width:1100px){.side,.side-r{display:none}.side.open,.side-r.open{display:flex;position:fixed;top:54px;bottom:0;width:280px;z-index:100}.side.open{left:0}.side-r.open{right:0}}
+
+/* ═══ PROFILE ═══ */
+.prof{background:linear-gradient(135deg,rgba(26,26,38,.9),rgba(13,13,20,.95));border:1px solid var(--bd);border-radius:10px;padding:14px;text-align:center}
+.av{width:60px;height:60px;margin:0 auto 8px;border-radius:50%;border:2px solid var(--mg);background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:1.6rem;cursor:pointer;transition:all .3s}
+.av:hover{transform:scale(1.08);box-shadow:var(--glow)}
+.pname{font-family:var(--f-display);font-size:.82rem;margin-bottom:2px}
+.ptitle{font-size:.62rem;color:var(--cyan);margin-bottom:8px}
+.xp-bar{background:rgba(0,0,0,.4);height:5px;border-radius:3px;overflow:hidden}
+.xp-fill{height:100%;background:linear-gradient(90deg,var(--mg-d),var(--mg));transition:width .5s var(--ease)}
+.xp-txt{font-size:.55rem;opacity:.6;margin-top:3px}
+
+/* ═══ TOOL PANEL ═══ */
+.tpanel{background:rgba(13,13,20,.5);border:1px solid var(--bd);border-radius:8px;overflow:hidden}
+.tph{background:rgba(72,187,120,.06);padding:8px 12px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--bd);cursor:pointer;font-family:var(--f-body);font-weight:700;font-size:.78rem}
+.tpc{padding:12px;max-height:250px;overflow-y:auto;font-size:.78rem}
+.tpc.hide{display:none}
+
+/* ═══ QUICK STATS ═══ */
+.qgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.qstat{background:rgba(0,0,0,.25);padding:8px;border-radius:6px;text-align:center}
+.qstat-v{font-size:1.1rem;font-weight:700}
+.qstat-l{font-size:.5rem;opacity:.6;text-transform:uppercase}
+
+/* ═══ MAIN CONTENT ═══ */
+.main{background:rgba(13,13,20,.6);display:flex;flex-direction:column;overflow:hidden}
+.toolbar{background:rgba(13,13,20,.85);padding:8px 14px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--bd);flex-wrap:wrap}
+.search-box{flex:1;min-width:180px;position:relative}
+.search-in{width:100%;background:rgba(0,0,0,.4);border:1px solid var(--bd);color:var(--mg);padding:8px 12px 8px 32px;font-family:var(--f-body);font-size:.8rem;border-radius:4px;transition:all .25s}
+.search-in:focus{outline:none;border-color:var(--mg);box-shadow:0 0 12px rgba(72,187,120,.2)}
+.search-ic{position:absolute;left:10px;top:50%;transform:translateY(-50%);opacity:.5;font-size:.8rem}
+.sort-sel{background:rgba(0,0,0,.4);border:1px solid var(--bd);color:var(--mg);padding:6px 10px;font-family:var(--f-mono);font-size:.7rem;border-radius:4px}
+.view-tog{display:flex;gap:3px}
+.vbtn{padding:6px 10px;background:transparent;border:1px solid var(--bd);color:var(--mg);cursor:pointer;transition:all .25s;border-radius:4px;font-size:.75rem}
+.vbtn.on{background:rgba(72,187,120,.12);border-color:var(--mg)}
+
+/* ═══ TABS ═══ */
+.tabs{display:flex;background:rgba(0,0,0,.2);border-bottom:1px solid var(--bd);overflow-x:auto}
+.tab{padding:10px 18px;cursor:pointer;border-bottom:2px solid transparent;transition:all .25s;font-weight:500;font-size:.78rem;white-space:nowrap}
+.tab:hover{background:rgba(72,187,120,.06)}
+.tab.on{border-bottom-color:var(--mg);background:rgba(72,187,120,.08);text-shadow:0 0 8px var(--mg)}
+
+/* ═══ CONTENT AREA ═══ */
+.content{flex:1;overflow-y:auto;padding:14px}
+
+/* ═══ CARDS GRID ═══ */
+.cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:12px}
+@media(max-width:600px){.cgrid{grid-template-columns:1fr}}
+.card{background:linear-gradient(135deg,rgba(26,26,38,.85),rgba(13,13,20,.92));border:1px solid var(--bd);border-radius:10px;overflow:hidden;transition:all .3s var(--ease);cursor:pointer;animation:fi .3s var(--ease) forwards}
+@keyframes fi{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(72,187,120,.12);border-color:var(--mg)}
+.card.fav{border-color:var(--orange)}.card.done{border-color:var(--ok)}
+.card.fc-c{border-color:rgba(252,129,129,.3)}.card.fc-c .c-hdr{background:rgba(252,129,129,.06)}
+.card.bm-c{border-color:rgba(99,179,237,.2)}.card.bm-c .c-hdr{background:rgba(99,179,237,.04)}
+.c-hdr{background:rgba(72,187,120,.05);padding:8px 12px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--bd)}
+.c-id{font-family:var(--f-mono);font-size:.65rem;color:var(--cyan)}
+.c-acts{display:flex;gap:6px}
+.c-act{background:transparent;border:none;color:var(--mg);cursor:pointer;opacity:.5;transition:all .25s;font-size:.85rem}
+.c-act:hover{opacity:1;transform:scale(1.15)}
+.c-act.on-fav{color:var(--orange);opacity:1}
+.c-act.on-done{color:var(--ok);opacity:1}
+.c-q{padding:12px;font-size:.88rem;line-height:1.5;min-height:60px}
+.c-a{padding:12px;background:rgba(0,0,0,.25);font-size:.8rem;color:var(--cyan);line-height:1.5;border-top:1px dashed var(--bd);display:none}
+.c-a.vis{display:block}
+.c-tags{padding:8px 12px;display:flex;flex-wrap:wrap;gap:4px}
+.tag{padding:2px 8px;border-radius:20px;font-size:.58rem;font-family:var(--f-mono);cursor:pointer;transition:all .2s}
+.tag:hover{filter:brightness(1.3)}
+
+/* ═══ FACT-CHECK BADGES ═══ */
+.fc{display:inline-flex;align-items:center;gap:2px;font-family:var(--f-mono);font-size:.52rem;padding:2px 6px;border-radius:50px;font-weight:600;letter-spacing:.02em;margin-left:5px}
+.fc-ok{background:rgba(72,187,120,.1);color:var(--ok)}
+.fc-warn{background:rgba(246,173,85,.1);color:var(--orange)}
+.fc-err{background:rgba(252,129,129,.1);color:var(--red)}
+.fc-new{background:rgba(159,122,234,.1);color:var(--lilac2)}
+.fc-bm{background:rgba(99,179,237,.1);color:var(--cyan)}
+
+/* ═══ SOURCE TAG ═══ */
+.src{display:inline-block;font-family:var(--f-mono);font-size:.48rem;color:rgba(255,255,255,.2);background:rgba(255,255,255,.03);padding:1px 5px;border-radius:50px;margin:3px 2px 0 0}
+
+/* ═══ TABLE VIEW ═══ */
+.tbl{width:100%;border-collapse:collapse}
+.tbl th,.tbl td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--bd);font-size:.75rem}
+.tbl th{background:rgba(72,187,120,.06);font-weight:700;cursor:pointer;user-select:none}
+.tbl th:hover{background:rgba(72,187,120,.12)}
+.tbl tr:hover{background:rgba(72,187,120,.03)}
+
+/* ═══ QUIZ ═══ */
+.quiz{max-width:660px;margin:0 auto}
+.quiz-card{background:linear-gradient(135deg,rgba(26,26,38,.9),rgba(13,13,20,.95));border:2px solid var(--mg);border-radius:14px;padding:28px;text-align:center}
+.quiz-q{font-size:1.15rem;line-height:1.6;margin:24px 0}
+.quiz-ans{background:rgba(0,0,0,.4);border:1px solid var(--bd);border-radius:10px;padding:18px;margin:16px 0;display:none;color:var(--cyan);font-size:1rem}
+.quiz-ans.vis{display:block}
+.quiz-ctrl{display:flex;gap:12px;justify-content:center;margin-top:16px}
+.quiz-score{display:flex;justify-content:center;gap:24px;margin-top:16px}
+.sc-v{font-size:1.6rem;font-weight:700;display:block}.sc-ok{color:var(--ok)}.sc-no{color:var(--red)}
+
+/* ═══ DETECTIVE ═══ */
+.det-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+.det-card{background:rgba(13,13,20,.7);border:1px solid var(--bd);border-radius:10px;padding:16px}
+.det-title{font-family:var(--f-display);font-size:.85rem;margin-bottom:12px;color:var(--cyan);display:flex;align-items:center;gap:6px}
+.word-cloud{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
+.word-item{padding:4px 10px;background:rgba(72,187,120,.08);border-radius:20px;cursor:pointer;transition:all .25s;font-size:.72rem}
+.word-item:hover{background:rgba(72,187,120,.2);transform:scale(1.05)}
+.chart-ct{height:180px;display:flex;align-items:flex-end;gap:3px;padding:8px 0}
+.chart-bar{flex:1;background:linear-gradient(180deg,var(--mg),var(--mg-d));border-radius:3px 3px 0 0;min-height:6px;transition:all .3s;cursor:pointer;position:relative}
+.chart-bar:hover{background:var(--cyan)}
+.timeline-item{padding:8px 12px;border-left:2px solid var(--mg);margin-left:8px;margin-bottom:8px;position:relative;font-size:.78rem}
+.timeline-item::before{content:'';position:absolute;left:-5px;top:12px;width:8px;height:8px;background:var(--mg);border-radius:50%}
+.tl-year{color:var(--cyan);font-weight:700}
+
+/* ═══ EDITOR ═══ */
+.editor{max-width:700px;margin:0 auto}
+.fg{margin-bottom:16px}
+.fg label{display:block;margin-bottom:6px;font-weight:700;font-size:.82rem}
+.fg input,.fg textarea,.fg select{width:100%;background:rgba(0,0,0,.4);border:1px solid var(--bd);color:var(--mg);padding:10px 12px;font-family:var(--f-body);font-size:.85rem;border-radius:4px;transition:all .25s}
+.fg textarea{min-height:80px;resize:vertical}
+.fg input:focus,.fg textarea:focus{outline:none;border-color:var(--mg);box-shadow:0 0 12px rgba(72,187,120,.2)}
+
+/* ═══ CONNECTIONS ═══ */
+.conn-ct{height:300px;position:relative;overflow:hidden}
+
+/* ═══ FILTER TAGS ═══ */
+.ftags{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:10px}
+.ftag{background:rgba(72,187,120,.06);border:1px solid var(--bd);padding:4px 10px;border-radius:20px;font-size:.62rem;cursor:pointer;transition:all .25s;font-family:var(--f-mono)}
+.ftag:hover,.ftag.on{background:rgba(72,187,120,.18);border-color:var(--mg)}
+
+/* ═══ SHORTCUTS ═══ */
+.sc-list{font-size:.7rem}
+.sc-item{display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid rgba(72,187,120,.06)}
+.sc-key{background:rgba(72,187,120,.12);padding:1px 6px;border-radius:3px;font-family:var(--f-mono);font-size:.6rem}
+
+/* ═══ LEGEND ═══ */
+.leg-item{display:flex;align-items:center;gap:8px;font-size:.7rem;cursor:pointer;padding:3px 0;transition:all .2s}
+.leg-item:hover{color:var(--mg-l)}
+.leg-dot{width:10px;height:10px;border-radius:3px;flex-shrink:0}
+.leg-ct{margin-left:auto;opacity:.5;font-family:var(--f-mono);font-size:.6rem}
+
+/* ═══ ACTIVITY LOG ═══ */
+.log{max-height:160px;overflow-y:auto}
+.log-e{padding:5px 0;border-bottom:1px solid rgba(72,187,120,.06);font-size:.65rem}
+.log-t{color:var(--cyan);font-size:.55rem;font-family:var(--f-mono)}
+
+/* ═══ MODAL ═══ */
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.8);display:none;align-items:center;justify-content:center;z-index:1000}
+.modal-bg.on{display:flex}
+.modal{background:var(--panel);border:1px solid var(--mg);border-radius:14px;padding:24px;max-width:560px;width:92%;max-height:80vh;overflow-y:auto}
+.modal h3{font-family:var(--f-display);font-size:1.1rem;margin-bottom:16px}
+.modal-close{background:transparent;border:none;color:var(--mg);font-size:1.2rem;cursor:pointer;float:right}
+
+/* ═══ NOTES ═══ */
+.notes-ta{width:100%;height:80px;background:rgba(0,0,0,.4);border:1px solid var(--bd);color:var(--mg);padding:8px;font-family:var(--f-body);font-size:.75rem;resize:vertical;border-radius:4px}
+.notes-ta:focus{outline:none;border-color:var(--mg);box-shadow:0 0 8px rgba(72,187,120,.2)}
+
+/* ═══ TIMER ═══ */
+.timer-d{font-family:var(--f-display);font-size:1.8rem;text-align:center;margin:8px 0;text-shadow:0 0 16px var(--cyan);color:var(--cyan)}
+.timer-btns{display:flex;gap:4px;justify-content:center}
+.timer-btns .btn{padding:4px 10px;font-size:.7rem}
+
+/* ═══ DROP ZONE ═══ */
+.drop-z{border:2px dashed var(--bd);border-radius:10px;padding:24px;text-align:center;transition:all .3s;margin-bottom:16px;font-size:.8rem}
+.drop-z.dragover{border-color:var(--mg);background:rgba(72,187,120,.06)}
+
+/* ═══ TOGGLE SWITCH ═══ */
+.tog{width:42px;height:22px;background:rgba(0,0,0,.4);border-radius:11px;cursor:pointer;position:relative;transition:all .3s}
+.tog.on{background:var(--mg)}
+.tog::after{content:'';position:absolute;top:3px;left:3px;width:16px;height:16px;background:var(--bg);border-radius:50%;transition:all .3s}
+.tog.on::after{left:23px}
+
+/* ═══ CANVAS ═══ */
+#rain{position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.12}
+
+/* ═══ RESPONSIVE HELPERS ═══ */
+.desk-only{display:flex}
+.mob-only{display:none}
+@media(max-width:1100px){.desk-only{display:none!important}.mob-only{display:flex!important}}
+</style>
+</head>
+<body class="scan">
+<canvas id="rain"></canvas>
+
+<div class="app">
+<!-- ═══ HEADER ═══ -->
+<header class="hdr">
+  <div class="logo"><div class="logo-ic">◈</div><span>NEXUS</span><sub>ECP v2 · FACT-CHECKED 2026</sub></div>
+  <div class="hdr-stats desk-only">
+    <div><span class="st-v" id="st-total">117</span><span class="st-l">Cartes</span></div>
+    <div><span class="st-v" id="st-done">0</span><span class="st-l">Maîtrisées</span></div>
+    <div><span class="st-v" id="st-fav">0</span><span class="st-l">Favoris</span></div>
+    <div><span class="st-v" id="st-time">00:00</span><span class="st-l">Session</span></div>
+  </div>
+  <div class="hdr-act">
+    <button class="t80" onclick="toggle80s()"><span class="dot"></span><span id="t80-lbl">EIGHTIES</span></button>
+    <button class="btn mob-only" onclick="toggleSide('l')">☰</button>
+    <button class="btn btn-cyan" onclick="openModal('import')">📥</button>
+    <button class="btn" onclick="exportCSV()">📤</button>
+    <button class="btn" onclick="openModal('settings')">⚙️</button>
+    <button class="btn mob-only" onclick="toggleSide('r')">📊</button>
+  </div>
+</header>
+
+<!-- ═══ LEFT SIDEBAR ═══ -->
+<aside class="side" id="side-l">
+  <div class="prof">
+    <div class="av" id="avatar">🕵️</div>
+    <div class="pname" contenteditable="true" id="pname">Agent_Inconnu</div>
+    <div class="ptitle">Détective ECP</div>
+    <div class="xp-bar"><div class="xp-fill" id="xp-fill" style="width:0%"></div></div>
+    <div class="xp-txt"><span id="xp-cur">0</span> / <span id="xp-need">100</span> XP · Nv.<span id="pniv">1</span></div>
+  </div>
+
+  <div class="tpanel"><div class="tph" onclick="togPanel(this)">⏱️ CHRONO <span>▼</span></div>
+  <div class="tpc">
+    <div class="timer-d" id="timer">25:00</div>
+    <div class="timer-btns">
+      <button class="btn" onclick="timerStart()">▶</button>
+      <button class="btn" onclick="timerPause()">⏸</button>
+      <button class="btn" onclick="timerReset()">↺</button>
+    </div>
+    <div style="margin-top:6px;text-align:center">
+      <button class="btn" onclick="timerSet(25)" style="padding:2px 6px;font-size:.6rem">25m</button>
+      <button class="btn" onclick="timerSet(15)" style="padding:2px 6px;font-size:.6rem">15m</button>
+      <button class="btn" onclick="timerSet(5)" style="padding:2px 6px;font-size:.6rem">5m</button>
+    </div>
+  </div></div>
+
+  <div class="tpanel"><div class="tph" onclick="togPanel(this)">📊 STATS <span>▼</span></div>
+  <div class="tpc">
+    <div class="qgrid">
+      <div class="qstat"><div class="qstat-v" id="cat-ecp" style="color:var(--mg)">0</div><div class="qstat-l">ECP</div></div>
+      <div class="qstat"><div class="qstat-v" id="cat-az" style="color:var(--orange)">0</div><div class="qstat-l">Arizona</div></div>
+      <div class="qstat"><div class="qstat-v" id="cat-fisc" style="color:var(--lilac)">0</div><div class="qstat-l">Fiscal</div></div>
+      <div class="qstat"><div class="qstat-v" id="cat-bench" style="color:var(--cyan)">0</div><div class="qstat-l">Benchmark</div></div>
+    </div>
+  </div></div>
+
+  <div class="tpanel"><div class="tph" onclick="togPanel(this)">📝 NOTES <span>▼</span></div>
+  <div class="tpc">
+    <textarea class="notes-ta" id="notes" placeholder="Notes personnelles..."></textarea>
+    <button class="btn" style="margin-top:6px;width:100%" onclick="saveAll()">💾 Sauvegarder</button>
+  </div></div>
+
+  <div class="tpanel"><div class="tph" onclick="togPanel(this)">⌨️ RACCOURCIS <span>▼</span></div>
+  <div class="tpc hide">
+    <div class="sc-list">
+      <div class="sc-item"><span>Recherche</span><span class="sc-key">Ctrl+F</span></div>
+      <div class="sc-item"><span>Quiz</span><span class="sc-key">Q</span></div>
+      <div class="sc-item"><span>Détective</span><span class="sc-key">D</span></div>
+      <div class="sc-item"><span>Nouvelle carte</span><span class="sc-key">N</span></div>
+      <div class="sc-item"><span>Réponse quiz</span><span class="sc-key">Espace</span></div>
+      <div class="sc-item"><span>Carte suivante</span><span class="sc-key">→</span></div>
+    </div>
+  </div></div>
+</aside>
+
+<!-- ═══ MAIN ═══ -->
+<main class="main">
+  <div class="toolbar">
+    <div class="search-box"><span class="search-ic">🔍</span><input type="text" class="search-in" id="search" placeholder="Rechercher..."></div>
+    <div class="view-tog">
+      <button class="vbtn on" data-v="grid" onclick="setView('grid')">⊞</button>
+      <button class="vbtn" data-v="table" onclick="setView('table')">☰</button>
+      <button class="vbtn" data-v="compact" onclick="setView('compact')">▤</button>
+    </div>
+    <select class="sort-sel" id="sort" onchange="sortCards(this.value)">
+      <option value="id">Tri: ID</option>
+      <option value="alpha">Tri: A-Z</option>
+      <option value="random">Tri: Aléatoire</option>
+    </select>
+  </div>
+  <div class="tabs">
+    <div class="tab on" data-tab="cards" onclick="switchTab('cards')">📚 CARTES</div>
+    <div class="tab" data-tab="quiz" onclick="switchTab('quiz')">🎯 QUIZ</div>
+    <div class="tab" data-tab="detective" onclick="switchTab('detective')">🔍 DÉTECTIVE</div>
+    <div class="tab" data-tab="editor" onclick="switchTab('editor')">✏️ ÉDITEUR</div>
+  </div>
+  <div class="content" id="content">
+    <div id="p-cards"><div class="cgrid" id="cards-ct"></div></div>
+    <div id="p-quiz" style="display:none"></div>
+    <div id="p-det" style="display:none"></div>
+    <div id="p-editor" style="display:none"></div>
+  </div>
+</main>
+
+<!-- ═══ RIGHT SIDEBAR ═══ -->
+<aside class="side-r" id="side-r">
+  <div class="tpanel"><div class="tph">🏷️ CATÉGORIES</div>
+  <div class="tpc" id="cat-legend"></div></div>
+
+  <div class="tpanel"><div class="tph">🔖 FILTRES</div>
+  <div class="tpc">
+    <div class="ftags" id="status-filters">
+      <span class="ftag on" onclick="filterStatus('all')">Toutes</span>
+      <span class="ftag" onclick="filterStatus('fav')">⭐ Favoris</span>
+      <span class="ftag" onclick="filterStatus('done')">✓ Maîtrisées</span>
+      <span class="ftag" onclick="filterStatus('todo')">○ À revoir</span>
+      <span class="ftag" onclick="filterStatus('fc')">🔬 Fact-check</span>
+      <span class="ftag" onclick="filterStatus('bench')">🌍 Benchmark</span>
+      <span class="ftag" onclick="filterStatus('new')">🆕 Nouvelles v2</span>
+    </div>
+    <div class="ftags" id="theme-filters"></div>
+  </div></div>
+
+  <div class="tpanel"><div class="tph" onclick="togPanel(this)">📋 ACTIVITÉ <span>▼</span></div>
+  <div class="tpc"><div class="log" id="log"></div></div></div>
+</aside>
+</div>
+
+<!-- ═══ MODALS ═══ -->
+<div class="modal-bg" id="modal-import">
+<div class="modal">
+  <button class="modal-close" onclick="closeModals()">✕</button>
+  <h3>📥 Importer des cartes</h3>
+  <div class="drop-z" id="drop-z">Glissez un fichier CSV ici<br><small>Format : question,réponse (une par ligne)</small></div>
+  <input type="file" id="file-in" accept=".csv,.txt" style="display:none">
+  <button class="btn btn-cyan" onclick="document.getElementById('file-in').click()">📁 Choisir un fichier</button>
+</div></div>
+
+<div class="modal-bg" id="modal-settings">
+<div class="modal">
+  <button class="modal-close" onclick="closeModals()">✕</button>
+  <h3>⚙️ Paramètres</h3>
+  <div style="margin-bottom:14px"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><span>Pluie matricielle</span><div class="tog on" id="tog-rain" onclick="togSetting(this,'rain')"></div></div></div>
+  <div style="margin-bottom:14px"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><span>Scanlines</span><div class="tog on" id="tog-scan" onclick="togSetting(this,'scan')"></div></div></div>
+  <div style="margin-bottom:14px"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><span>Réponses visibles</span><div class="tog" id="tog-ans" onclick="togSetting(this,'answers')"></div></div></div>
+</div></div>
+
+<script>
+// ═══════════════════════════════════════════
+// DATA & STATE
+// ═══════════════════════════════════════════
+let cards=[], filtered=[], view='grid', tab='cards', qIdx=0, qCards=[], qOk=0, qNo=0;
+let sess=Date.now(), tInt=null, tSec=25*60, tRun=false;
+let S={rain:true,scan:true,answers:false};
+let prof={name:'Agent_Inconnu',level:1,xp:0,notes:''};
+
+const CAT={
+  'ECP':{c:'#48bb78',k:['ecp','contributive','provisionnée','contributeur','citoyen','fonds','nyxo','arc','piège institutionnel','provisionnement']},
+  'Arizona':{c:'#f6ad55',k:['arizona','gouvernement','coalition','bart de wever','n-va','mr','engagés','vooruit','cd&v']},
+  'Fiscal':{c:'#b794f4',k:['fiscal','taxe','impôt','tva','précompte','budget','ruling','sda','onss','vvpr']},
+  'Social':{c:'#faf089',k:['social','allocation','bim','cpas','chômeur','pauvreté','emploi','inami','onem','ris','volontariat','tmie']},
+  'Tech':{c:'#68d391',k:['solid','fhir','nyxo','git','eleventy','pod','décentralisé','decidim','sensor']},
+  'Benchmark':{c:'#63b3ed',k:['tzcld','magma','basisbaan','sge berlin','marienthal','garantie emploi','territoir','ebe','groningen']},
+  'Acteurs':{c:'#fc8181',k:['paradigm','athumi','dulbea','fgtb','csc','solidaris','vandenbroucke','syndicat','mutuelle','alliés']},
+  'Stratégie':{c:'#9f7aea',k:['swot','smart','théorie du changement','pourquoi','stratégie','roadmap','plaidoyer','objectif','cause racine','levier']},
+};
+
+const RAW=`Qu'est-ce que l'Économie Contributive Provisionnée (ECP) ?,Un modèle économique permettant de valoriser les compétences des citoyens précaires sans leur faire perdre leurs droits sociaux.
+Quel est le but principal de l'ECP face au système social actuel ?,Répondre au « piège institutionnel » qui décourage l'activité des personnes précarisées.
+Le concept de l'ECP s'inscrit dans le contexte des réformes de quel gouvernement belge ?,Le gouvernement Arizona ($2025$-$2029$).
+Quels sont les cinq partis qui forment la coalition Arizona ?,"La N-VA, le MR, Les Engagés, Vooruit et le CD&V."
+Qui est le Premier ministre pressenti du gouvernement Arizona ?,Bart De Wever.
+Quel est l'objectif de taux d'emploi du gouvernement Arizona pour $2029$ ?,$80\\%$.
+Quel montant d'assainissement budgétaire le gouvernement Arizona vise-t-il d'ici $2029$ ?,$18$ milliards d'euros.
+Quel mécanisme de l'ECP sépare l'acte de contribution de la perception immédiate du revenu ?,Le provisionnement différé.
+Où est bloquée la valeur monétaire des actions citoyennes dans le modèle ECP ?,Dans un Fonds de Contribution Citoyenne.
+Pourquoi les sommes accumulées en ECP ne réduisent-elles pas les allocations sociales ?,Elles ne sont pas considérées comme un revenu tant qu'elles ne sont pas encaissées par le contributeur.
+"Pour garantir la sécurité juridique de l'ECP, quelle procédure doit être entamée auprès du SPF Finances ?","Une demande de décision anticipée, appelée « ruling fiscal »."
+Quel organisme belge est compétent pour délivrer un ruling fiscal ?,Le Service des Décisions Anticipées (SDA).
+Quelle est la durée minimale de validité d'une décision du SDA (ruling fiscal) ?,$5$ ans.
+Sur quelle loi de $2005$ l'ECP s'appuie-t-elle pour garantir l'absence de lien de subordination ?,La loi du $3$ juillet $2005$ relative aux droits des volontaires.
+Quel est le coût d'une procédure de ruling auprès du SDA ?,La procédure est gratuite et confidentielle.
+Combien de personnes sont estimées en situation d'inactivité contrainte en Belgique selon l'ECP ?,"Près de $978\\,000$ personnes."
+Quel est le coût annuel estimé de l'inactivité pour l'État belge ?,"~$21,4$ Mrd€/an ($2023$) = agrégation de $3$ sources : INAMI $13,0$ Mrd€ + ONEM $6,46$ Mrd€ + RIS/CPAS ~$2$ Mrd€. Source : Cour des Comptes + ONEM + SPP IS."
+Comment l'ECP appelle-t-elle le fait que le système actuel pénalise financièrement l'initiative ?,Le piège institutionnel.
+Quel est le nom du projet pilote de l'ECP axé sur la santé mentale ?,L'Agence de Renseignement Citoyenne (ARC).
+Quel est le budget nécessaire pour lancer le projet pilote ARC ?,"$24\\,000$ euros."
+Que signifie l'acronyme BIM dans le système de santé belge ?,Bénéficiaire de l'Intervention Majorée.
+Quel est l'avantage principal du statut BIM pour les soins de santé ?,Un remboursement plus important des frais médicaux et le tiers payant social obligatoire.
+Comment l'ECP assure-t-elle le maintien du statut BIM pour ses participants ?,En transformant le revenu immédiat en un capital différé non comptabilisé par l'administration sociale.
+Quel protocole de données décentralisé est utilisé par l'ECP pour garantir la souveraineté des citoyens ?,Le protocole Solid.
+Qui est l'inventeur du World Wide Web à l'origine du projet Solid ?,Tim Berners-Lee.
+Qu'est-ce qu'un « Pod » dans le contexte du protocole Solid ?,Un espace de stockage de données personnelles en ligne appartenant à l'utilisateur.
+Quel standard est utilisé pour l'interopérabilité des services sociaux et de santé dans l'ECP ?,Le standard FHIR ($HL7$).
+Comment se nomme la plateforme technique qui sert de moteur à l'ECP ?,NYXO.
+Quel est le coût d'utilisation de la plateforme NYXO pour les citoyens ?,Elle est gratuite pour les citoyens.
+Quel mécanisme démocratique Auderghem utilise-t-elle pour l'allocation de son budget partagé ?,Le vote quadratique.
+Quel est le montant du budget partagé géré par la commune d'Auderghem ?,"Plus de $500\\,000$ euros."
+Quelle technique est utilisée par NYXO pour archiver les flux de données publiques de manière inaltérable ?,Le Git Scraping.
+Quel est le seuil de pauvreté pour un isolé en Belgique en $2024$ ?,"$1\\,522$ euros net par mois."
+Quel pourcentage de la population belge est considéré comme étant à risque de pauvreté ?,"$18,6\\%$."
+Quel est le nombre approximatif de postes vacants en Belgique selon les données de $2024$ ?,"$172\\,000$ postes."
+Quel est le principe de la « vérité administrative » dans l'ECP ?,Produire des données citoyennes vérifiables pour influencer les décisions locales.
+Pourquoi l'ECP garantit-elle une liberté totale d'engagement (pas d'horaires imposés) ?,Pour éviter toute requalification juridique en contrat de travail salarié.
+Quel est l'un des risques majeurs identifiés pour les chômeurs participant à l'ECP ?,Le risque que l'activité ne soit pas reconnue comme une recherche active d'emploi.
+Quelle phase de la feuille de route ECP prévoit la création d'un consortium formel en $2026$ ?,La Phase $2$ (Coalition).
+Quel est l'objectif final de la Phase $3$ de l'ECP ($2027$-$2029$) ?,L'institutionnalisation via un cadre légal reconnaissant le statut de « Contributeur Citoyen ».
+Quel concept économique de Kate Raworth inspire le cadre éthique de l'ECP ?,La Théorie du Donut.
+Que signifie l'acronyme MCC dans le cadre de l'ECP ?,Monnaie Contributive Citoyenne.
+"Dans le modèle ECP, qu'est-ce que la « liquidation » des fonds ?","Le moment où le contributeur retire les sommes accumulées, par exemple lors de son départ à la pension."
+Quel est l'avantage du modèle « B2B » validé par le ruling fiscal pour un contributeur ?,"Il acte la nature commerciale et autonome de la prestation, protégeant contre le lien de subordination."
+Quels sont les plafonds de défraiement du volontariat en $2026$ ?,"$44,02$ €/jour et $1\\,760,83$ €/an (standard). Majoré : $3\\,233,91$ €/an. Sources : Securex, Liantis, Acerta janv. $2026$."
+Quel est l'objectif de l'écart financier entre travail et non-travail visé par l'Arizona ?,Atteindre une différence de plus de $500$ euros par mois.
+Comment s'appelle la taxe sur les comptes-titres que le gouvernement Arizona prévoit de doubler ?,La taxe d'abonnement.
+Quel est le nouveau taux du précompte mobilier VVPRbis prévu par l'accord budgétaire ?,$18\\%$.
+Quel type de société est particulièrement visé par la réforme du VVPRbis ?,Les sociétés de management.
+Quel est le montant total de l'effort budgétaire global prévu par Les Engagés pour $2029$ ?,$23$ milliards d'euros.
+Quelle réforme transforme le certificat médical en document indiquant ce que le travailleur peut encore faire ?,La mise en place de la « fit note » (certificat d'aptitude).
+À partir de quelle année la déclaration en temps réel des factures TVA deviendra-t-elle obligatoire ?,$2028$.
+Quel est le taux de la nouvelle taxe sur les plus-values sur actifs financiers ?,$10\\%$.
+Quelle technique fiscale pour les partenaires sans revenus sera réduite de moitié d'ici $2029$ ?,Le quotient conjugal.
+Quel est le nouveau plafond d'heures pour le travail étudiant ?,$650$ heures par an.
+Quel montant maximum de revenus nets un étudiant peut-il gagner sans que ses parents ne perdent d'avantages ?,"$12\\,000$ euros."
+Quelle mesure permanente concerne la TVA pour la démolition et la reconstruction d'un logement ?,L'application du taux réduit de $6\\%$.
+Comment s'appelle le nouveau principe fiscal qui permet aux contribuables de bonne foi de ne pas être pénalisés pour une première erreur ?,Le droit à l'erreur.
+Quel montant devra désormais débourser un candidat pour obtenir la nationalité belge ?,"$1\\,000$ euros (au lieu de $150$ euros)."
+Quel est le délai de prescription prévu en cas de suspicion de fraude fiscale ?,$7$ ans.
+Quel outil informatique centralise toutes les aides et prestations sociales pour calculer le plafond par ménage ?,Le registre central.
+Comment l'accord Arizona prévoit-il d'augmenter le pouvoir d'achat via les chèques-repas ?,En augmentant la contribution maximale légale de deux fois $2$ euros.
+Quelle taxe sera instaurée unilatéralement en $2027$ si aucun accord international n'est trouvé ?,La digitaxe (taxe numérique).
+Quelle institution est chargée de réécrire et simplifier le code de l'impôt sur le revenu ?,Une commission spéciale de simplification.
+Quel service de médiation sera transformé en « arbitrage fiscal » pour réduire les litiges ?,Le service de médiation fiscale.
+"Dans le cadre de l'ECP, que représente un « crédit de voix » ?",Une unité de pouvoir décisionnel générée par une action citoyenne positive.
+Quelle ville belge a récemment annoncé un accord communal PS-Ecolo-PTB surnommé la « Portugaise » ?,Mons.
+Quel mouvement d'éducation permanente édite le magazine « Agir par la Culture » ?,Présence et Action Culturelles (PAC).
+Quelle organisation d'économie sociale a été fondée par l'Abbé Froidure en $1937$ ?,Les Petits Riens.
+Comment s'appelle le journal d'investigation néerlandophone indépendant créé en $2009$ ?,Apache.
+Quelle instance médiatique a reçu des centaines de plaintes après une séquence polémique sur le CPAS ?,Le CSA (Conseil supérieur de l'audiovisuel).
+Quel est le coût opérationnel modeste de l'infrastructure de l'ARC ?,"Environ $16\\,000$ euros par an."
+Quelle technologie frugale est recommandée pour garantir l'accès universel au portail NYXO ?,Eleventy ($11ty$).
+Quel système remplace les astreintes lorsqu'un contribuable entrave une visite fiscale ?,L'application d'un bénéfice imposable minimal.
+Quelle réforme de Les Engagés vise à créer un crédit de jours de congé par enfant ?,La réforme « sac à dos des congés familiaux ».
+Quel est le but de la « norme énergétique » renforcée par le budget Arizona ?,Réduire la facture d'électricité des entreprises belges exposées.
+Quel organisme est mentionné comme partenaire pour le support de l'infrastructure Solid à Bruxelles ?,Paradigm.
+"Selon le FMI, sans intervention, vers quel type de budget se dirige la Belgique ?",Le pire budget de tous les pays industrialisés.
+Quel est le taux d'endettement public par rapport au PIB prévu pour $2038$ sans réformes ?,$130\\%$.
+Quelle procédure européenne a été déclenchée contre la Belgique en juin $2024$ ?,La procédure de déficits excessifs.
+Quel principe de justice fiscale est invoqué pour faire contribuer les plus grandes fortunes ?,La contribution des épaules les plus larges.
+Quelle est la durée de la période d'ajustement budgétaire choisie par la Belgique auprès de l'UE ?,$7$ ans.
+[FACT-CHECK] Le « déficit sécu sociale $18,2$ Mrd€ » est-il exact ?,"❌ NON. $18,2$ Mrd€ = déficit Entité I (fédéral + sécu combinés). Déficit sécu seule = $5,5$-$6,2$ Mrd€. Source : FEB oct. $2024$."
+[FACT-CHECK] Le « $21$-$24$ Mrd€ » est-il une citation de la Cour des Comptes ?,"⚠️ NON. Agrégation construite : INAMI $13,0$ Mrd€ + ONEM $6,46$ Mrd€ + RIS ~$2$ Mrd€ = ~$21,4$ Mrd€ ($2023$). Méthodologiquement légitime."
+Quel est le TMIE fiscal pour un bénéficiaire AMI reprenant le travail ?,"$96,30\\%$ en fiscal pur. Source : CNT-NAR Dossier $3.032$-$21$ ($2021$)."
+Quel est le TMIE fiscal pour un chômeur reprenant le travail ?,"$90,13\\%$ en fiscal pur. Source : CNT-NAR Dossier $3.032$-$21$ ($2021$)."
+Pourquoi dit-on que le TMIE peut dépasser $100\\%$ ?,"En ajoutant la perte des droits dérivés (BIM, tarifs sociaux énergie, logement social). Source : CSE mars $2024$."
+À quel rang mondial la Belgique se situe-t-elle pour le coin fiscal ?,"Rang $1$ sur $38$ pays OCDE avec $52,6\\%$. Source : OCDE Taxing Wages $2025$."
+Qu'est-ce que le TZCLD en France ?,"Territoires Zéro Chômeur de Longue Durée : $85$ territoires, $94$ EBE, $4\\,492$ CDI. Activation : $51\\%$. Source : DARES/Eval-Lab sept. $2025$."
+Quel pourcentage de bénéficiaires TZCLD n'auraient pas trouvé d'emploi sans le programme ?,"$74\\%$. Et $77\\%$ sans CDI $2$ ans après. Source : DARES/Eval-Lab sept. $2025$."
+Qu'est-ce que MAGMA de Gramatneusiedl (Autriche) ?,"$1$er RCT de garantie d'emploi ($2020$-$2024$). $112$ emplois, +$30\\%$ revenu. Source : Kasy & Lehner, IZA DP $16088$."
+Qu'est-ce que la Basisbaan de Groningen (Pays-Bas) ?,"$170$ participants, zéro abandon (hors retraite). Philosophie la plus proche de l'ECP."
+Qu'est-ce que le SGE de Berlin ?,"Solidarisches Grundeinkommen : $1\\,000$ emplois publics permanents ($2019$-$2025$)."
+Qu'est-ce que TerritoiR'ES en Wallonie ?,"Adaptation belge TZCLD : $17$ territoires, $104$ M€ ($2022$-$2026$, UE/FSE+)."
+Quelle est la différence structurelle TZCLD vs ECP ?,TZCLD = CDI au SMIC dans des EBE. ECP = statut allocataire maintenu + provisionnement différé. Moins coûteux par conception.
+Quel est le coût par ETP du TZCLD ?,"~$28\\,000$ €/an. Activation $51\\%$ = $8\\,093$ € économies/pers/$12$ mois. Source : Eval-Lab/TAXIPP."
+Le SDA est la cible principale du plaidoyer ECP. Pourquoi ?,Seule autorité habilitée à délivrer un ruling fiscal sécurisant le provisionnement différé.
+Qui est Frank Vandenbroucke dans la stratégie ECP ?,Ministre Affaires Sociales (Vooruit). Cible secondaire — socialiste sensible à l'articulation ECP/sécu.
+Quels sont les alliés stratégiques du plaidoyer ECP ?,"FGTB/CSC (syndicats), Solidaris (mutuelle), Paradigm/Athumi (Solid), DULBEA-ULB (académique), fédérations CPAS."
+Quelles sont les $3$ stratégies de pouvoir du plaidoyer ?,"AVEC (dialogue SDA, partenariats). SANS (pilote ARC, déploiement tech). CONTRE (recours juridiques, campagne publique, UE)."
+Quelle est la cause racine du piège institutionnel (analyse $5$ Pourquoi) ?,Rapport de force politique défavorable. Sécu indexée sur salariat. Ruling sous-utilisé. Coalition Arizona : punition > innovation.
+Quels sont les $3$ leviers de la théorie du changement ECP ?,"$1$. Conscience (honte→fierté). $2$. Politiques (ruling+statut ECP). $3$. Comportement (engagement valorisé)."
+Objectif SMART principal Q4 $2026$ ?,Ruling fiscal favorable SDA validant provisionnement différé = non-revenu. Échéance : $31$/oct/$2026$.
+Combien de contributeurs vise le pilote ARC ?,"$100$+ avec charte signée et missions documentées sur Pods Solid. Échéance : $15$/déc/$2026$."
+Quels sont les $3$ critères ONSS de requalification en contrat de travail ?,"Prestation, rémunération, subordination. La loi volontariat $2005$ garantit l'absence de subordination."
+Qu'est-ce que l'article $344$ CIR $92$ ?,Disposition anti-abus fiscale. Le ruling SDA confirme que le provisionnement différé ≠ abus.
+Nombre exact de chômeurs complets indemnisés $2024$ ?,"$292\\,790$ (moyenne mensuelle). Source : ONEM."
+Combien en invalidité selon l'INAMI ?,"$526\\,507$ au $31/12/2023$. +$17,56\\%$ depuis $2019$. Source : INAMI."
+Combien de bénéficiaires RIS ?,"$158\\,697$ (moyenne $2023$). Doublé depuis $2003$. Source : SPP IS."
+Indemnités INAMI $2023$ — montant exact ?,"$13\\,035,8$ M€. Source : Cour des Comptes $181$e Cahier Part. II, oct. $2024$."
+Le plafond majoré volontariat est-il accessible aux allocataires sociaux ?,NON. Limités au standard ($1\\,760,83$ €/an). Source : Securex/Liantis.
+Quel budget pour prouver le concept ECP ?,"$24\\,000$ € vs ~$21,4$ Mrd€/an passifs. Ratio : $1$ pour ~$892\\,000$."
+Quelle plateforme de délibération utilise l'ECP ?,Decidim — open source, démocratie participative (« délibération liquide »).
+Quel réseau de capteurs citoyens intègre l'écosystème ECP ?,Sensor.community — capteurs environnementaux citoyens (air, bruit, particules).`;
+
+// ═══════════════════════════════════════════
+// PARSE & INIT
+// ═══════════════════════════════════════════
+function parseCSV(txt){
+  return txt.trim().split('\n').map((line,i)=>{
+    const m=line.match(/^"?([^"]*)"?,(.*)$/)||line.match(/^([^,]*),(.*)$/);
+    if(!m) return null;
+    return{id:i+1,q:m[1].replace(/^"|"$/g,'').trim(),a:m[2].replace(/^"|"$/g,'').trim(),fav:false,done:false,cat:null,tags:[]};
+  }).filter(Boolean);
+}
+function categorize(c){
+  const t=(c.q+' '+c.a).toLowerCase();
+  for(const[n,d]of Object.entries(CAT)){if(d.k.some(k=>t.includes(k))){c.cat=n;return;}}
+  c.cat='Autre';
+}
+function fmt(s){return s.replace(/\$([^$]+)\$/g,'<span style="color:var(--cyan)">$1</span>').replace(/\\,/g,' ').replace(/\\%/g,'%')}
+
+// ═══════════════════════════════════════════
+// RENDERING
+// ═══════════════════════════════════════════
+function render(){
+  const ct=document.getElementById('cards-ct');
+  if(view==='table'){renderTable(ct)}else{renderGrid(ct)}
+  updateStats();
+}
+
+function renderGrid(ct){
+  ct.className='cgrid';
+  ct.style.gridTemplateColumns=view==='compact'?'repeat(auto-fill,minmax(260px,1fr))':'repeat(auto-fill,minmax(340px,1fr))';
+  ct.innerHTML=filtered.map((c,i)=>{
+    const isFC=c.q.startsWith('[FACT-CHECK]');
+    const hasErr=c.a.includes('❌')||c.a.startsWith('NON');
+    const hasWarn=c.a.includes('⚠️');
+    const hasSrc=/Source[s]?\s*:/.test(c.a);
+    const isBM=['TZCLD','MAGMA','Basisbaan','SGE','TerritoiR'].some(k=>c.q.includes(k)||c.a.includes(k));
+    let badge='';
+    if(isFC&&hasErr) badge='<span class="fc fc-err">❌ CORRIGÉ</span>';
+    else if(isFC&&hasWarn) badge='<span class="fc fc-warn">⚠️ NUANCÉ</span>';
+    else if(isFC) badge='<span class="fc fc-ok">✅ VÉRIFIÉ</span>';
+    else if(hasSrc) badge='<span class="fc fc-ok">✅ SOURCÉ</span>';
+    else if(isBM) badge='<span class="fc fc-bm">🌍 BENCHMARK</span>';
+    else if(c.id>82) badge='<span class="fc fc-new">🆕 v2</span>';
+    const srcM=c.a.match(/Source[s]?\s*:\s*([^.]+\.)/);
+    const src=srcM?'<br><span class="src">'+srcM[1].trim()+'</span>':'';
+    const cleanQ=c.q.replace('[FACT-CHECK] ','');
+    const xcls=isFC?'fc-c':(isBM?'bm-c':'');
+    const catC=CAT[c.cat]?.c||'var(--mg)';
+    return `<div class="card ${xcls} ${c.fav?'fav':''} ${c.done?'done':''}" data-id="${c.id}" style="animation-delay:${i*.025}s">
+<div class="c-hdr"><span class="c-id">#${String(c.id).padStart(3,'0')} ${badge}</span>
+<div class="c-acts"><button class="c-act ${c.fav?'on-fav':''}" onclick="togFav(${c.id})">⭐</button><button class="c-act ${c.done?'on-done':''}" onclick="togDone(${c.id})">✓</button></div></div>
+<div class="c-q" onclick="togAns(${c.id})">${fmt(cleanQ)}</div>
+<div class="c-a ${S.answers?'vis':''}" id="a-${c.id}">${fmt(c.a)}${src}</div>
+<div class="c-tags"><span class="tag" style="background:${catC}25;color:${catC}">${c.cat||'—'}</span></div></div>`;
+  }).join('');
+}
+
+function renderTable(ct){
+  ct.className='';
+  ct.innerHTML=`<table class="tbl"><thead><tr><th onclick="sortCards('id')">#</th><th onclick="sortCards('alpha')">Question</th><th>Réponse</th><th>Cat.</th><th>⭐</th></tr></thead><tbody>${
+    filtered.map(c=>`<tr><td>${c.id}</td><td style="cursor:pointer" onclick="togAns(${c.id})">${fmt(c.q.replace('[FACT-CHECK] ','')).substring(0,90)}…</td><td id="a-${c.id}" class="c-a ${S.answers?'vis':''}" style="max-width:300px">${fmt(c.a).substring(0,80)}…</td><td><span class="tag" style="background:${CAT[c.cat]?.c||'#666'}25;color:${CAT[c.cat]?.c||'#aaa'}">${c.cat||'—'}</span></td><td><button class="c-act ${c.fav?'on-fav':''}" onclick="togFav(${c.id})">⭐</button></td></tr>`).join('')
+  }</tbody></table>`;
+}
+
+function updateStats(){
+  const d=cards.filter(c=>c.done).length, f=cards.filter(c=>c.fav).length;
+  const el=id=>document.getElementById(id);
+  el('st-total').textContent=cards.length;
+  el('st-done').textContent=d;
+  el('st-fav').textContent=f;
+  // Category counts
+  const cc={};cards.forEach(c=>{cc[c.cat]=(cc[c.cat]||0)+1});
+  if(el('cat-ecp'))el('cat-ecp').textContent=cc['ECP']||0;
+  if(el('cat-az'))el('cat-az').textContent=cc['Arizona']||0;
+  if(el('cat-fisc'))el('cat-fisc').textContent=cc['Fiscal']||0;
+  if(el('cat-bench'))el('cat-bench').textContent=cc['Benchmark']||0;
+}
+
+function renderLegend(){
+  const ct=document.getElementById('cat-legend');
+  const cc={};cards.forEach(c=>{cc[c.cat]=(cc[c.cat]||0)+1});
+  ct.innerHTML=Object.entries(CAT).map(([n,d])=>`<div class="leg-item" onclick="filterCat('${n}')"><span class="leg-dot" style="background:${d.c}"></span><span>${n}</span><span class="leg-ct">${cc[n]||0}</span></div>`).join('');
+}
+function renderThemeFilters(){
+  const ct=document.getElementById('theme-filters');
+  ct.innerHTML=Object.keys(CAT).map(n=>`<span class="ftag" onclick="filterCat('${n}')">${n}</span>`).join('');
+}
+
+// ═══════════════════════════════════════════
+// INTERACTIONS
+// ═══════════════════════════════════════════
+function togAns(id){const el=document.getElementById('a-'+id);if(el)el.classList.toggle('vis')}
+function togFav(id){const c=cards.find(x=>x.id===id);if(c){c.fav=!c.fav;render();saveAll();logAct('Carte #'+id+(c.fav?' ⭐':' désfavorisée'));addXP(5)}}
+function togDone(id){const c=cards.find(x=>x.id===id);if(c){c.done=!c.done;render();saveAll();logAct('Carte #'+id+(c.done?' ✓ maîtrisée':' à revoir'));if(c.done)addXP(10)}}
+
+function setView(v){view=v;document.querySelectorAll('.vbtn').forEach(b=>b.classList.toggle('on',b.dataset.v===v));render()}
+function sortCards(by){
+  if(by==='id')filtered.sort((a,b)=>a.id-b.id);
+  else if(by==='alpha')filtered.sort((a,b)=>a.q.localeCompare(b.q));
+  else if(by==='random')filtered.sort(()=>Math.random()-.5);
+  render();
+}
+function filterCat(cat){filtered=cards.filter(c=>c.cat===cat);render();logAct('Filtre: '+cat)}
+function filterStatus(st){
+  document.querySelectorAll('#status-filters .ftag').forEach(f=>f.classList.remove('on'));
+  event.target.classList.add('on');
+  if(st==='all')filtered=[...cards];
+  else if(st==='fav')filtered=cards.filter(c=>c.fav);
+  else if(st==='done')filtered=cards.filter(c=>c.done);
+  else if(st==='todo')filtered=cards.filter(c=>!c.done);
+  else if(st==='fc')filtered=cards.filter(c=>c.q.startsWith('[FACT-CHECK]'));
+  else if(st==='bench')filtered=cards.filter(c=>['TZCLD','MAGMA','Basisbaan','SGE','TerritoiR'].some(k=>c.q.includes(k)||c.a.includes(k)));
+  else if(st==='new')filtered=cards.filter(c=>c.id>82);
+  render();logAct('Filtre: '+st);
+}
+
+function switchTab(t){
+  tab=t;
+  document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x.dataset.tab===t));
+  ['cards','quiz','det','editor'].forEach(p=>document.getElementById('p-'+p).style.display='none');
+  if(t==='cards'){document.getElementById('p-cards').style.display='block'}
+  else if(t==='quiz'){document.getElementById('p-quiz').style.display='block';initQuiz()}
+  else if(t==='detective'){document.getElementById('p-det').style.display='block';renderDet()}
+  else if(t==='editor'){document.getElementById('p-editor').style.display='block';renderEditor()}
+}
+
+// ═══════════════════════════════════════════
+// QUIZ
+// ═══════════════════════════════════════════
+function initQuiz(){
+  qCards=[...filtered].sort(()=>Math.random()-.5);qIdx=0;qOk=0;qNo=0;renderQuizCard();
+}
+function renderQuizCard(){
+  const ct=document.getElementById('p-quiz');
+  if(!qCards.length){ct.innerHTML='<p style="text-align:center;opacity:.5">Aucune carte à quizzer.</p>';return}
+  const c=qCards[qIdx];
+  ct.innerHTML=`<div class="quiz"><div class="quiz-card">
+    <div style="display:flex;justify-content:space-between;font-size:.75rem;opacity:.6"><span>${qIdx+1}/${qCards.length}</span><span>Score: ${qOk}✓ ${qNo}✗</span></div>
+    <div class="quiz-q">${fmt(c.q.replace('[FACT-CHECK] ',''))}</div>
+    <div class="quiz-ans" id="quiz-ans">${fmt(c.a)}</div>
+    <div class="quiz-ctrl">
+      <button class="btn btn-cyan" onclick="quizReveal()">👁️ Réponse</button>
+      <button class="btn" style="border-color:var(--ok);color:var(--ok)" onclick="quizRate(1)">✓ Savais</button>
+      <button class="btn" style="border-color:var(--red);color:var(--red)" onclick="quizRate(0)">✗ Savais pas</button>
+      <button class="btn" onclick="quizNext()">→</button>
+    </div>
+    <div class="quiz-score"><div><span class="sc-v sc-ok">${qOk}</span><span style="font-size:.6rem;opacity:.5">Correct</span></div><div><span class="sc-v sc-no">${qNo}</span><span style="font-size:.6rem;opacity:.5">Incorrect</span></div></div>
+  </div></div>`;
+}
+function quizReveal(){const el=document.getElementById('quiz-ans');if(el)el.classList.add('vis')}
+function quizRate(ok){if(ok)qOk++;else qNo++;addXP(ok?10:3);quizNext()}
+function quizNext(){qIdx=(qIdx+1)%qCards.length;renderQuizCard()}
+
+// ═══════════════════════════════════════════
+// DETECTIVE
+// ═══════════════════════════════════════════
+function renderDet(){
+  const ct=document.getElementById('p-det');
+  // Word frequency
+  const words={};
+  cards.forEach(c=>{(c.q+' '+c.a).toLowerCase().replace(/[^\wàâäéèêëïîôùûüÿç'-]/g,' ').split(/\s+/).forEach(w=>{if(w.length>4)words[w]=(words[w]||0)+1})});
+  const top=Object.entries(words).sort((a,b)=>b[1]-a[1]).slice(0,30);
+  const maxF=top[0]?top[0][1]:1;
+  // Category chart
+  const cc={};cards.forEach(c=>{cc[c.cat]=(cc[c.cat]||0)+1});
+  const maxC=Math.max(...Object.values(cc),1);
+  ct.innerHTML=`<div class="det-grid">
+    <div class="det-card"><div class="det-title">☁️ NUAGE DE MOTS</div><div class="word-cloud">${top.map(([w,n])=>`<span class="word-item" style="font-size:${.6+n/maxF*.8}rem;opacity:${.4+n/maxF*.6}" onclick="searchWord('${w}')">${w}</span>`).join('')}</div></div>
+    <div class="det-card"><div class="det-title">📊 PAR CATÉGORIE</div><div class="chart-ct">${Object.entries(cc).map(([n,v])=>`<div class="chart-bar" style="height:${v/maxC*100}%;background:${CAT[n]?.c||'var(--mg)'}" title="${n}: ${v}"></div>`).join('')}</div><div style="display:flex;justify-content:space-around;font-size:.5rem;opacity:.4">${Object.keys(cc).map(n=>`<span>${n.substring(0,5)}</span>`).join('')}</div></div>
+    <div class="det-card"><div class="det-title">📈 STATISTIQUES</div><div style="font-size:.78rem">
+      <p>Total cartes : <strong>${cards.length}</strong></p>
+      <p>Maîtrisées : <strong>${cards.filter(c=>c.done).length}</strong></p>
+      <p>Favoris : <strong>${cards.filter(c=>c.fav).length}</strong></p>
+      <p>Fact-check : <strong>${cards.filter(c=>c.q.includes('[FACT-CHECK]')).length}</strong></p>
+      <p>Benchmark : <strong>${cards.filter(c=>['TZCLD','MAGMA','Basisbaan','SGE','TerritoiR'].some(k=>c.q.includes(k)||c.a.includes(k))).length}</strong></p>
+      <p>Nouvelles v2 : <strong>${cards.filter(c=>c.id>82).length}</strong></p>
+    </div></div>
+  </div>`;
+}
+function searchWord(w){document.getElementById('search').value=w;doSearch(w)}
+
+// ═══════════════════════════════════════════
+// EDITOR
+// ═══════════════════════════════════════════
+function renderEditor(){
+  document.getElementById('p-editor').innerHTML=`<div class="editor">
+    <h3 style="font-family:var(--f-display);margin-bottom:16px">✏️ Nouvelle carte</h3>
+    <div class="fg"><label>Question</label><textarea id="ed-q" placeholder="Entrez la question..."></textarea></div>
+    <div class="fg"><label>Réponse</label><textarea id="ed-a" placeholder="Entrez la réponse..."></textarea></div>
+    <button class="btn btn-cyan" onclick="addCard()">➕ Ajouter la carte</button>
+  </div>`;
+}
+function addCard(){
+  const q=document.getElementById('ed-q').value.trim();
+  const a=document.getElementById('ed-a').value.trim();
+  if(!q||!a){alert('Question et réponse requises');return}
+  const c={id:cards.length+1,q,a,fav:false,done:false,cat:null,tags:[]};
+  categorize(c);cards.push(c);filtered=[...cards];
+  render();renderEditor();logAct('Carte #'+c.id+' créée');addXP(15);saveAll();
+}
+
+// ═══════════════════════════════════════════
+// SEARCH
+// ═══════════════════════════════════════════
+function doSearch(q){
+  q=q.toLowerCase();
+  if(!q){filtered=[...cards]}
+  else{filtered=cards.filter(c=>c.q.toLowerCase().includes(q)||c.a.toLowerCase().includes(q))}
+  render();
+}
+
+// ═══════════════════════════════════════════
+// TIMER
+// ═══════════════════════════════════════════
+function timerStart(){if(tRun)return;tRun=true;tInt=setInterval(()=>{if(tSec<=0){timerPause();alert('⏰ Temps écoulé !');return}tSec--;timerDisp()},1000)}
+function timerPause(){tRun=false;clearInterval(tInt)}
+function timerReset(){timerPause();tSec=25*60;timerDisp()}
+function timerSet(m){timerPause();tSec=m*60;timerDisp()}
+function timerDisp(){const m=Math.floor(tSec/60),s=tSec%60;document.getElementById('timer').textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0')}
+
+// ═══════════════════════════════════════════
+// XP & PROFILE
+// ═══════════════════════════════════════════
+function addXP(n){
+  prof.xp+=n;
+  const need=prof.level*100;
+  if(prof.xp>=need){prof.level++;prof.xp-=need}
+  document.getElementById('xp-cur').textContent=prof.xp;
+  document.getElementById('xp-need').textContent=prof.level*100;
+  document.getElementById('xp-fill').style.width=(prof.xp/(prof.level*100)*100)+'%';
+  document.getElementById('pniv').textContent=prof.level;
+}
+
+// ═══════════════════════════════════════════
+// ACTIVITY LOG
+// ═══════════════════════════════════════════
+function logAct(msg){
+  const ct=document.getElementById('log');
+  const t=new Date().toLocaleTimeString('fr-BE',{hour:'2-digit',minute:'2-digit'});
+  ct.insertAdjacentHTML('afterbegin',`<div class="log-e"><span class="log-t">${t}</span> ${msg}</div>`);
+  if(ct.children.length>30)ct.lastChild.remove();
+}
+
+// ═══════════════════════════════════════════
+// PERSISTENCE
+// ═══════════════════════════════════════════
+function saveAll(){
+  try{
+    const d={cards:cards.map(c=>({id:c.id,fav:c.fav,done:c.done})),prof,S};
+    localStorage.setItem('nexus-v2',JSON.stringify(d));
+  }catch(e){}
+}
+function loadAll(){
+  try{
+    const raw=localStorage.getItem('nexus-v2');
+    if(!raw)return;
+    const d=JSON.parse(raw);
+    if(d.cards)d.cards.forEach(s=>{const c=cards.find(x=>x.id===s.id);if(c){c.fav=s.fav;c.done=s.done}});
+    if(d.prof)Object.assign(prof,d.prof);
+    if(d.S)Object.assign(S,d.S);
+    document.getElementById('pname').textContent=prof.name||'Agent_Inconnu';
+    document.getElementById('xp-cur').textContent=prof.xp;
+    document.getElementById('pniv').textContent=prof.level;
+    document.getElementById('xp-fill').style.width=(prof.xp/(prof.level*100)*100)+'%';
+    if(prof.notes)document.getElementById('notes').value=prof.notes;
+    if(!S.scan)document.body.classList.remove('scan');
+    if(!S.rain)document.getElementById('rain').style.display='none';
+  }catch(e){}
+}
+function exportCSV(){
+  const csv=cards.map(c=>`"${c.q.replace(/"/g,'""')}","${c.a.replace(/"/g,'""')}"`).join('\n');
+  const blob=new Blob([csv],{type:'text/csv'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='nexus-ecp-v2.csv';a.click();
+  logAct('Export CSV');
+}
+
+// ═══════════════════════════════════════════
+// IMPORT
+// ═══════════════════════════════════════════
+function handleImport(file){
+  const r=new FileReader();
+  r.onload=function(e){
+    const lines=e.target.result.trim().split('\n');
+    let added=0;
+    lines.forEach(line=>{
+      const m=line.match(/^"?([^"]*)"?,(.*)$/);
+      if(m){
+        const c={id:cards.length+1,q:m[1].trim(),a:m[2].replace(/^"|"$/g,'').trim(),fav:false,done:false,cat:null,tags:[]};
+        categorize(c);cards.push(c);added++;
+      }
+    });
+    filtered=[...cards];render();renderLegend();
+    logAct(added+' cartes importées');closeModals();
+  };
+  r.readAsText(file);
+}
+
+// ═══════════════════════════════════════════
+// UI HELPERS
+// ═══════════════════════════════════════════
+function togPanel(el){el.nextElementSibling.classList.toggle('hide')}
+function toggleSide(s){document.getElementById('side-'+s).classList.toggle('open')}
+function openModal(id){document.getElementById('modal-'+id).classList.add('on')}
+function closeModals(){document.querySelectorAll('.modal-bg').forEach(m=>m.classList.remove('on'))}
+function togSetting(el,key){
+  el.classList.toggle('on');
+  S[key]=el.classList.contains('on');
+  if(key==='scan')document.body.classList.toggle('scan',S.scan);
+  if(key==='rain')document.getElementById('rain').style.display=S.rain?'block':'none';
+  if(key==='answers'){render()}
+  saveAll();
+}
+function toggle80s(){
+  const is80=document.documentElement.hasAttribute('data-t');
+  if(is80){document.documentElement.removeAttribute('data-t');document.getElementById('t80-lbl').textContent='EIGHTIES'}
+  else{document.documentElement.setAttribute('data-t','80s');document.getElementById('t80-lbl').textContent='CLASSIQUE'}
+  initRain();
+}
+
+// ═══════════════════════════════════════════
+// MATRIX RAIN
+// ═══════════════════════════════════════════
+function initRain(){
+  const cv=document.getElementById('rain'),ctx=cv.getContext('2d');
+  cv.width=window.innerWidth;cv.height=window.innerHeight;
+  const chars='アイウエオカキクケコサシスセソタチツテト0123456789ABCDEF';
+  const fs=14,cols=Math.floor(cv.width/fs),drops=Array(cols).fill(1);
+  function draw(){
+    ctx.fillStyle='rgba(13,13,20,.05)';ctx.fillRect(0,0,cv.width,cv.height);
+    ctx.fillStyle=getComputedStyle(document.documentElement).getPropertyValue('--mg').trim()||'#48bb78';
+    ctx.font=fs+'px monospace';
+    for(let i=0;i<drops.length;i++){
+      ctx.fillText(chars[Math.floor(Math.random()*chars.length)],i*fs,drops[i]*fs);
+      if(drops[i]*fs>cv.height&&Math.random()>.975)drops[i]=0;
+      drops[i]++;
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+}
+
+// ═══════════════════════════════════════════
+// SESSION TIMER
+// ═══════════════════════════════════════════
+function sessTick(){
+  const el=Date.now()-sess;
+  const m=Math.floor(el/60000),s=Math.floor((el%60000)/1000);
+  document.getElementById('st-time').textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
+}
+
+// ═══════════════════════════════════════════
+// KEYBOARD
+// ═══════════════════════════════════════════
+document.addEventListener('keydown',function(e){
+  if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')return;
+  if(e.key==='q')switchTab('quiz');
+  if(e.key==='d')switchTab('detective');
+  if(e.key==='n')switchTab('editor');
+  if(e.key===' '&&tab==='quiz'){e.preventDefault();quizReveal()}
+  if(e.key==='ArrowRight'&&tab==='quiz')quizNext();
+  if(e.ctrlKey&&e.key==='f'){e.preventDefault();document.getElementById('search').focus()}
+});
+
+// ═══════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════
+(function(){
+  cards=parseCSV(RAW);
+  cards.forEach(categorize);
+  filtered=[...cards];
+  loadAll();
+  render();
+  renderLegend();
+  renderThemeFilters();
+  updateStats();
+  initRain();
+  setInterval(sessTick,1000);
+  logAct('Session démarrée — '+cards.length+' cartes chargées');
+
+  document.getElementById('search').addEventListener('input',function(e){doSearch(e.target.value)});
+  document.getElementById('pname').addEventListener('blur',function(){prof.name=this.textContent;saveAll()});
+  document.getElementById('notes').addEventListener('blur',function(){prof.notes=this.value;saveAll()});
+
+  // Drop zone
+  const dz=document.getElementById('drop-z');
+  dz.addEventListener('dragover',function(e){e.preventDefault();dz.classList.add('dragover')});
+  dz.addEventListener('dragleave',function(){dz.classList.remove('dragover')});
+  dz.addEventListener('drop',function(e){e.preventDefault();dz.classList.remove('dragover');handleImport(e.dataTransfer.files[0])});
+  document.getElementById('file-in').addEventListener('change',function(e){handleImport(e.target.files[0])});
+
+  window.addEventListener('resize',function(){const cv=document.getElementById('rain');cv.width=window.innerWidth;cv.height=window.innerHeight});
+})();
+</script>
+</body>
+</html>
